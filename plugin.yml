@@ -1,0 +1,11 @@
+name: Snowballer
+main: co.networkery.uvbeenzaned.Snowballer
+version: 1.0.0
+commands:
+   snowballer:
+       description: Main Snowballer command.
+       aliases: [sbr]
+       usage: |
+         /<command> join cyan to join the cyan team.
+         /<command> join lime to join the lime team.
+         /<command> leave to leave your current team.
