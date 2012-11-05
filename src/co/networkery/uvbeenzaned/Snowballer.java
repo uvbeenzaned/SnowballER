@@ -186,14 +186,14 @@ public class Snowballer extends JavaPlugin
 				  			sbr.gameon = false;
 							for (int i = 0; i < sbr.teamcyaninarena.size(); i++)
 							{
-								Player pl = sbr.teamcyaninarena.get(i);
+								Player pl = getServer().getPlayer(sbr.teamcyaninarena.get(i));
 				  				pl.teleport(sbr.lobbyspawnlocation);
 				  				pl.sendMessage(pg + "An admin has ended the current snowballer game!");
 				  				sbr.teamcyaninarena.remove(pl);
 							}
 							for (int i = 0; i < sbr.teamlimeinarena.size(); i++)
 							{
-								Player pl = sbr.teamlimeinarena.get(i);
+								Player pl = getServer().getPlayer(sbr.teamlimeinarena.get(i));
 				  				pl.teleport(sbr.lobbyspawnlocation);
 				  				pl.sendMessage(pg + "An admin has ended the current snowballer game!");
 				  				sbr.teamlimeinarena.remove(pl);
@@ -214,21 +214,21 @@ public class Snowballer extends JavaPlugin
 			  	case "join":
 			  		if(args.length > 1)
 			  		{
-			  			if(sbr.teamcyan.contains(plcmd))
+			  			if(sbr.teamcyan.containsKey(plcmd))
 			  			{
 			  				plcmd.sendMessage(pg + "You are already on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  				return true;
 			  			}
-			  			if(sbr.teamlime.contains(plcmd))
+			  			if(sbr.teamlime.containsKey(plcmd))
 			  			{
 			  				plcmd.sendMessage(pg + "You are already on team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			  				return true;
 			  			}
 			  			if(args[1].equalsIgnoreCase("cyan"))
 			  			{
-					  		if(!sbr.teamcyan.contains(plcmd))
+					  		if(!sbr.teamcyan.containsKey(plcmd))
 					  		{
-					  			sbr.teamcyan.add(plcmd);
+					  			sbr.teamcyan.put(plcmd.getName(), 0);
 					  			plcmd.teleport(sbr.lobbyspawnlocation);
 					  			plcmd.sendMessage(pg + "You've joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			sbr.cyanMsg(pg + plcmd.getName() +" has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
@@ -242,9 +242,9 @@ public class Snowballer extends JavaPlugin
 			  			}
 			  			if(args[1].equalsIgnoreCase("lime"))
 			  			{
-					  		if(!sbr.teamlime.contains(plcmd))
+					  		if(!sbr.teamlime.containsKey(plcmd))
 					  		{
-					  			sbr.teamlime.add(plcmd);
+					  			sbr.teamlime.put(plcmd.getName(), 0);
 					  			plcmd.teleport(sbr.lobbyspawnlocation);
 					  			plcmd.sendMessage(pg + "You've joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			sbr.limeMsg(pg + plcmd.getName() +" has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
@@ -259,13 +259,13 @@ public class Snowballer extends JavaPlugin
 			  		}
 			  		return false;
 			  	case "leave":
-			  		if(sbr.teamcyan.contains(plcmd))
+			  		if(sbr.teamcyan.containsKey(plcmd))
 			  		{
 			  			sbr.teamcyan.remove(plcmd);
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			return true;
 			  		}
-			  		if(sbr.teamlime.contains(plcmd))
+			  		if(sbr.teamlime.containsKey(plcmd))
 			  		{
 			  			sbr.teamlime.remove(plcmd);
 			  			plcmd.teleport(sbr.lobbyspawnlocation);
