@@ -27,10 +27,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 	 public boolean gameon = false;
 	 public boolean timergame = false;
 	 public Location lobbyspawnlocation = null;
-	 //
-	 //
-	 //
-	 //
+	 //public List<Player> teamcyan = new ArrayList<Player>();
+	 //public List<Player> teamlime = new ArrayList<Player>();
+	 //public List<Player> teamcyaninarena = new ArrayList<Player>();
+	 //public List<Player> teamlimeinarena = new ArrayList<Player>();
 	 public HashMap<String, Integer> teamcyan = new HashMap<String, Integer>();
 	 public HashMap<String, Integer> teamlime = new HashMap<String, Integer>();
 	 public HashMap<String, Integer> teamcyaninarena = new HashMap<String, Integer>();
