@@ -29,12 +29,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 	 public Location lobbyspawnlocation = null;
 	 //public List<Player> teamcyan = new ArrayList<Player>();
 	 //public List<Player> teamlime = new ArrayList<Player>();
-	 //public List<Player> teamcyaninarena = new ArrayList<Player>();
-	 //public List<Player> teamlimeinarena = new ArrayList<Player>();
 	 public HashMap<String, Integer> teamcyan = new HashMap<String, Integer>();
 	 public HashMap<String, Integer> teamlime = new HashMap<String, Integer>();
-	 public HashMap<String, Integer> teamcyaninarena = new HashMap<String, Integer>();
-	 public HashMap<String, Integer> teamlimeinarena = new HashMap<String, Integer>();
+	 public List<String> teamcyaninarena = new ArrayList<String>();
+	 public List<String> teamlimeinarena = new ArrayList<String>();
+	 //public HashMap<String, Integer> teamcyaninarena = new HashMap<String, Integer>();
+	 //public HashMap<String, Integer> teamlimeinarena = new HashMap<String, Integer>();
 	 public HashMap<String, Location> teamcyanarenasides = new HashMap<String, Location>();
 	 public HashMap<String, Location> teamlimearenasides = new HashMap<String, Location>();
 	 public int timerdelay = 0;
@@ -46,14 +46,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 		 String pll = event.getPlayer().getName();
 		 if(gameon)
 		 {
-				if(teamcyaninarena.containsKey(pll))
+				if(teamcyaninarena.contains(pll))
 				{
-					Bukkit.getServer().getPlayerExact(pll).teleport(lobbyspawnlocation);
+					Bukkit.getServer().getPlayer(pll).teleport(lobbyspawnlocation);
 					teamcyaninarena.remove(pll);
 				}
-				if(teamlimeinarena.containsKey(pll))
+				if(teamlimeinarena.contains(pll))
 				{
-					Bukkit.getServer().getPlayerExact(pll).teleport(lobbyspawnlocation);
+					Bukkit.getServer().getPlayer(pll).teleport(lobbyspawnlocation);
 					teamlimeinarena.remove(pll);
 				}
 				checkTeamsInArena();
@@ -68,14 +68,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 		 }
 		 else
 		 {
-				if(teamcyaninarena.containsKey(pll))
+				if(teamcyaninarena.contains(pll))
 				{
-					Bukkit.getServer().getPlayerExact(pll).teleport(lobbyspawnlocation);
+					Bukkit.getServer().getPlayer(pll).teleport(lobbyspawnlocation);
 					teamcyaninarena.remove(pll);
 				}
-				if(teamlimeinarena.containsKey(pll))
+				if(teamlimeinarena.contains(pll))
 				{
-					Bukkit.getServer().getPlayerExact(pll).teleport(lobbyspawnlocation);
+					Bukkit.getServer().getPlayer(pll).teleport(lobbyspawnlocation);
 					teamlimeinarena.remove(pll);
 				}
 				if(teamcyan.containsKey(pll))
@@ -95,14 +95,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 		 String pld = event.getEntity().getName();
 		 if(gameon)
 		 {
-			    if(teamcyaninarena.containsKey(pld))
+			    if(teamcyaninarena.contains(pld))
 			    {
-			    	Bukkit.getServer().getPlayerExact(pld).teleport(lobbyspawnlocation);
+			    	Bukkit.getServer().getPlayer(pld).teleport(lobbyspawnlocation);
 			    	teamcyaninarena.remove(pld);
 				}
-				if(teamlimeinarena.containsKey(pld))
+				if(teamlimeinarena.contains(pld))
 				{
-					Bukkit.getServer().getPlayerExact(pld).teleport(lobbyspawnlocation);
+					Bukkit.getServer().getPlayer(pld).teleport(lobbyspawnlocation);
 					teamlimeinarena.remove(pld);
 				}
 				checkTeamsInArena();
@@ -117,16 +117,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 		 }
 		 else
 		 {
-			    if(teamcyaninarena.containsKey(pld))
+			    if(teamcyaninarena.contains(pld))
 			    {
-			    	Bukkit.getServer().getPlayerExact(pld).teleport(lobbyspawnlocation);
+			    	Bukkit.getServer().getPlayer(pld).teleport(lobbyspawnlocation);
 			    	teamcyaninarena.remove(pld);
 				}
-				if(teamlimeinarena.containsKey(pld))
+				if(teamlimeinarena.contains(pld))
 				{
-					Bukkit.getServer().getPlayerExact(pld).teleport(lobbyspawnlocation);
+					Bukkit.getServer().getPlayer(pld).teleport(lobbyspawnlocation);
 					teamlimeinarena.remove(pld);
-					//-----------------------------stopped here adding scores-----------------------------
 				}
 			    if(teamcyan.containsKey(pld))
 			    {
@@ -151,24 +150,24 @@ import org.bukkit.event.player.PlayerQuitEvent;
 				 Player plenemy = (Player)sb.getShooter();
 				 if(plhit != plenemy)
 				 {
-					 if(teamcyaninarena.containsKey(plhit) || teamlimeinarena.containsKey(plhit))
+					 if(teamcyaninarena.contains(plhit) || teamlimeinarena.contains(plhit))
 					 {
-						 if(teamcyaninarena.containsKey(plenemy) || teamlimeinarena.containsKey(plenemy))
+						 if(teamcyaninarena.contains(plenemy) || teamlimeinarena.contains(plenemy))
 						 {
-							 if(!teamcyaninarena.containsKey(plhit) || !teamcyaninarena.containsKey(plenemy))
+							 if(!teamcyaninarena.contains(plhit) || !teamcyaninarena.contains(plenemy))
 							 {
-								 if(!teamlimeinarena.containsKey(plhit) || !teamlimeinarena.containsKey(plenemy))
+								 if(!teamlimeinarena.contains(plhit) || !teamlimeinarena.contains(plenemy))
 								 {
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 1);
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 2);
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 3);
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 4);
 									 plhit.getWorld().playEffect(plhit.getLocation(), Effect.ENDER_SIGNAL, 0);
-									 if(teamcyaninarena.containsKey(plhit))
+									 if(teamcyaninarena.contains(plhit))
 									 {
 										 teamcyaninarena.remove(plhit);
 									 }
-									 if(teamlimeinarena.containsKey(plhit))
+									 if(teamlimeinarena.contains(plhit))
 									 {
 										 teamlimeinarena.remove(plhit);
 									 }
@@ -206,15 +205,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 		{
 			if(mapnum == i)
 			{
-				for(Player pl : teamcyan)
+				for(Entry<String, Integer> pl : teamcyan.entrySet())
 				{
-					teamcyaninarena.add(pl);
-					pl.teleport(entry.getValue());
+					teamcyaninarena.add(pl.getKey());
+					Bukkit.getServer().getPlayer(pl.getKey()).teleport(entry.getValue());
 				}
-				for(Player pl : teamlime)
+				for(Entry<String, Integer> pl : teamlime.entrySet())
 				{
-					teamlimeinarena.add(pl);
-					pl.teleport(teamlimearenasides.get(entry.getKey()));
+					teamlimeinarena.add(pl.getKey());
+					Bukkit.getPlayer(pl.getKey()).teleport(teamlimearenasides.get(entry.getValue()));
 				}
 			}
 			i++;
@@ -225,13 +224,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 	 {
 		 if(teamcyaninarena.size() == 0)
 		 {
-			 for(Player pl : teamlimeinarena)
+			 for(String pl : teamlimeinarena)
 			 {
-				 pl.teleport(lobbyspawnlocation);
+				 Bukkit.getServer().getPlayer(pl).teleport(lobbyspawnlocation);
 			 }
-			 for(Player pl : teamcyaninarena)
+			 for(String pl : teamcyaninarena)
 			 {
-				 pl.teleport(lobbyspawnlocation);
+				 Bukkit.getServer().getPlayer(pl).teleport(lobbyspawnlocation);
 			 }
 			 limeMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
 			 cyanMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
@@ -243,13 +242,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 		 {
 			 if(teamlimeinarena.size() == 0)
 			 {
-				 for(Player pl : teamcyaninarena)
+				 for(String pl : teamcyaninarena)
 				 {
-					 pl.teleport(lobbyspawnlocation);
+					 Bukkit.getServer().getPlayer(pl).teleport(lobbyspawnlocation);
 				 }
-				 for(Player pl : teamlimeinarena)
+				 for(String pl : teamlimeinarena)
 				 {
-					 pl.teleport(lobbyspawnlocation);
+					 Bukkit.getServer().getPlayer(pl).teleport(lobbyspawnlocation);
 				 }
 				 cyanMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
 				 limeMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
@@ -267,29 +266,29 @@ import org.bukkit.event.player.PlayerQuitEvent;
 	 
 	 public void sendAllTeamsMsg(String msg)
 	 {
-		 for(Player pl : teamlime)
+		 for(Entry<String, Integer> pl : teamlime.entrySet())
 		 {
-			 pl.sendMessage(msg);
+			 Bukkit.getServer().getPlayer(pl.getKey()).sendMessage(msg);
 		 }
-		 for(Player pl : teamcyan)
+		 for(Entry<String, Integer> pl : teamcyan.entrySet())
 		 {
-			 pl.sendMessage(msg);
+			 Bukkit.getServer().getPlayer(pl.getKey()).sendMessage(msg);
 		 } 
 	 }
 	 
 	 public void cyanMsg(String msg)
 	 {
-		 for(Player pl : teamcyan)
+		 for(Entry<String, Integer> pl : teamcyan.entrySet())
 		 {
-			 pl.sendMessage(msg);
+			 Bukkit.getServer().getPlayer(pl.getKey()).sendMessage(msg);
 		 }
 	 }
 	 
 	 public void limeMsg(String msg)
 	 {
-		 for(Player pl : teamlime)
+		 for(Entry<String, Integer> pl : teamlime.entrySet())
 		 {
-			 pl.sendMessage(msg);
+			 Bukkit.getServer().getPlayer(pl.getKey()).sendMessage(msg);
 		 }
 	 }
  }
