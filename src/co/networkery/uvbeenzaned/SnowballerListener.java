@@ -60,10 +60,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 				if(teamcyan.containsKey(pll))
 				{
 					teamcyan.remove(pll);
+					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 				}
 				if(teamlime.containsKey(pll))
 				{
 					teamlime.remove(pll);
+					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 				}
 		 }
 		 else
@@ -81,10 +85,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 				if(teamcyan.containsKey(pll))
 				{
 					teamcyan.remove(pll);
+					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 				}
 				if(teamlime.containsKey(pll))
 				{
 					teamlime.remove(pll);
+					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 				}
 		 }
 	 }
@@ -109,10 +117,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 			    if(teamcyan.containsKey(pld))
 			    {
 			    	teamcyan.remove(pld);
+					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 				}
 				if(teamlime.containsKey(pld))
 				{
 					teamlime.remove(pld);
+					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 				}
 		 }
 		 else
@@ -130,10 +142,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 			    if(teamcyan.containsKey(pld))
 			    {
 			    	teamcyan.remove(pld);
+					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 				}
 				if(teamlime.containsKey(pld))
 				{
 					teamlime.remove(pld);
+					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 				}
 		 }
 	 }
@@ -150,32 +166,53 @@ import org.bukkit.event.player.PlayerQuitEvent;
 				 Player plenemy = (Player)sb.getShooter();
 				 if(plhit != plenemy)
 				 {
-					 if(teamcyaninarena.contains(plhit) || teamlimeinarena.contains(plhit))
+					 if(teamcyaninarena.contains(plhit.getName()) || teamlimeinarena.contains(plhit.getName()))
 					 {
-						 if(teamcyaninarena.contains(plenemy) || teamlimeinarena.contains(plenemy))
+						 if(teamcyaninarena.contains(plenemy.getName()) || teamlimeinarena.contains(plenemy.getName()))
 						 {
-							 if(!teamcyaninarena.contains(plhit) || !teamcyaninarena.contains(plenemy))
+							 if(!teamcyaninarena.contains(plhit.getName()) || !teamcyaninarena.contains(plenemy.getName()))
 							 {
-								 if(!teamlimeinarena.contains(plhit) || !teamlimeinarena.contains(plenemy))
+								 if(!teamlimeinarena.contains(plhit.getName()) || !teamlimeinarena.contains(plenemy.getName()))
 								 {
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 1);
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 2);
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 3);
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 4);
 									 plhit.getWorld().playEffect(plhit.getLocation(), Effect.ENDER_SIGNAL, 0);
-									 if(teamcyaninarena.contains(plhit))
+									 if(teamcyaninarena.contains(plhit.getName()))
 									 {
-										 teamcyaninarena.remove(plhit);
+										 teamcyaninarena.remove(plhit.getName());
 									 }
-									 if(teamlimeinarena.contains(plhit))
+									 if(teamlimeinarena.contains(plhit.getName()))
 									 {
-										 teamlimeinarena.remove(plhit);
+										 teamlimeinarena.remove(plhit.getName());
 									 }
 									 plhit.teleport(lobbyspawnlocation);
-									 cyanMsg(pg + ChatColor.RED + plhit.getName() + ChatColor.BLUE + " was hit by " + ChatColor.GREEN + plenemy.getName() + ".");
-									 limeMsg(pg + ChatColor.RED + plhit.getName() + ChatColor.BLUE + " was hit by " + ChatColor.GREEN + plenemy.getName() + ".");
-									 //Bukkit.broadcastMessage("Team cyan players left: " + Integer.toString(teamcyaninarena.size()) + " players.");
-									 //Bukkit.broadcastMessage("Team lime players left: " + Integer.toString(teamlimeinarena.size()) + " players.");
+									 if(teamcyan.containsKey(plenemy.getName()))
+									 {
+										 teamcyan.put(plenemy.getName(), teamcyan.get(plenemy.getName()) + 1);
+										 plenemy.sendMessage(pg + "You've gained 1 point!  Your score is now " + teamcyan.get(plenemy));
+										 if(teamcyan.get(plhit.getName()) > 0)
+										 {
+											 teamcyan.put(plhit.getName(), teamcyan.get(plhit.getName()) - 1);
+											 plhit.sendMessage(pg + "You've lost 1 point!  Your score is now " + teamcyan.get(plhit));
+										 }
+									 }
+									 else
+									 {
+										 if(teamlime.containsKey(plenemy.getName()))
+										 {
+											 teamlime.put(plenemy.getName(), teamlime.get(plenemy.getName()) + 1);
+											 plenemy.sendMessage(pg + "You've gained 1 point!  Your score is now " + teamcyan.get(plenemy));
+											 if(teamlime.get(plhit.getName()) > 0)
+											 {
+												 teamlime.put(plhit.getName(), teamlime.get(plhit.getName()) - 1);
+												 plhit.sendMessage(pg + "You've lost 1 point!  Your score is now " + teamcyan.get(plhit));
+											 }
+										 }
+									 }
+									 sendAllTeamsMsg(pg + ChatColor.RED + plhit.getName() + ChatColor.BLUE + " was hit by " + ChatColor.GREEN + plenemy.getName() + ".");
+									 sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 									 checkTeamsInArena();
 									 event.setCancelled(true);
 								 }
@@ -199,7 +236,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 	 
 	 public void randomMap()
 	 {
-		int mapnum = r.nextInt(teamcyanarenasides.keySet().size());
+		int mapnum = r.nextInt(teamcyanarenasides.entrySet().size());
 		int i = 0;
 		for(Entry<String, Location> entry : teamcyanarenasides.entrySet())
 		{
@@ -213,7 +250,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 				for(Entry<String, Integer> pl : teamlime.entrySet())
 				{
 					teamlimeinarena.add(pl.getKey());
-					Bukkit.getPlayer(pl.getKey()).teleport(teamlimearenasides.get(entry.getValue()));
+					Bukkit.getServer().getPlayer(pl.getKey()).teleport(teamlimearenasides.get(entry.getKey()));
 				}
 			}
 			i++;

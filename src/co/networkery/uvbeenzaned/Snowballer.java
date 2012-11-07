@@ -84,6 +84,16 @@ public class Snowballer extends JavaPlugin
 		  getConfig().set("teamlimearenasides." + entry.getKey(), LTSTL.loc2str(entry.getValue()));
 		  log.info("Saved lime arena side " + "\"" + entry.getKey() + "\"" + " at " + LTSTL.loc2str(entry.getValue()));
 	  }
+	  for(Entry<String, Integer> entry : sbr.teamcyan.entrySet())
+	  {
+		  getConfig().set("cyanscores." + entry.getKey(), Integer.toString(entry.getValue()));
+		  log.info("Saved cyan scores " + "\"" + entry.getKey() + "\"" + " at " + Integer.toString(entry.getValue()));
+	  }
+	  for(Entry<String, Integer> entry : sbr.teamlime.entrySet())
+	  {
+		  getConfig().set("limescores." + entry.getKey(), Integer.toString(entry.getValue()));
+		  log.info("Saved lime scores " + "\"" + entry.getKey() + "\"" + " at " + Integer.toString(entry.getValue()));
+	  }
 	  saveConfig();
   }
 
@@ -119,7 +129,6 @@ public class Snowballer extends JavaPlugin
 				  					return true;
 			  					}
 			  					plcmd.sendMessage(pg + "You have to have a name for the arena!");
-			  
 			  					return true;
 			  				}
 			  				if(args[1].equalsIgnoreCase("lime"))
@@ -229,6 +238,13 @@ public class Snowballer extends JavaPlugin
 					  		if(!sbr.teamcyan.containsKey(plcmd))
 					  		{
 					  			sbr.teamcyan.put(plcmd.getName(), 0);
+				  				//for(String key : getConfig().getConfigurationSection("cyanscores").getKeys(false))
+				  				//{
+				  				//	if(getConfig().getString("cyanscores." + key) != null)
+				  				//	{
+				  				//		sbr.teamcyan.put(key, getConfig().getInt("cyanscores." + key));
+				  				//	}
+				  				//}
 					  			plcmd.teleport(sbr.lobbyspawnlocation);
 					  			plcmd.sendMessage(pg + "You've joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			sbr.cyanMsg(pg + plcmd.getName() +" has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
@@ -245,8 +261,14 @@ public class Snowballer extends JavaPlugin
 					  		if(!sbr.teamlime.containsKey(plcmd))
 					  		{
 					  			sbr.teamlime.put(plcmd.getName(), 0);
+				  				//for(String key : getConfig().getConfigurationSection("limescores").getKeys(false))
+				  				//{
+				  				//	if(getConfig().getString("limescores." + key) != null)
+				  				//	{
+				  				//		sbr.teamcyan.put(key, getConfig().getInt("limescores." + key));
+				  				//	}
+				  				//}
 					  			plcmd.teleport(sbr.lobbyspawnlocation);
-					  			plcmd.sendMessage(pg + "You've joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			sbr.limeMsg(pg + plcmd.getName() +" has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + sbr.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + sbr.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
@@ -259,17 +281,30 @@ public class Snowballer extends JavaPlugin
 			  		}
 			  		return false;
 			  	case "leave":
-			  		if(sbr.teamcyan.containsKey(plcmd))
+			  		if(sbr.teamcyan.containsKey(plcmd.getName()))
 			  		{
-			  			sbr.teamcyan.remove(plcmd);
+			  			if(sbr.teamcyaninarena.contains(plcmd.getName()))
+			  			{
+			  				sbr.teamcyaninarena.remove(plcmd.getName());
+			  				plcmd.teleport(sbr.lobbyspawnlocation);
+			  			}
+			  			sbr.teamcyan.remove(plcmd.getName());
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+			  			sbr.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+			  			sbr.sendAllTeamsMsg(pg + "There are now " + sbr.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 			  			return true;
 			  		}
-			  		if(sbr.teamlime.containsKey(plcmd))
+			  		if(sbr.teamlime.containsKey(plcmd.getName()))
 			  		{
-			  			sbr.teamlime.remove(plcmd);
-			  			plcmd.teleport(sbr.lobbyspawnlocation);
+			  			if(sbr.teamlimeinarena.contains(plcmd.getName()))
+			  			{
+			  				sbr.teamlimeinarena.remove(plcmd.getName());
+			  				plcmd.teleport(sbr.lobbyspawnlocation);
+			  			}
+			  			sbr.teamlime.remove(plcmd.getName());
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+			  			sbr.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+			  			sbr.sendAllTeamsMsg(pg + "There are now " + sbr.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 			  			return true;
 			  		}
 		  			plcmd.sendMessage(pg + "You are not on a team!");
