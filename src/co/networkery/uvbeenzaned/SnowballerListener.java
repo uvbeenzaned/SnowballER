@@ -143,7 +143,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 			    {
 			    	teamcyan.remove(pld);
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
+					sendAllTeamsMsg(pg + "There are now " + teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 				}
 				if(teamlime.containsKey(pld))
 				{
@@ -188,32 +188,42 @@ import org.bukkit.event.player.PlayerQuitEvent;
 										 teamlimeinarena.remove(plhit.getName());
 									 }
 									 plhit.teleport(lobbyspawnlocation);
-									 if(teamcyan.containsKey(plenemy.getName()))
+									 for(Entry<String, Integer> entry : teamcyan.entrySet())
 									 {
-										 teamcyan.put(plenemy.getName(), teamcyan.get(plenemy.getName()) + 1);
-										 plenemy.sendMessage(pg + "You've gained 1 point!  Your score is now " + teamcyan.get(plenemy));
-										 if(teamcyan.get(plhit.getName()) > 0)
+										 if(entry.getKey() == plenemy.getName())
 										 {
-											 teamcyan.put(plhit.getName(), teamcyan.get(plhit.getName()) - 1);
-											 plhit.sendMessage(pg + "You've lost 1 point!  Your score is now " + teamcyan.get(plhit));
+											 entry.setValue(entry.getValue() + 1);
+											 plenemy.sendMessage(pg + "You've gained 1 point!  Your score is now " + teamcyan.get(plenemy.getName()));
 										 }
-									 }
-									 else
-									 {
-										 if(teamlime.containsKey(plenemy.getName()))
+										 if(entry.getKey() == plhit.getName())
 										 {
-											 teamlime.put(plenemy.getName(), teamlime.get(plenemy.getName()) + 1);
-											 plenemy.sendMessage(pg + "You've gained 1 point!  Your score is now " + teamcyan.get(plenemy));
-											 if(teamlime.get(plhit.getName()) > 0)
+											 if(entry.getValue() != 0)
 											 {
-												 teamlime.put(plhit.getName(), teamlime.get(plhit.getName()) - 1);
-												 plhit.sendMessage(pg + "You've lost 1 point!  Your score is now " + teamcyan.get(plhit));
+												 entry.setValue(entry.getValue() - 1);
+												 plhit.sendMessage(pg + "You've lost 1 point!  Your score is now " + teamcyan.get(plhit.getName()));
 											 }
 										 }
 									 }
-									 sendAllTeamsMsg(pg + ChatColor.RED + plhit.getName() + ChatColor.BLUE + " was hit by " + ChatColor.GREEN + plenemy.getName() + ".");
-									 sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
+									 for(Entry<String, Integer> entry : teamlime.entrySet())
+									 {
+										 if(entry.getKey() == plenemy.getName())
+										 {
+											 entry.setValue(entry.getValue() + 1);
+											 plenemy.sendMessage(pg + "You've gained 1 point!  Your score is now " + teamlime.get(plenemy.getName()));
+										 }
+										 if(entry.getKey() == plhit.getName())
+										 {
+											 if(entry.getValue() != 0)
+											 {
+												 entry.setValue(entry.getValue() - 1);
+												 plhit.sendMessage(pg + "You've lost 1 point!  Your score is now " + teamlime.get(plhit.getName()));
+											 }
+										 }
+									 }
 									 checkTeamsInArena();
+									 sendAllTeamsMsg(pg + "There are now " + teamcyaninarena.size() + " players on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " left in the arena!");
+									 sendAllTeamsMsg(pg + "There are now " + teamlimeinarena.size() + " players on team " + ChatColor.GREEN + "LIME." + ChatColor.RESET + " left in the arena!");
+									 sendAllTeamsMsg(pg + ChatColor.RED + plhit.getName() + ChatColor.BLUE + " was hit by " + ChatColor.GREEN + plenemy.getName() + ".");
 									 event.setCancelled(true);
 								 }
 							 }

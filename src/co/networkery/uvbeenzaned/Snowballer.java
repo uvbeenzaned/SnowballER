@@ -235,19 +235,18 @@ public class Snowballer extends JavaPlugin
 			  			}
 			  			if(args[1].equalsIgnoreCase("cyan"))
 			  			{
-					  		if(!sbr.teamcyan.containsKey(plcmd))
+					  		if(!sbr.teamcyan.containsKey(plcmd.getName()))
 					  		{
-					  			sbr.teamcyan.put(plcmd.getName(), 0);
-				  				//for(String key : getConfig().getConfigurationSection("cyanscores").getKeys(false))
-				  				//{
-				  				//	if(getConfig().getString("cyanscores." + key) != null)
-				  				//	{
-				  				//		sbr.teamcyan.put(key, getConfig().getInt("cyanscores." + key));
-				  				//	}
-				  				//}
+								if(getConfig().getInt("cyanscores." + plcmd.getName()) != 0)
+								{
+									sbr.teamcyan.put(plcmd.getName(), getConfig().getInt("cyanscores." + plcmd.getName()));
+								}
+								else
+								{
+									sbr.teamcyan.put(plcmd.getName(), 0);
+								}
 					  			plcmd.teleport(sbr.lobbyspawnlocation);
-					  			plcmd.sendMessage(pg + "You've joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-					  			sbr.cyanMsg(pg + plcmd.getName() +" has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+					  			sbr.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + sbr.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + sbr.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			return true;
@@ -258,18 +257,18 @@ public class Snowballer extends JavaPlugin
 			  			}
 			  			if(args[1].equalsIgnoreCase("lime"))
 			  			{
-					  		if(!sbr.teamlime.containsKey(plcmd))
+					  		if(!sbr.teamlime.containsKey(plcmd.getName()))
 					  		{
-					  			sbr.teamlime.put(plcmd.getName(), 0);
-				  				//for(String key : getConfig().getConfigurationSection("limescores").getKeys(false))
-				  				//{
-				  				//	if(getConfig().getString("limescores." + key) != null)
-				  				//	{
-				  				//		sbr.teamcyan.put(key, getConfig().getInt("limescores." + key));
-				  				//	}
-				  				//}
+								if(getConfig().getInt("limescores." + plcmd.getName()) != 0)
+								{
+									sbr.teamlime.put(plcmd.getName(), getConfig().getInt("limescores." + plcmd.getName()));
+								}
+								else
+								{
+									sbr.teamlime.put(plcmd.getName(), 0);
+								}
 					  			plcmd.teleport(sbr.lobbyspawnlocation);
-					  			sbr.limeMsg(pg + plcmd.getName() +" has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+					  			sbr.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + sbr.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + sbr.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			return true;
@@ -309,6 +308,20 @@ public class Snowballer extends JavaPlugin
 			  		}
 		  			plcmd.sendMessage(pg + "You are not on a team!");
 		  			return true;
+			  	case "score":
+			  		if(sbr.teamcyan.containsKey(plcmd.getName()))
+			  		{
+			  			plcmd.sendMessage(pg + "Your score is " + sbr.teamcyan.get(plcmd.getName()) + ".");
+			  		}
+			  		else
+			  		{
+				  		if(sbr.teamlime.containsKey(plcmd.getName()))
+				  		{
+				  			plcmd.sendMessage(pg + "Your score is " + sbr.teamlime.get(plcmd.getName()) + ".");
+				  		}
+			  		}
+			  		plcmd.sendMessage(pg + "You do not have a score yet.");
+			  		return true;
 			  }
 		  }
 	  }

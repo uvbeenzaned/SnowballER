@@ -10,3 +10,4 @@ commands:
          /<command> join cyan to join the cyan team.
          /<command> join lime to join the lime team.
          /<command> leave to leave your current team.
+         /<command> score to check your current score.
