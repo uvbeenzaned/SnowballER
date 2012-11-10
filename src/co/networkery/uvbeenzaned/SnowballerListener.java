@@ -20,25 +20,28 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.java.JavaPlugin;
  
  public class SnowballerListener implements Listener
  {
-	 public String pg = ChatColor.AQUA + "[Snowballer] " +  ChatColor.RESET;
-	 public boolean gameon = false;
-	 public boolean timergame = false;
-	 public Location lobbyspawnlocation = null;
-	 //public List<Player> teamcyan = new ArrayList<Player>();
-	 //public List<Player> teamlime = new ArrayList<Player>();
-	 public HashMap<String, Integer> teamcyan = new HashMap<String, Integer>();
-	 public HashMap<String, Integer> teamlime = new HashMap<String, Integer>();
-	 public List<String> teamcyaninarena = new ArrayList<String>();
-	 public List<String> teamlimeinarena = new ArrayList<String>();
-	 //public HashMap<String, Integer> teamcyaninarena = new HashMap<String, Integer>();
-	 //public HashMap<String, Integer> teamlimeinarena = new HashMap<String, Integer>();
-	 public HashMap<String, Location> teamcyanarenasides = new HashMap<String, Location>();
-	 public HashMap<String, Location> teamlimearenasides = new HashMap<String, Location>();
-	 public int timerdelay = 0;
-	 public Timer t = new Timer();
+	 public static String pg = ChatColor.AQUA + "[Snowballer] " +  ChatColor.RESET;
+	 public configOps cO;
+	 public static boolean gameon = false;
+	 public static boolean timergame = false;
+	 public static Location lobbyspawnlocation = null;
+	 public static HashMap<String, Integer> teamcyan = new HashMap<String, Integer>();
+	 public static HashMap<String, Integer> teamlime = new HashMap<String, Integer>();
+	 public static List<String> teamcyaninarena = new ArrayList<String>();
+	 public static List<String> teamlimeinarena = new ArrayList<String>();
+	 public static HashMap<String, Location> teamcyanarenasides = new HashMap<String, Location>();
+	 public static HashMap<String, Location> teamlimearenasides = new HashMap<String, Location>();
+	 public static int timerdelay = 0;
+	 public static Timer t = new Timer();
+	 
+	 public SnowballerListener(JavaPlugin jp)
+	 {
+		 cO = new configOps(jp);
+	 }
 	 
 	 @EventHandler
 	 public void playerLeave(PlayerQuitEvent event)
@@ -193,14 +196,16 @@ import org.bukkit.event.player.PlayerQuitEvent;
 										 if(entry.getKey() == plenemy.getName())
 										 {
 											 entry.setValue(entry.getValue() + 1);
-											 plenemy.sendMessage(pg + "You've gained 1 point!  Your score is now " + teamcyan.get(plenemy.getName()));
+											 plenemy.sendMessage(pg + "+1 point!  Your score is now " + teamcyan.get(plenemy.getName()) + ".");
+											 configOps.saveScores();
 										 }
 										 if(entry.getKey() == plhit.getName())
 										 {
 											 if(entry.getValue() != 0)
 											 {
 												 entry.setValue(entry.getValue() - 1);
-												 plhit.sendMessage(pg + "You've lost 1 point!  Your score is now " + teamcyan.get(plhit.getName()));
+												 plhit.sendMessage(pg + "-1 point!  Your score is now " + teamcyan.get(plhit.getName()) + ".");
+												 configOps.saveScores();
 											 }
 										 }
 									 }
@@ -209,21 +214,23 @@ import org.bukkit.event.player.PlayerQuitEvent;
 										 if(entry.getKey() == plenemy.getName())
 										 {
 											 entry.setValue(entry.getValue() + 1);
-											 plenemy.sendMessage(pg + "You've gained 1 point!  Your score is now " + teamlime.get(plenemy.getName()));
+											 plenemy.sendMessage(pg + "+1 point!  Your score is now " + teamlime.get(plenemy.getName()) + ".");
+											 configOps.saveScores();
 										 }
 										 if(entry.getKey() == plhit.getName())
 										 {
 											 if(entry.getValue() != 0)
 											 {
 												 entry.setValue(entry.getValue() - 1);
-												 plhit.sendMessage(pg + "You've lost 1 point!  Your score is now " + teamlime.get(plhit.getName()));
+												 plhit.sendMessage(pg + "-1 point!  Your score is now " + teamlime.get(plhit.getName()) + ".");
+												 configOps.saveScores();
 											 }
 										 }
 									 }
-									 checkTeamsInArena();
 									 sendAllTeamsMsg(pg + "There are now " + teamcyaninarena.size() + " players on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " left in the arena!");
 									 sendAllTeamsMsg(pg + "There are now " + teamlimeinarena.size() + " players on team " + ChatColor.GREEN + "LIME." + ChatColor.RESET + " left in the arena!");
 									 sendAllTeamsMsg(pg + ChatColor.RED + plhit.getName() + ChatColor.BLUE + " was hit by " + ChatColor.GREEN + plenemy.getName() + ".");
+									 checkTeamsInArena();
 									 event.setCancelled(true);
 								 }
 							 }
@@ -246,6 +253,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 	 
 	 public void randomMap()
 	 {
+		r.setSeed(System.currentTimeMillis());
 		int mapnum = r.nextInt(teamcyanarenasides.entrySet().size());
 		int i = 0;
 		for(Entry<String, Location> entry : teamcyanarenasides.entrySet())
