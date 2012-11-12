@@ -265,7 +265,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 										 }
 									 }
 									 sendAllTeamsMsg(pg + "There are now " + teamcyaninarena.size() + " players on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " left in the arena!");
-									 sendAllTeamsMsg(pg + "There are now " + teamlimeinarena.size() + " players on team " + ChatColor.GREEN + "LIME." + ChatColor.RESET + " left in the arena!");
+									 sendAllTeamsMsg(pg + "There are now " + teamlimeinarena.size() + " players on team " + ChatColor.GREEN + "LIME" + ChatColor.RESET + " left in the arena!");
 									 sendAllTeamsMsg(pg + ChatColor.RED + plhit.getName() + ChatColor.BLUE + " was hit by " + ChatColor.GREEN + plenemy.getName() + ".");
 									 checkTeamsInArena();
 									 event.setCancelled(true);
