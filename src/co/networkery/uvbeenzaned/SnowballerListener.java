@@ -47,6 +47,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 public void playerLeave(PlayerQuitEvent event)
 	 {
 		 String pll = event.getPlayer().getName();
+		 configOps.saveScores();
 		 if(gameon)
 		 {
 				if(teamcyaninarena.contains(pll))
@@ -104,6 +105,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 public void playerDeath(PlayerDeathEvent event)
 	 {
 		 String pld = event.getEntity().getName();
+		 configOps.saveScores();
 		 if(gameon)
 		 {
 			    if(teamcyaninarena.contains(pld))

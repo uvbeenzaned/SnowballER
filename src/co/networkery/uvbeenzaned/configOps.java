@@ -8,45 +8,47 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class configOps{
 
-	public static ConfigAccessor cA;
+	public static ConfigAccessor config;
+	public static ConfigAccessor scores;
 	
 	public configOps(JavaPlugin jp)
 	{
-		cA = new ConfigAccessor(jp, "config.yml");
+		config = new ConfigAccessor(jp, "config.yml");
+		scores = new ConfigAccessor(jp, "scores.yml");
 	}
 	
 	public static void load()
 	{
-		cA.saveDefaultConfig();
-		if(cA.getConfig().getInt("timerdelay") != 0)
+		config.saveDefaultConfig();
+		if(config.getConfig().getInt("timerdelay") != 0)
 		{
-			SnowballerListener.timerdelay = cA.getConfig().getInt("timerdelay");
+			SnowballerListener.timerdelay = config.getConfig().getInt("timerdelay");
 		}
 		else
 		{
 			SnowballerListener.timerdelay = 30000;
 		}
-		if(cA.getConfig().getString("lobbyspawnlocation") != null && cA.getConfig().getString("lobbyspawnlocation") != "")
+		if(config.getConfig().getString("lobbyspawnlocation") != null && config.getConfig().getString("lobbyspawnlocation") != "")
 		{
-			SnowballerListener.lobbyspawnlocation = LTSTL.str2loc(cA.getConfig().getString("lobbyspawnlocation"));
+			SnowballerListener.lobbyspawnlocation = LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation"));
 		}
-		if(cA.getConfig().getConfigurationSection("teamcyanarenasides").getKeys(false) != null)
+		if(config.getConfig().getConfigurationSection("teamcyanarenasides").getKeys(false) != null)
 		{
-			for(String key : cA.getConfig().getConfigurationSection("teamcyanarenasides").getKeys(false))
+			for(String key : config.getConfig().getConfigurationSection("teamcyanarenasides").getKeys(false))
 			{
-				if(cA.getConfig().getString("teamcyanarenasides." + key) != null)
+				if(config.getConfig().getString("teamcyanarenasides." + key) != null)
 				{
-					SnowballerListener.teamcyanarenasides.put(key, LTSTL.str2loc(cA.getConfig().getString("teamcyanarenasides." + key)));
+					SnowballerListener.teamcyanarenasides.put(key, LTSTL.str2loc(config.getConfig().getString("teamcyanarenasides." + key)));
 				}
 			}
 		}
-		if(cA.getConfig().getConfigurationSection("teamlimearenasides").getKeys(false) != null)
+		if(config.getConfig().getConfigurationSection("teamlimearenasides").getKeys(false) != null)
 		{
-			for(String key : cA.getConfig().getConfigurationSection("teamlimearenasides").getKeys(false))
+			for(String key : config.getConfig().getConfigurationSection("teamlimearenasides").getKeys(false))
 			{
-				if(cA.getConfig().getString("teamlimearenasides." + key) != null)
+				if(config.getConfig().getString("teamlimearenasides." + key) != null)
 				{
-					SnowballerListener.teamlimearenasides.put(key, LTSTL.str2loc(cA.getConfig().getString("teamlimearenasides." + key)));
+					SnowballerListener.teamlimearenasides.put(key, LTSTL.str2loc(config.getConfig().getString("teamlimearenasides." + key)));
 				}
 			}
 		}
@@ -59,21 +61,21 @@ public class configOps{
 		//save timer delay in ms for continuus no admin games
 		  if(SnowballerListener.timerdelay != 0)
 		  {
-			  cA.getConfig().set("timerdelay", SnowballerListener.timerdelay);
+			  config.getConfig().set("timerdelay", SnowballerListener.timerdelay);
 		  }
 		  //save lobby spawn location
 		  if(SnowballerListener.lobbyspawnlocation != null)
 		  {
-			  cA.getConfig().set("lobbyspawnlocation", LTSTL.loc2str(SnowballerListener.lobbyspawnlocation));
+			  config.getConfig().set("lobbyspawnlocation", LTSTL.loc2str(SnowballerListener.lobbyspawnlocation));
 		  }
 		  //save team sides in serializable location format
 		  for(Entry<String, Location> entry : SnowballerListener.teamcyanarenasides.entrySet())
 		  {
-			  cA.getConfig().set("teamcyanarenasides." + entry.getKey(), LTSTL.loc2str(entry.getValue()));
+			  config.getConfig().set("teamcyanarenasides." + entry.getKey(), LTSTL.loc2str(entry.getValue()));
 		  }
 		  for(Entry<String, Location> entry : SnowballerListener.teamlimearenasides.entrySet())
 		  {
-			  cA.getConfig().set("teamlimearenasides." + entry.getKey(), LTSTL.loc2str(entry.getValue()));
+			  config.getConfig().set("teamlimearenasides." + entry.getKey(), LTSTL.loc2str(entry.getValue()));
 		  }
 		  //temporary collective scores list
 		  HashMap<String, Integer> tmpscores = new HashMap<String, Integer>();
@@ -88,10 +90,11 @@ public class configOps{
 		  }
 		  for(Entry<String, Integer> entry : tmpscores.entrySet())
 		  {
-			  cA.getConfig().set("scores." + entry.getKey(), Integer.toString(entry.getValue()));
+			  scores.getConfig().set(entry.getKey(), entry.getValue());
 		  }
 		  //save all config to file
-		  cA.saveConfig();
+		  config.saveConfig();
+		  scores.saveConfig();
 	}
 	
 	public static void saveScores()
@@ -109,8 +112,8 @@ public class configOps{
 		  }
 		  for(Entry<String, Integer> entry : tmpscores.entrySet())
 		  {
-			  cA.getConfig().set("scores." + entry.getKey(), Integer.toString(entry.getValue()));
+			  scores.getConfig().set(entry.getKey(), entry.getValue());
 		  }
-		  cA.saveConfig();
+		  scores.saveConfig();
 	}
 }

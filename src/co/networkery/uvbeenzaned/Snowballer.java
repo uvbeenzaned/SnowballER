@@ -15,12 +15,16 @@ public class Snowballer extends JavaPlugin
 	public String pg = ChatColor.AQUA + "[Snowballer] " +  ChatColor.RESET;
 	public SnowballerListener sbr;
 	public configOps cO;
+	public ConfigAccessor config;
+	public ConfigAccessor scores;
 	public Logger log;
 	
 	public void onEnable()
 	{
 		sbr = new SnowballerListener(this);
 		cO = new configOps(this);
+		config = new ConfigAccessor(this, "config.yml");
+		scores = new ConfigAccessor(this, "scores.yml");
 		this.log = getLogger();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.sbr, this);
@@ -177,10 +181,18 @@ public class Snowballer extends JavaPlugin
 			  			{
 					  		if(!SnowballerListener.teamcyan.containsKey(plcmd.getName()))
 					  		{
-								if(getConfig().getInt("scores." + plcmd.getName()) != 0)
-								{
-									SnowballerListener.teamcyan.put(plcmd.getName(), getConfig().getInt("scores." + plcmd.getName()));
-								}
+					  			if(scores.getConfig() != null)
+					  			{
+						  			int tmpscore = scores.getConfig().getInt(plcmd.getName());
+									if(tmpscore != 0)
+									{
+										SnowballerListener.teamcyan.put(plcmd.getName(), tmpscore);
+									}
+									else
+									{
+										SnowballerListener.teamcyan.put(plcmd.getName(), 0);
+									}
+					  			}
 								else
 								{
 									SnowballerListener.teamcyan.put(plcmd.getName(), 0);
@@ -199,10 +211,18 @@ public class Snowballer extends JavaPlugin
 			  			{
 					  		if(!SnowballerListener.teamlime.containsKey(plcmd.getName()))
 					  		{
-								if(getConfig().getInt("scores." + plcmd.getName()) != 0)
-								{
-									SnowballerListener.teamlime.put(plcmd.getName(), getConfig().getInt("scores." + plcmd.getName()));
-								}
+					  			if(scores.getConfig() != null)
+					  			{
+						  			int tmpscore = scores.getConfig().getInt(plcmd.getName());
+									if(tmpscore != 0)
+									{
+										SnowballerListener.teamlime.put(plcmd.getName(), tmpscore);
+									}
+									else
+									{
+										SnowballerListener.teamlime.put(plcmd.getName(), 0);
+									}
+					  			}
 								else
 								{
 									SnowballerListener.teamlime.put(plcmd.getName(), 0);
@@ -220,6 +240,7 @@ public class Snowballer extends JavaPlugin
 			  		}
 			  		return false;
 			  	case "leave":
+			  		configOps.saveScores();
 			  		if(SnowballerListener.teamcyan.containsKey(plcmd.getName()))
 			  		{
 			  			if(SnowballerListener.teamcyaninarena.contains(plcmd.getName()))
@@ -262,7 +283,7 @@ public class Snowballer extends JavaPlugin
 				  			return true;
 				  		}
 			  		}
-			  		plcmd.sendMessage(pg + "You do not have a score yet.");
+			  		plcmd.sendMessage(pg + "Join a team to lookup your score!");
 			  		return true;
 			  }
 		  }
