@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -20,6 +21,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
  
  public class SnowballerListener implements Listener
@@ -50,6 +52,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 configOps.saveScores();
 		 if(gameon)
 		 {
+			 event.getPlayer().getInventory().clear();
 				if(teamcyaninarena.contains(pll))
 				{
 					Bukkit.getServer().getPlayer(pll).teleport(lobbyspawnlocation);
@@ -76,6 +79,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 }
 		 else
 		 {
+			 event.getPlayer().getInventory().clear();
 				if(teamcyaninarena.contains(pll))
 				{
 					Bukkit.getServer().getPlayer(pll).teleport(lobbyspawnlocation);
@@ -184,15 +188,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 3);
 									 plhit.getWorld().playSound(plhit.getLocation(), Sound.NOTE_PIANO, 10, 4);
 									 plhit.getWorld().playEffect(plhit.getLocation(), Effect.ENDER_SIGNAL, 0);
+									 plhit.teleport(lobbyspawnlocation);
+									 plhit.getInventory().clear();
 									 if(teamcyaninarena.contains(plhit.getName()))
 									 {
 										 teamcyaninarena.remove(plhit.getName());
+										 giveTeamArmor(plhit, "cyan");
 									 }
 									 if(teamlimeinarena.contains(plhit.getName()))
 									 {
 										 teamlimeinarena.remove(plhit.getName());
+										 giveTeamArmor(plhit, "lime");
 									 }
-									 plhit.teleport(lobbyspawnlocation);
 									 for(Entry<String, Integer> entry : teamcyan.entrySet())
 									 {
 										 if(entry.getKey() == plenemy.getName())
@@ -264,11 +271,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 			{
 				for(Entry<String, Integer> pl : teamcyan.entrySet())
 				{
+					Bukkit.getServer().getPlayer(pl.getKey()).getInventory().clear();
+					giveSnowballs(Bukkit.getServer().getPlayer(pl.getKey()));
 					teamcyaninarena.add(pl.getKey());
 					Bukkit.getServer().getPlayer(pl.getKey()).teleport(entry.getValue());
 				}
 				for(Entry<String, Integer> pl : teamlime.entrySet())
 				{
+					giveSnowballs(Bukkit.getServer().getPlayer(pl.getKey()));
 					teamlimeinarena.add(pl.getKey());
 					Bukkit.getServer().getPlayer(pl.getKey()).teleport(teamlimearenasides.get(entry.getKey()));
 				}
@@ -319,6 +329,35 @@ import org.bukkit.plugin.java.JavaPlugin;
 				 sendAllTeamsMsg("Next game starts in " + Integer.toString(timerdelay / 1000) + " seconds.");
 			 }
 		 }
+	 }
+	 
+	 public void giveSnowballs(Player pl)
+	 {
+		 for(int x = 0; x < 10; x++)
+		 {
+			 pl.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
+		 }
+	 }
+	 
+	 public void giveTeamArmor(Player pl, String team)
+	 {
+		switch(team)
+		{
+			case "cyan":
+			try {
+				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.CYAN));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+				break;
+			case "lime":
+			try {
+				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.LIME));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+				break;
+		}
 	 }
 	 
 	 public void sendAllTeamsMsg(String msg)

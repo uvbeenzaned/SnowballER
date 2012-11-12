@@ -3,9 +3,11 @@ package co.networkery.uvbeenzaned;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -167,19 +169,19 @@ public class Snowballer extends JavaPlugin
 			  	case "join":
 			  		if(args.length > 1)
 			  		{
-			  			if(SnowballerListener.teamcyan.containsKey(plcmd))
+			  			if(SnowballerListener.teamcyan.containsKey(plcmd.getName()))
 			  			{
 			  				plcmd.sendMessage(pg + "You are already on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  				return true;
 			  			}
-			  			if(SnowballerListener.teamlime.containsKey(plcmd))
+			  			if(SnowballerListener.teamlime.containsKey(plcmd.getName()))
 			  			{
 			  				plcmd.sendMessage(pg + "You are already on team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			  				return true;
 			  			}
 			  			if(args[1].equalsIgnoreCase("cyan"))
 			  			{
-					  		if(!SnowballerListener.teamcyan.containsKey(plcmd.getName()))
+					  		if(!SnowballerListener.teamcyan.containsKey(plcmd.getName()) && !SnowballerListener.teamlime.containsKey(plcmd.getName()))
 					  		{
 					  			if(scores.getConfig() != null)
 					  			{
@@ -197,19 +199,17 @@ public class Snowballer extends JavaPlugin
 								{
 									SnowballerListener.teamcyan.put(plcmd.getName(), 0);
 								}
+					  			sbr.giveTeamArmor(plcmd, "cyan");
 					  			plcmd.teleport(SnowballerListener.lobbyspawnlocation);
 					  			sbr.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			return true;
 					  		}
-				  			plcmd.sendMessage(pg + "You are already on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-				  			return true;
-
 			  			}
 			  			if(args[1].equalsIgnoreCase("lime"))
 			  			{
-					  		if(!SnowballerListener.teamlime.containsKey(plcmd.getName()))
+					  		if(!SnowballerListener.teamlime.containsKey(plcmd.getName()) && !SnowballerListener.teamcyan.containsKey(plcmd.getName()))
 					  		{
 					  			if(scores.getConfig() != null)
 					  			{
@@ -227,14 +227,13 @@ public class Snowballer extends JavaPlugin
 								{
 									SnowballerListener.teamlime.put(plcmd.getName(), 0);
 								}
+					  			sbr.giveTeamArmor(plcmd, "lime");
 					  			plcmd.teleport(SnowballerListener.lobbyspawnlocation);
 					  			sbr.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			sbr.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			return true;
 					  		}
-				  			plcmd.sendMessage(pg + "You are already on team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-				  			return true;
 			  			}
 			  			return false;
 			  		}
@@ -249,6 +248,8 @@ public class Snowballer extends JavaPlugin
 			  				plcmd.teleport(SnowballerListener.lobbyspawnlocation);
 			  			}
 			  			SnowballerListener.teamcyan.remove(plcmd.getName());
+			  			plcmd.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+			  			plcmd.getInventory().clear();
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			sbr.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			sbr.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
@@ -262,6 +263,8 @@ public class Snowballer extends JavaPlugin
 			  				plcmd.teleport(SnowballerListener.lobbyspawnlocation);
 			  			}
 			  			SnowballerListener.teamlime.remove(plcmd.getName());
+			  			plcmd.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+			  			plcmd.getInventory().clear();
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			  			sbr.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			  			sbr.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
