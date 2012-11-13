@@ -1,12 +1,14 @@
 package co.networkery.uvbeenzaned;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
 import java.util.Map.Entry;
-import java.util.TimerTask;
+
+import javax.swing.Timer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -39,7 +41,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 public static HashMap<String, Location> teamcyanarenasides = new HashMap<String, Location>();
 	 public static HashMap<String, Location> teamlimearenasides = new HashMap<String, Location>();
 	 public static int timerdelay = 0;
-	 public static Timer t = new Timer();
 	 
 	 public SnowballerListener(JavaPlugin jp)
 	 {
@@ -112,7 +113,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 public void playerDeath(PlayerDeathEvent event)
 	 {
 		 String pld = event.getEntity().getName();
-		 configOps.saveScores();
 		 if(gameon)
 		 {
 			    if(teamcyaninarena.contains(pld))
@@ -164,6 +164,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 				}
 		 }
+		 configOps.saveScores();
 	 }
 	 
 	 @SuppressWarnings("deprecation")
@@ -278,17 +279,33 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 }
 	 }
 	 
-	 public TimerTask startIndependentTimerRound()
+	 public static void startIndependentTimerRound()
 	 {
-		randomMap();
-		gameon = true;
-		timergame = true;
-		return null;
+		 if(timergame == true && gameon == false)
+		 {
+		        ActionListener taskPerformer = new ActionListener() {
+		            public void actionPerformed(ActionEvent evt) {
+		            	if(timergame == true)
+		            	{
+		            		if(!teamcyan.isEmpty() && !teamlime.isEmpty())
+		            		{
+			            		sendAllTeamsMsg(pg + "Starting next round now!");
+				            	randomMap();
+				            	gameon = true;
+		            		}
+		            	}
+		            }
+		            };
+		        Timer timer = new Timer(timerdelay, taskPerformer);
+		        timer.setRepeats(false);
+		        timer.start();
+		        sendAllTeamsMsg(pg + "Next round starts in " + Integer.toString(timerdelay / 1000) + " seconds!");
+		 }
 	 }
 	 
-	 public Random r = new Random();
+	 public static Random r = new Random();
 	 
-	 public void randomMap()
+	 public static void randomMap()
 	 {
 		r.setSeed(System.currentTimeMillis());
 		int mapnum = r.nextInt(teamcyanarenasides.entrySet().size());
@@ -355,15 +372,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 				 teamlimeinarena.clear();
 				 gameon = false;
 			 }
-			 if(timergame == true)
-			 {
-				 t.schedule(startIndependentTimerRound(), timerdelay);
-				 sendAllTeamsMsg("Next game starts in " + Integer.toString(timerdelay / 1000) + " seconds.");
-			 }
+		 }
+		 if(timergame == true && gameon == false)
+		 {
+			 startIndependentTimerRound();
 		 }
 	 }
 	 
-	 public void giveSnowballs(Player pl)
+	 public static void giveSnowballs(Player pl)
 	 {
 		 for(int x = 0; x < 10; x++)
 		 {
@@ -392,7 +408,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 		}
 	 }
 	 
-	 public void sendAllTeamsMsg(String msg)
+	 public static void sendAllTeamsMsg(String msg)
 	 {
 		 for(Entry<String, Integer> pl : teamlime.entrySet())
 		 {
@@ -404,7 +420,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 } 
 	 }
 	 
-	 public void cyanMsg(String msg)
+	 public static void cyanMsg(String msg)
 	 {
 		 for(Entry<String, Integer> pl : teamcyan.entrySet())
 		 {
@@ -412,7 +428,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 }
 	 }
 	 
-	 public void limeMsg(String msg)
+	 public static void limeMsg(String msg)
 	 {
 		 for(Entry<String, Integer> pl : teamlime.entrySet())
 		 {
