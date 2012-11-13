@@ -220,6 +220,10 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
+					  			if(SnowballerListener.gameon == true)
+					  			{
+					  				plcmd.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
+					  			}
 					  			return true;
 					  		}
 			  			}
@@ -249,6 +253,10 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
+					  			if(SnowballerListener.gameon == true)
+					  			{
+					  				plcmd.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
+					  			}
 					  			return true;
 					  		}
 			  			}
