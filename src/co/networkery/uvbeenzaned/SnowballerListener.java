@@ -41,6 +41,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 public static HashMap<String, Location> teamcyanarenasides = new HashMap<String, Location>();
 	 public static HashMap<String, Location> teamlimearenasides = new HashMap<String, Location>();
 	 public static int timerdelay = 0;
+	 public static int teampoints = 4;
 	 
 	 public SnowballerListener(JavaPlugin jp)
 	 {
@@ -350,6 +351,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 			 cyanMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
 			 teamcyaninarena.clear();
 			 teamlimeinarena.clear();
+			 for(Entry<String, Integer> entry : teamlime.entrySet())
+			 {
+				 entry.setValue(entry.getValue() + teampoints);
+			 }
+			 limeMsg(pg + "+4 points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
+			 cyanMsg(pg + "+4 points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
 			 gameon = false;
 		 }
 		 else
@@ -370,6 +377,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 				 limeMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
 				 teamcyaninarena.clear();
 				 teamlimeinarena.clear();
+				 for(Entry<String, Integer> entry : teamcyan.entrySet())
+				 {
+					 entry.setValue(entry.getValue() + teampoints);
+				 }
+				 limeMsg(pg + "+4 points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+				 cyanMsg(pg + "+4 points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
 				 gameon = false;
 			 }
 		 }
