@@ -28,6 +28,14 @@ public class configOps{
 		{
 			SnowballerListener.timerdelay = 30000;
 		}
+		if(config.getConfig().getInt("teampoints") != 0)
+		{
+			SnowballerListener.timerdelay = config.getConfig().getInt("teampoints");
+		}
+		else
+		{
+			SnowballerListener.teampoints = 4;
+		}
 		if(config.getConfig().getString("lobbyspawnlocation") != null && config.getConfig().getString("lobbyspawnlocation") != "")
 		{
 			SnowballerListener.lobbyspawnlocation = LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation"));
@@ -62,6 +70,11 @@ public class configOps{
 		  if(SnowballerListener.timerdelay != 0)
 		  {
 			  config.getConfig().set("timerdelay", SnowballerListener.timerdelay);
+		  }
+		  //save default team win points allocation
+		  if(SnowballerListener.teampoints != 0)
+		  {
+			  config.getConfig().set("timerpoints", SnowballerListener.teampoints);
 		  }
 		  //save lobby spawn location
 		  if(SnowballerListener.lobbyspawnlocation != null)
