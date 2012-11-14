@@ -41,7 +41,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 public static HashMap<String, Location> teamcyanarenasides = new HashMap<String, Location>();
 	 public static HashMap<String, Location> teamlimearenasides = new HashMap<String, Location>();
 	 public static int timerdelay = 0;
-	 public static int teampoints = 4;
+	 public static int teampoints = 0;
 	 
 	 public SnowballerListener(JavaPlugin jp)
 	 {
