@@ -99,10 +99,26 @@ public class Snowballer extends JavaPlugin
 			  		{
 			  			if(SnowballerListener.gameon == false)
 			  			{
-			  				SnowballerListener.gameon = true;
-				  			SnowballerListener.randomMap();
-				  			plcmd.sendMessage(pg + "You've started a Snowballer game.");
-				  			return true;
+			  				if(SnowballerListener.timergame == false)
+			  				{
+				  				if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
+				  				{
+					  				SnowballerListener.gameon = true;
+						  			SnowballerListener.randomMap();
+						  			plcmd.sendMessage(pg + "You've started a Snowballer game.");
+						  			return true;
+				  				}
+				  				else
+				  				{
+				  					plcmd.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
+				  					return true;
+				  				}
+			  				}
+			  				else
+			  				{
+			  					plcmd.sendMessage(pg + "A timer based game is running right now.");
+			  					return true;
+			  				}
 				  		}
 			  			else
 			  			{
@@ -115,14 +131,27 @@ public class Snowballer extends JavaPlugin
 			  	case "start-timer":
 			  		if(plcmd.isOp())
 			  		{
-			  			if(SnowballerListener.gameon == false && SnowballerListener.timergame == false)
+			  			if(SnowballerListener.gameon == false)
 			  			{
-			  				if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
+			  				if(SnowballerListener.timergame == false)
 			  				{
-				  				SnowballerListener.timergame = true;
-				  				SnowballerListener.startIndependentTimerRound();
-					  			plcmd.sendMessage(pg + "You've scheduled a Snowballer game for " + Integer.toString(SnowballerListener.timerdelay / 1000) + " seconds from now.");
-					  			return true;
+				  				if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
+				  				{
+					  				SnowballerListener.timergame = true;
+					  				SnowballerListener.startIndependentTimerRound();
+						  			plcmd.sendMessage(pg + "You've scheduled a Snowballer game for " + Integer.toString(SnowballerListener.timerdelay / 1000) + " seconds from now.");
+						  			return true;
+				  				}
+				  				else
+				  				{
+				  					plcmd.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
+				  					return true;
+				  				}
+			  				}
+			  				else
+			  				{
+			  					plcmd.sendMessage(pg + "A timer based game is running right now.");
+			  					return true;
 			  				}
 				  		}
 			  			else
