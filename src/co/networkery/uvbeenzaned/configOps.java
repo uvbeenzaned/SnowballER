@@ -30,7 +30,7 @@ public class configOps{
 		}
 		if(config.getConfig().getInt("teampoints") != 0)
 		{
-			SnowballerListener.timerdelay = config.getConfig().getInt("teampoints");
+			SnowballerListener.teampoints = config.getConfig().getInt("teampoints");
 		}
 		else
 		{
@@ -74,7 +74,7 @@ public class configOps{
 		  //save default team win points allocation
 		  if(SnowballerListener.teampoints != 0)
 		  {
-			  config.getConfig().set("timerpoints", SnowballerListener.teampoints);
+			  config.getConfig().set("teampoints", SnowballerListener.teampoints);
 		  }
 		  //save lobby spawn location
 		  if(SnowballerListener.lobbyspawnlocation != null)
