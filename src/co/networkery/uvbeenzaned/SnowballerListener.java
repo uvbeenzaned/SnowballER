@@ -294,6 +294,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 				            	randomMap();
 				            	gameon = true;
 		            		}
+		            		else
+		            		{
+		            			if(!teamcyan.isEmpty() && teamlime.isEmpty())
+		            			{
+		            				cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
+		            			}
+		            			if(!teamlime.isEmpty() && teamcyan.isEmpty())
+		            			{
+		            				limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
+		            			}
+		            		}
 		            	}
 		            }
 		            };
