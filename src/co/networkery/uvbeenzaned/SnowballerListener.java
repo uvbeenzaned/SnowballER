@@ -296,7 +296,7 @@ import org.bukkit.plugin.java.JavaPlugin;
          			if(teamlime.isEmpty())
          			{
          				cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
-         				cyanMsg(pg + "Stopping game and waiting for another join....");
+         				cyanMsg(pg + "Stopping game and waiting for another player to join....");
          				timer.stop();
          				gameon = false;
          				timergame = false;
@@ -304,7 +304,7 @@ import org.bukkit.plugin.java.JavaPlugin;
          			if(teamcyan.isEmpty())
          			{
          				limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
-         				limeMsg(pg + "Stopping game and waiting for another join....");
+         				limeMsg(pg + "Stopping game and waiting for another player to join....");
          				timer.stop();
          				gameon = false;
          				timergame = false;
@@ -314,7 +314,7 @@ import org.bukkit.plugin.java.JavaPlugin;
          }
          };
          
-         public static Timer timer = new Timer(timerdelay, taskPerformer);
+         public static Timer timer;
 	 
 	 public static void startIndependentTimerRound()
 	 {
@@ -322,6 +322,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 {
 			 if(!teamcyan.isEmpty() && !teamlime.isEmpty())
 			 {
+				 timer = new Timer(timerdelay, taskPerformer);
 				 timer.setRepeats(false);
 			     timer.start();
 			     sendAllTeamsMsg(pg + "Next round starts in " + Integer.toString(timerdelay / 1000) + " seconds!");
@@ -432,7 +433,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 
 	 public static void giveSnowballs(Player pl)
 	 {
-		 for(int x = 0; x < 10; x++)
+		 for(int x = 0; x < 9; x++)
 		 {
 			 pl.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
 		 }
