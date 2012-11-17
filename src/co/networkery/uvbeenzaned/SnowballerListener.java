@@ -13,6 +13,7 @@ import javax.swing.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -364,6 +365,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 			{
 				for(Entry<String, Integer> pl : teamcyan.entrySet())
 				{
+					if(Bukkit.getServer().getPlayer(pl.getKey()).getGameMode() == GameMode.CREATIVE)
+					{
+						Bukkit.getServer().getPlayer(pl.getKey()).setGameMode(GameMode.SURVIVAL);
+					}
 					Bukkit.getServer().getPlayer(pl.getKey()).getInventory().clear();
 					giveSnowballs(Bukkit.getServer().getPlayer(pl.getKey()));
 					teamcyaninarena.add(pl.getKey());
@@ -371,6 +376,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 				}
 				for(Entry<String, Integer> pl : teamlime.entrySet())
 				{
+					if(Bukkit.getServer().getPlayer(pl.getKey()).getGameMode() == GameMode.CREATIVE)
+					{
+						Bukkit.getServer().getPlayer(pl.getKey()).setGameMode(GameMode.SURVIVAL);
+					}
+					Bukkit.getServer().getPlayer(pl.getKey()).getInventory().clear();
 					giveSnowballs(Bukkit.getServer().getPlayer(pl.getKey()));
 					teamlimeinarena.add(pl.getKey());
 					Bukkit.getServer().getPlayer(pl.getKey()).teleport(teamlimearenasides.get(entry.getKey()));
