@@ -249,9 +249,36 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
-					  			if(SnowballerListener.gameon == true)
+					  			if(!SnowballerListener.teamlime.isEmpty())
 					  			{
-					  				plcmd.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
+					  				if(SnowballerListener.gameon == false)
+						  			{
+						  				if(SnowballerListener.timergame == false)
+						  				{
+							  				if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
+							  				{
+								  				SnowballerListener.timergame = true;
+								  				SnowballerListener.startIndependentTimerRound();
+									  			plcmd.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.timerdelay / 1000) + " seconds from now.");
+									  			return true;
+							  				}
+							  				else
+							  				{
+							  					plcmd.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
+							  					return true;
+							  				}
+						  				}
+							  		}
+						  			else
+						  			{
+						  				plcmd.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
+						  				return true;
+						  			}
+					  			}
+					  			else
+					  			{
+					  				plcmd.sendMessage(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
+					  				plcmd.sendMessage(pg + "Waiting for another player to join....");
 					  			}
 					  			return true;
 					  		}
@@ -282,14 +309,41 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
-					  			if(SnowballerListener.gameon == true)
+					  			if(!SnowballerListener.teamcyan.isEmpty())
 					  			{
-					  				plcmd.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
+					  				if(SnowballerListener.gameon == false)
+						  			{
+						  				if(SnowballerListener.timergame == false)
+						  				{
+							  				if(!SnowballerListener.teamlime.isEmpty() && !SnowballerListener.teamcyan.isEmpty())
+							  				{
+								  				SnowballerListener.timergame = true;
+								  				SnowballerListener.startIndependentTimerRound();
+									  			plcmd.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.timerdelay / 1000) + " seconds from now.");
+									  			return true;
+							  				}
+							  				else
+							  				{
+							  					plcmd.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
+							  					return true;
+							  				}
+						  				}
+							  		}
+						  			else
+						  			{
+						  				plcmd.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
+						  				return true;
+						  			}
+					  			}
+					  			else
+					  			{
+					  				plcmd.sendMessage(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
+					  				plcmd.sendMessage(pg + "Waiting for another player to join....");
 					  			}
 					  			return true;
 					  		}
 			  			}
-			  			return false;
+			  			return true;
 			  		}
 			  		return false;
 			  	case "leave":

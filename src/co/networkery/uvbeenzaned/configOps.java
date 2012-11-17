@@ -20,6 +20,7 @@ public class configOps{
 	public static void load()
 	{
 		config.saveDefaultConfig();
+		SnowballerListener.startwithoutop = config.getConfig().getBoolean("startwithoutop");
 		if(config.getConfig().getInt("timerdelay") != 0)
 		{
 			SnowballerListener.timerdelay = config.getConfig().getInt("timerdelay");
@@ -66,6 +67,8 @@ public class configOps{
 	
 	public static void save()
 	{
+		//save start without ops for completely auto games
+		config.getConfig().set("startwithoutop", SnowballerListener.startwithoutop);
 		//save timer delay in ms for continuus no admin games
 		  if(SnowballerListener.timerdelay != 0)
 		  {

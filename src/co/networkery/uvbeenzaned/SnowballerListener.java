@@ -40,6 +40,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 public static List<String> teamlimeinarena = new ArrayList<String>();
 	 public static HashMap<String, Location> teamcyanarenasides = new HashMap<String, Location>();
 	 public static HashMap<String, Location> teamlimearenasides = new HashMap<String, Location>();
+	 public static boolean startwithoutop = false;
 	 public static int timerdelay = 0;
 	 public static int teampoints = 0;
 	 
@@ -280,38 +281,64 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 }
 	 }
 	 
+     public static ActionListener taskPerformer = new ActionListener() {
+         public void actionPerformed(ActionEvent evt) {
+         	if(timergame == true)
+         	{
+         		if(!teamcyan.isEmpty() && !teamlime.isEmpty())
+         		{
+	            		sendAllTeamsMsg(pg + "Starting next round....");
+		            	randomMap();
+		            	gameon = true;
+         		}
+         		else
+         		{
+         			if(teamlime.isEmpty())
+         			{
+         				cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
+         				cyanMsg(pg + "Stopping game and waiting for another join....");
+         				timer.stop();
+         				gameon = false;
+         				timergame = false;
+         			}
+         			if(teamcyan.isEmpty())
+         			{
+         				limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
+         				limeMsg(pg + "Stopping game and waiting for another join....");
+         				timer.stop();
+         				gameon = false;
+         				timergame = false;
+         			}
+         		}
+         	}
+         }
+         };
+         
+         public static Timer timer = new Timer(timerdelay, taskPerformer);
+	 
 	 public static void startIndependentTimerRound()
 	 {
 		 if(timergame == true && gameon == false)
 		 {
-		        ActionListener taskPerformer = new ActionListener() {
-		            public void actionPerformed(ActionEvent evt) {
-		            	if(timergame == true)
-		            	{
-		            		if(!teamcyan.isEmpty() && !teamlime.isEmpty())
-		            		{
-			            		sendAllTeamsMsg(pg + "Starting next round now!");
-				            	randomMap();
-				            	gameon = true;
-		            		}
-		            		else
-		            		{
-		            			if(!teamcyan.isEmpty() && teamlime.isEmpty())
-		            			{
-		            				cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
-		            			}
-		            			if(!teamlime.isEmpty() && teamcyan.isEmpty())
-		            			{
-		            				limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
-		            			}
-		            		}
-		            	}
-		            }
-		            };
-		        Timer timer = new Timer(timerdelay, taskPerformer);
-		        timer.setRepeats(false);
-		        timer.start();
-		        sendAllTeamsMsg(pg + "Next round starts in " + Integer.toString(timerdelay / 1000) + " seconds!");
+			 if(!teamcyan.isEmpty() && !teamlime.isEmpty())
+			 {
+				 timer.setRepeats(false);
+			     timer.start();
+			     sendAllTeamsMsg(pg + "Next round starts in " + Integer.toString(timerdelay / 1000) + " seconds!");
+			 }
+			 else
+			 {
+      			if(teamlime.isEmpty())
+      			{
+      				cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
+      				cyanMsg(pg + "Waiting for another player to join....");
+      			}
+      			if(teamcyan.isEmpty())
+      			{
+      				limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
+      				limeMsg(pg + "Waiting for another player to join....");
+      			}
+			 }
 		 }
 	 }
 	 
