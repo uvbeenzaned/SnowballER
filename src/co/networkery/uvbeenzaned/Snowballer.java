@@ -213,6 +213,10 @@ public class Snowballer extends JavaPlugin
 			  	case "join":
 			  		if(args.length > 1)
 			  		{
+			  			if(SnowballerListener.lobbyspawnlocation == null)
+			  			{
+			  				configOps.load();
+			  			}
 			  			if(SnowballerListener.teamcyan.containsKey(plcmd.getName()))
 			  			{
 			  				plcmd.sendMessage(pg + "You are already on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");

@@ -404,6 +404,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 			 }
 			 limeMsg(pg + "+4 points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
 			 cyanMsg(pg + "+4 points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
+			 configOps.saveScores();
 			 gameon = false;
 		 }
 		 else
@@ -427,9 +428,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 				 for(Entry<String, Integer> entry : teamcyan.entrySet())
 				 {
 					 entry.setValue(entry.getValue() + teampoints);
+					 //Bukkit.getServer().getPlayer(entry.getKey()).sendMessage(pg + "Your score is now " + entry.getValue() + ".");
 				 }
 				 limeMsg(pg + "+4 points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
 				 cyanMsg(pg + "+4 points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+				 configOps.saveScores();
 				 gameon = false;
 			 }
 		 }
