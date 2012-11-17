@@ -56,8 +56,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 configOps.saveScores();
 		 if(gameon)
 		 {
-			 event.getPlayer().getInventory().clear();
-			 event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 				if(teamcyaninarena.contains(pll))
 				{
 					Bukkit.getServer().getPlayer(pll).teleport(lobbyspawnlocation);
@@ -74,18 +72,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 					teamcyan.remove(pll);
 					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
+					event.getPlayer().teleport(lobbyspawnlocation);
+					event.getPlayer().getInventory().clear();
+					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 				}
 				if(teamlime.containsKey(pll))
 				{
 					teamlime.remove(pll);
 					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
+					event.getPlayer().teleport(lobbyspawnlocation);
+					event.getPlayer().getInventory().clear();
+					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 				}
 		 }
 		 else
 		 {
-			 event.getPlayer().getInventory().clear();
-			 event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 				if(teamcyaninarena.contains(pll))
 				{
 					Bukkit.getServer().getPlayer(pll).teleport(lobbyspawnlocation);
@@ -101,12 +103,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 					teamcyan.remove(pll);
 					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
+					event.getPlayer().teleport(lobbyspawnlocation);
+					event.getPlayer().getInventory().clear();
+					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 				}
 				if(teamlime.containsKey(pll))
 				{
 					teamlime.remove(pll);
 					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
+					event.getPlayer().teleport(lobbyspawnlocation);
+					event.getPlayer().getInventory().clear();
+					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 				}
 		 }
 	 }
