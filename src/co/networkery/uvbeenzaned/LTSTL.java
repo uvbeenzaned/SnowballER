@@ -12,10 +12,12 @@ public final class LTSTL {
         loc.setX(Double.parseDouble(str2loc[1]));
         loc.setY(Double.parseDouble(str2loc[2]));
         loc.setZ(Double.parseDouble(str2loc[3]));
+        loc.setPitch(Float.parseFloat(str2loc[4]));
+        loc.setYaw(Float.parseFloat(str2loc[5]));
         return loc;
     }
  
     public static String loc2str(Location loc){
-        return loc.getWorld().getName()+":"+loc.getX()+":"+loc.getY()+":"+loc.getZ();
+        return loc.getWorld().getName()+":"+loc.getX()+":"+loc.getY()+":"+loc.getZ()+":"+loc.getPitch()+":"+loc.getYaw();
     }
 }
