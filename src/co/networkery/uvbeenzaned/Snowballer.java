@@ -371,8 +371,8 @@ public class Snowballer extends JavaPlugin
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
-			  			return true;
 			  		}
+			  		SnowballerListener.checkTeamsInArena();
 			  		if(SnowballerListener.teamlime.containsKey(plcmd.getName()))
 			  		{
 			  			if(SnowballerListener.teamlimeinarena.contains(plcmd.getName()))

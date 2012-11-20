@@ -390,7 +390,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 		}
 	 }
 	 
-	 public void checkTeamsInArena()
+	 public static void checkTeamsInArena()
 	 {
 		 if(teamcyaninarena.size() == 0)
 		 {

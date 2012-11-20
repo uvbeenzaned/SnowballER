@@ -16,6 +16,6 @@ public final class LTSTL {
     }
  
     public static String loc2str(Location loc){
-        return loc.getWorld().getName()+":"+loc.getBlockX()+":"+loc.getBlockY()+":"+loc.getBlockZ();
+        return loc.getWorld().getName()+":"+loc.getX()+":"+loc.getY()+":"+loc.getZ();
     }
 }
