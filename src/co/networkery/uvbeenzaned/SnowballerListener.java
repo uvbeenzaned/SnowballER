@@ -306,7 +306,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 
      public static ActionListener taskPerformer = new ActionListener() {
          public void actionPerformed(ActionEvent evt) {
-         	if(timergame == true)
+         	if(timergame == true && gameon == false)
          	{
          		if(!teamcyan.isEmpty() && !teamlime.isEmpty())
          		{
