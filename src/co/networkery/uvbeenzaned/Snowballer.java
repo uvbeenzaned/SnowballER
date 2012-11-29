@@ -371,8 +371,9 @@ public class Snowballer extends JavaPlugin
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
+			  			SnowballerListener.checkTeamsInArena();
+			  			return true;
 			  		}
-			  		SnowballerListener.checkTeamsInArena();
 			  		if(SnowballerListener.teamlime.containsKey(plcmd.getName()))
 			  		{
 			  			if(SnowballerListener.teamlimeinarena.contains(plcmd.getName()))
@@ -386,6 +387,7 @@ public class Snowballer extends JavaPlugin
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
+			  			SnowballerListener.checkTeamsInArena();
 			  			return true;
 			  		}
 		  			plcmd.sendMessage(pg + "You are not on a team!");
