@@ -248,9 +248,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 										 giveTeamArmor(plhit, "lime");
 									 }
 									 scores.getConfig().set(plhit.getName(), scores.getConfig().getInt(plhit.getName()) - 1);
-									 plhit.sendMessage(pg + "-1 point!  Your score is now " + scores.getConfig().getInt(plhit.getName()) + ".");
+									 plhit.sendMessage(pg + "-1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plhit.getName())) + ".");
 									 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
-									 plenemy.sendMessage(pg + "+1 point!  Your score is now " + scores.getConfig().getInt(plenemy.getName()) + ".");
+									 plenemy.sendMessage(pg + "+1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plenemy.getName())) + ".");
 									 scores.saveConfig();
 									 sendAllTeamsMsg(pg + "There are now " + teamcyaninarena.size() + " players on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " left in the arena!");
 									 sendAllTeamsMsg(pg + "There are now " + teamlimeinarena.size() + " players on team " + ChatColor.GREEN + "LIME" + ChatColor.RESET + " left in the arena!");
@@ -390,8 +390,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 				 {
 					 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints"));
 				 }
-				 limeMsg(pg + "+" + config.getConfig().getInt("teampoints") + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
-				 cyanMsg(pg + "+" + config.getConfig().getInt("teampoints") + " LIME " + ChatColor.RESET + ".");
+				 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
+				 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
 				 scores.saveConfig();
 				 gameon = false;
 			 }
@@ -417,8 +417,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 					 {
 						 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints"));
 					 }
-					 limeMsg(pg + "+" + config.getConfig().getInt("teampoints") + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
-					 cyanMsg(pg + "+" + config.getConfig().getInt("teampoints") + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+					 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+					 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
 					 scores.saveConfig();
 					 gameon = false;
 				 }

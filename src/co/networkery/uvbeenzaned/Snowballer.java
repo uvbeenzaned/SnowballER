@@ -17,15 +17,11 @@ public class Snowballer extends JavaPlugin
 	
 	public String pg = ChatColor.AQUA + "[Snowballer] " +  ChatColor.RESET;
 	public SnowballerListener sbr;
-	public ConfigAccessor config;
-	public ConfigAccessor scores;
 	public Logger log;
 	
 	public void onEnable()
 	{
 		sbr = new SnowballerListener(this);
-		config = new ConfigAccessor(this, "config.yml");
-		scores = new ConfigAccessor(this, "scores.yml");
 		this.log = getLogger();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.sbr, this);
@@ -34,7 +30,7 @@ public class Snowballer extends JavaPlugin
 
   public void onDisable()
   {
-	  config.saveConfig();
+	  SnowballerListener.config.saveConfig();
 	  log.info(pg + "All config saved!");
   }
 
@@ -50,8 +46,8 @@ public class Snowballer extends JavaPlugin
 			  	case "setspawn":
 			  		if(plcmd.isOp())
 			  		{
-			  			config.getConfig().set("lobbyspawnlocation", LTSTL.loc2str(plcmd.getLocation()));
-				  		plcmd.sendMessage(pg + "The new spawn location is now at: " + config.getConfig().getString("lobbyspawnlocation") + ".");
+			  			SnowballerListener.config.getConfig().set("lobbyspawnlocation", LTSTL.loc2str(plcmd.getLocation()));
+				  		plcmd.sendMessage(pg + "The new spawn location is now at: " + SnowballerListener.config.getConfig().getString("lobbyspawnlocation") + ".");
 				  		return true;
 			  		}
 			  		plcmd.sendMessage(pg + "You have to be an op to run this command!");
@@ -65,9 +61,9 @@ public class Snowballer extends JavaPlugin
 			  				{
 			  					if(args[2] != null)
 			  					{
-			  						config.getConfig().set("teamcyanarenasides." + args[2], LTSTL.loc2str(plcmd.getLocation()));
-				  					plcmd.sendMessage(pg + "Added side for arena " + args[2] + " and location " + LTSTL.str2loc(config.getConfig().getString("teamcyanarenasides." + args[2])) + ".");
-				  					config.saveConfig();
+			  						SnowballerListener.config.getConfig().set("teamcyanarenasides." + args[2], LTSTL.loc2str(plcmd.getLocation()));
+				  					plcmd.sendMessage(pg + "Added side for arena " + args[2] + " and location " + LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamcyanarenasides." + args[2])) + ".");
+				  					SnowballerListener.config.saveConfig();
 				  					return true;
 			  					}
 			  					plcmd.sendMessage(pg + "You have to have a name for the arena!");
@@ -77,9 +73,9 @@ public class Snowballer extends JavaPlugin
 			  				{
 			  					if(args[2] != null)
 			  					{
-			  						config.getConfig().set("teamlimearenasides." + args[2], LTSTL.loc2str(plcmd.getLocation()));
-				  					plcmd.sendMessage(pg + "Added side for arena " + args[2] + " and location " + LTSTL.str2loc(config.getConfig().getString("teamlimearenasides." + args[2])) + ".");
-				  					config.saveConfig();
+			  						SnowballerListener.config.getConfig().set("teamlimearenasides." + args[2], LTSTL.loc2str(plcmd.getLocation()));
+				  					plcmd.sendMessage(pg + "Added side for arena " + args[2] + " and location " + LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamlimearenasides." + args[2])) + ".");
+				  					SnowballerListener.config.saveConfig();
 				  					return true;
 			  					}
 			  				}
@@ -134,7 +130,7 @@ public class Snowballer extends JavaPlugin
 				  				{
 					  				SnowballerListener.timergame = true;
 					  				SnowballerListener.startIndependentTimerRound();
-						  			plcmd.sendMessage(pg + "You've scheduled a Snowballer game for " + Integer.toString(config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
+						  			plcmd.sendMessage(pg + "You've scheduled a Snowballer game for " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
 						  			return true;
 				  				}
 				  				else
@@ -171,7 +167,7 @@ public class Snowballer extends JavaPlugin
 							for (int i = 0; i < SnowballerListener.teamcyaninarena.size(); i++)
 							{
 								Player pl = getServer().getPlayer(SnowballerListener.teamcyaninarena.get(i));
-				  				pl.teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+				  				pl.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 				  				pl.sendMessage(pg + "An admin has ended the current snowballer game!");
 				  				SnowballerListener.teamcyaninarena.remove(pl);
 							}
@@ -183,7 +179,7 @@ public class Snowballer extends JavaPlugin
 							for (int i = 0; i < SnowballerListener.teamlimeinarena.size(); i++)
 							{
 								Player pl = getServer().getPlayer(SnowballerListener.teamlimeinarena.get(i));
-				  				pl.teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+				  				pl.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 				  				pl.sendMessage(pg + "An admin has ended the current snowballer game!");
 				  				SnowballerListener.teamlimeinarena.remove(pl);
 							}
@@ -222,13 +218,14 @@ public class Snowballer extends JavaPlugin
 			  			{
 					  		if(!SnowballerListener.teamcyan.contains(plcmd.getName()) && !SnowballerListener.teamlime.contains(plcmd.getName()))
 					  		{
-					  			plcmd.teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
+					  			SnowballerListener.teamcyan.add(plcmd.getName());
 					  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			plcmd.getInventory().clear();
 					  			SnowballerListener.giveTeamArmor(plcmd, "cyan");
-					  			if(config.getConfig().getBoolean("startwithoutop"))
+					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamlime.isEmpty())
 						  			{
@@ -240,7 +237,7 @@ public class Snowballer extends JavaPlugin
 								  				{
 									  				SnowballerListener.timergame = true;
 									  				SnowballerListener.startIndependentTimerRound();
-										  			plcmd.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
+										  			plcmd.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
 										  			return true;
 								  				}
 								  				else
@@ -269,13 +266,14 @@ public class Snowballer extends JavaPlugin
 			  			{
 					  		if(!SnowballerListener.teamlime.contains(plcmd.getName()) && !SnowballerListener.teamcyan.contains(plcmd.getName()))
 					  		{
-					  			plcmd.teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
+					  			SnowballerListener.teamlime.add(plcmd.getName());
 					  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			plcmd.getInventory().clear();
 					  			SnowballerListener.giveTeamArmor(plcmd, "lime");
-					  			if(config.getConfig().getBoolean("startwithoutop"))
+					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamcyan.isEmpty())
 						  			{
@@ -287,7 +285,7 @@ public class Snowballer extends JavaPlugin
 								  				{
 									  				SnowballerListener.timergame = true;
 									  				SnowballerListener.startIndependentTimerRound();
-										  			plcmd.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
+										  			plcmd.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
 										  			return true;
 								  				}
 								  				else
@@ -316,13 +314,13 @@ public class Snowballer extends JavaPlugin
 			  		}
 			  		return false;
 			  	case "leave":
-			  		scores.saveConfig();
+			  		SnowballerListener.scores.saveConfig();
 			  		if(SnowballerListener.teamcyan.contains(plcmd.getName()))
 			  		{
 			  			if(SnowballerListener.teamcyaninarena.contains(plcmd.getName()))
 			  			{
 			  				SnowballerListener.teamcyaninarena.remove(plcmd.getName());
-			  				plcmd.teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+			  				plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 			  			}
 			  			SnowballerListener.teamcyan.remove(plcmd.getName());
 			  			plcmd.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
@@ -338,7 +336,7 @@ public class Snowballer extends JavaPlugin
 			  			if(SnowballerListener.teamlimeinarena.contains(plcmd.getName()))
 			  			{
 			  				SnowballerListener.teamlimeinarena.remove(plcmd.getName());
-			  				plcmd.teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+			  				plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 			  			}
 			  			SnowballerListener.teamlime.remove(plcmd.getName());
 			  			plcmd.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
@@ -354,14 +352,14 @@ public class Snowballer extends JavaPlugin
 			  	case "score":
 			  		if(SnowballerListener.teamcyan.contains(plcmd.getName()))
 			  		{
-			  			plcmd.sendMessage(pg + "Your score is " + scores.getConfig().getInt(plcmd.getName()) + ".");
+			  			plcmd.sendMessage(pg + "Your score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(plcmd.getName())) + ".");
 			  			return true;
 			  		}
 			  		else
 			  		{
 				  		if(SnowballerListener.teamlime.contains(plcmd.getName()))
 				  		{
-				  			plcmd.sendMessage(pg + "Your score is " + scores.getConfig().getInt(plcmd.getName()) + ".");
+				  			plcmd.sendMessage(pg + "Your score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(plcmd.getName())) + ".");
 				  			return true;
 				  		}
 			  		}
