@@ -85,6 +85,32 @@ public class Snowballer extends JavaPlugin
 			  		}
 			  		plcmd.sendMessage(pg + "You have to be an op to run this command!");
 			  		return true;
+			  	case "removearena":
+			  		if(plcmd.isOp())
+			  		{
+			  			if(args.length > 1)
+			  			{
+			  				if(SnowballerListener.config.getConfig().getConfigurationSection("teamcyanarenaside").contains(args[1]) || SnowballerListener.config.getConfig().getConfigurationSection("teamlimearenaside").contains(args[1]))
+			  				{
+				  				if(SnowballerListener.config.getConfig().getConfigurationSection("teamcyanarenaside").contains(args[1]))
+				  				{
+				  					SnowballerListener.config.getConfig().set("teamcyanarenaside." + args[1], null);
+				  				}
+				  				if(SnowballerListener.config.getConfig().getConfigurationSection("teamlimearenaside").contains(args[1]))
+				  				{
+				  					SnowballerListener.config.getConfig().set("teamlimearenaside." + args[1], null);
+				  				}
+				  				plcmd.sendMessage(pg + "Removed arena " + args[1] + " successfully!");
+			  					return true;
+			  				}
+			  				plcmd.sendMessage(pg + "There is no arena named " + args[1] + ".");
+		  					return true;
+			  			}
+			  			plcmd.sendMessage(pg + "Please provide a name to remove this arena.");
+	  					return true;
+			  		}
+			  		plcmd.sendMessage(pg + "You have to be an op to run this command!");
+			  		return true;
 			  	case "start":
 			  		if(plcmd.isOp())
 			  		{
