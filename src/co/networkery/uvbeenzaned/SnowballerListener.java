@@ -395,31 +395,33 @@ import org.bukkit.plugin.java.JavaPlugin;
 				 scores.saveConfig();
 				 gameon = false;
 			 }
-			 //stopped here//
-			 if(teamlimeinarena.size() == 0)
+			 else
 			 {
-				 for(String pl : teamcyaninarena)
+				 if(teamlimeinarena.size() == 0)
 				 {
-					 Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					 Bukkit.getServer().getPlayer(pl).getInventory().clear();
-				 }
-				 for(String pl : teamlimeinarena)
-				 {
-					 Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					 Bukkit.getServer().getPlayer(pl).getInventory().clear();
-				 }
-				 cyanMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
-				 limeMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
-				 teamcyaninarena.clear();
-				 teamlimeinarena.clear();
-				 for(String pl : teamcyan)
-				 {
-					 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints"));
-				 }
-				 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
-				 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
-				 scores.saveConfig();
-				 gameon = false;
+					 for(String pl : teamcyaninarena)
+					 {
+						 Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+						 Bukkit.getServer().getPlayer(pl).getInventory().clear();
+					 }
+					 for(String pl : teamlimeinarena)
+					 {
+						 Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+						 Bukkit.getServer().getPlayer(pl).getInventory().clear();
+					 }
+					 cyanMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
+					 limeMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
+					 teamcyaninarena.clear();
+					 teamlimeinarena.clear();
+					 for(String pl : teamcyan)
+					 {
+						 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints"));
+					 }
+					 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+					 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+					 scores.saveConfig();
+					 gameon = false;
+				 } 
 			 }
 			 if(timergame == true && gameon == false)
 			 {
