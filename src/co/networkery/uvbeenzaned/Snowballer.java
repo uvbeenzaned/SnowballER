@@ -62,7 +62,7 @@ public class Snowballer extends JavaPlugin
 			  					if(args[2] != null)
 			  					{
 			  						SnowballerListener.config.getConfig().set("teamcyanarenasides." + args[2], LTSTL.loc2str(plcmd.getLocation()));
-				  					plcmd.sendMessage(pg + "Added side for arena " + args[2] + " and location " + LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamcyanarenasides." + args[2])) + ".");
+				  					plcmd.sendMessage(pg + "Added side for arena " + args[2] + " and location " + SnowballerListener.config.getConfig().getString("teamcyanarenasides." + args[2]) + ".");
 				  					SnowballerListener.config.saveConfig();
 				  					return true;
 			  					}
@@ -74,7 +74,7 @@ public class Snowballer extends JavaPlugin
 			  					if(args[2] != null)
 			  					{
 			  						SnowballerListener.config.getConfig().set("teamlimearenasides." + args[2], LTSTL.loc2str(plcmd.getLocation()));
-				  					plcmd.sendMessage(pg + "Added side for arena " + args[2] + " and location " + LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamlimearenasides." + args[2])) + ".");
+				  					plcmd.sendMessage(pg + "Added side for arena " + args[2] + " and location " + SnowballerListener.config.getConfig().getString("teamlimearenasides." + args[2]) + ".");
 				  					SnowballerListener.config.saveConfig();
 				  					return true;
 			  					}
@@ -90,16 +90,17 @@ public class Snowballer extends JavaPlugin
 			  		{
 			  			if(args.length > 1)
 			  			{
-			  				if(SnowballerListener.config.getConfig().getConfigurationSection("teamcyanarenaside").contains(args[1]) || SnowballerListener.config.getConfig().getConfigurationSection("teamlimearenaside").contains(args[1]))
+			  				if(SnowballerListener.config.getConfig().getConfigurationSection("teamcyanarenasides").contains(args[1]) || SnowballerListener.config.getConfig().getConfigurationSection("teamlimearenaside").contains(args[1]))
 			  				{
-				  				if(SnowballerListener.config.getConfig().getConfigurationSection("teamcyanarenaside").contains(args[1]))
+				  				if(SnowballerListener.config.getConfig().getConfigurationSection("teamcyanarenasides").contains(args[1]))
 				  				{
-				  					SnowballerListener.config.getConfig().set("teamcyanarenaside." + args[1], null);
+				  					SnowballerListener.config.getConfig().set("teamcyanarenasides." + args[1], null);
 				  				}
-				  				if(SnowballerListener.config.getConfig().getConfigurationSection("teamlimearenaside").contains(args[1]))
+				  				if(SnowballerListener.config.getConfig().getConfigurationSection("teamlimearenasides").contains(args[1]))
 				  				{
-				  					SnowballerListener.config.getConfig().set("teamlimearenaside." + args[1], null);
+				  					SnowballerListener.config.getConfig().set("teamlimearenasides." + args[1], null);
 				  				}
+				  				SnowballerListener.scores.saveConfig();
 				  				plcmd.sendMessage(pg + "Removed arena " + args[1] + " successfully!");
 			  					return true;
 			  				}
