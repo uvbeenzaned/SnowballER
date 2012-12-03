@@ -52,7 +52,7 @@ public class Snowballer extends JavaPlugin
 			  		}
 			  		plcmd.sendMessage(pg + "You have to be an op to run this command!");
 			  		return true;
-			  	case "setarenaside":
+			  	case "addarenaside":
 			  		if(plcmd.isOp())
 			  		{
 			  			if(args.length > 1)
