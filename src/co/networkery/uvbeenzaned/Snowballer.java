@@ -1,5 +1,6 @@
 package co.networkery.uvbeenzaned;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -254,15 +255,6 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.giveTeamArmor(plcmd, "cyan");
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
-					  			//check to see if the timer is messed up
-					  				if(SnowballerListener.teamcyan.isEmpty() || SnowballerListener.teamlime.isEmpty() && SnowballerListener.gameon == true || SnowballerListener.timergame == true)
-					  				{
-				  						SnowballerListener.sendAllTeamsMsg(pg + "Something went wrong with the timer!  Attempting to fix....");
-				  						SnowballerListener.checkTeamsInArena();
-				  						SnowballerListener.gameon = false;
-				  						SnowballerListener.timer.stop();
-				  						SnowballerListener.timergame = false;
-					  				}
 						  			if(!SnowballerListener.teamlime.isEmpty())
 						  			{
 						  				if(SnowballerListener.gameon == false)
@@ -311,15 +303,6 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.giveTeamArmor(plcmd, "lime");
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
-					  			//check to see if the timer is messed up
-					  				if(SnowballerListener.teamlime.isEmpty() || SnowballerListener.teamcyan.isEmpty() && SnowballerListener.gameon == true || SnowballerListener.timergame == true)
-					  				{
-				  						SnowballerListener.sendAllTeamsMsg(pg + "Something went wrong with the timer!  Attempting to fix....");
-				  						SnowballerListener.checkTeamsInArena();
-				  						SnowballerListener.gameon = false;
-				  						SnowballerListener.timer.stop();
-				  						SnowballerListener.timergame = false;
-					  				}
 						  			if(!SnowballerListener.teamcyan.isEmpty())
 						  			{
 						  				if(SnowballerListener.gameon == false)
@@ -409,6 +392,9 @@ public class Snowballer extends JavaPlugin
 				  		}
 			  		}
 			  		plcmd.sendMessage(pg + "Join a team to lookup your score!");
+			  		return true;
+			  	case "stats":
+			  		HashMap<String, Integer> stats = new HashMap<String, Integer>();
 			  		return true;
 			  }
 		  }
