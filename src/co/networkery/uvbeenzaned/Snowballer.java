@@ -1,6 +1,5 @@
 package co.networkery.uvbeenzaned;
 
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -355,6 +354,7 @@ public class Snowballer extends JavaPlugin
 			  			plcmd.getInventory().clear();
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			SnowballerListener.checkTeamsInArena();
+			  			SnowballerListener.terminateAll();
 			  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 			  			return true;
@@ -371,6 +371,7 @@ public class Snowballer extends JavaPlugin
 			  			plcmd.getInventory().clear();
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			  			SnowballerListener.checkTeamsInArena();
+			  			SnowballerListener.terminateAll();
 			  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 			  			return true;
@@ -394,7 +395,7 @@ public class Snowballer extends JavaPlugin
 			  		plcmd.sendMessage(pg + "Join a team to lookup your score!");
 			  		return true;
 			  	case "stats":
-			  		HashMap<String, Integer> stats = new HashMap<String, Integer>();
+			  		plcmd.sendMessage(pg + "Not implemented yet.");
 			  		return true;
 			  }
 		  }

@@ -51,7 +51,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 {
 				if(teamcyaninarena.contains(pll))
 				{
-					
 					Bukkit.getServer().getPlayer(pll).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					teamcyaninarena.remove(pll);
 				}
@@ -82,6 +81,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					event.getPlayer().getInventory().clear();
 					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 				}
+				terminateAll();
 		 }
 		 else
 		 {
@@ -117,6 +117,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					event.getPlayer().getInventory().clear();
 					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 				}
+				terminateAll();
 		 }
 	 }
 	 
@@ -153,6 +154,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 				}
+				terminateAll();
 		 }
 		 else
 		 {
@@ -182,6 +184,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 				}
+				terminateAll();
 		 }
 	 }
 	 
@@ -366,6 +369,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 		}
 	 }
 	 
+	 public static void terminateAll()
+	 {
+		checkTeamsInArena();
+		if(teamcyan.isEmpty() && teamlime.isEmpty())
+		{
+			gameon = false;
+			timergame = false;
+			if(timer != null && timer.isRunning())
+			{
+				timer.stop();
+			}
+			teamcyaninarena.clear();
+			teamlimeinarena.clear();
+			teamcyan.clear();
+			teamlime.clear();
+		}
+	 }
+	 
 	 public static void checkTeamsInArena()
 	 {
 		 if(gameon == true)
@@ -426,7 +447,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 			 if(timergame == true && gameon == false)
 			 {
 				 startIndependentTimerRound();
-			 } 
+			 }
 		 }
 	 }
 	 
