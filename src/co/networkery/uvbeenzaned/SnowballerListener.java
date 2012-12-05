@@ -132,12 +132,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 			    	scores.saveConfig();
 			    	Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 			    	teamcyaninarena.remove(pld);
+			    	event.getDrops().clear();
 				}
 				if(teamlimeinarena.contains(pld))
 				{
 					scores.saveConfig();
 					Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					teamlimeinarena.remove(pld);
+					event.getDrops().clear();
 				}
 				checkTeamsInArena();
 			    if(teamcyan.contains(pld))
@@ -146,6 +148,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 			    	teamcyan.remove(pld);
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
+					event.getDrops().clear();
 				}
 				if(teamlime.contains(pld))
 				{
@@ -153,6 +156,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					teamlime.remove(pld);
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
+					event.getDrops().clear();
 				}
 				terminateAll();
 		 }
@@ -163,12 +167,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 			    	scores.saveConfig();
 			    	Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 			    	teamcyaninarena.remove(pld);
+			    	event.getDrops().clear();
 				}
 				if(teamlimeinarena.contains(pld))
 				{
 					scores.saveConfig();
 					Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					teamlimeinarena.remove(pld);
+					event.getDrops().clear();
 				}
 			    if(teamcyan.contains(pld))
 			    {
@@ -176,6 +182,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 			    	teamcyan.remove(pld);
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
+					event.getDrops().clear();
 				}
 				if(teamlime.contains(pld))
 				{
@@ -183,6 +190,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					teamlime.remove(pld);
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
+					event.getDrops().clear();
 				}
 				terminateAll();
 		 }
@@ -372,7 +380,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 public static void terminateAll()
 	 {
 		checkTeamsInArena();
-		if(teamcyan.isEmpty() && teamlime.isEmpty())
+		if(teamcyan.isEmpty() || teamlime.isEmpty())
 		{
 			gameon = false;
 			timergame = false;
@@ -382,8 +390,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 			}
 			teamcyaninarena.clear();
 			teamlimeinarena.clear();
-			teamcyan.clear();
-			teamlime.clear();
+  			if(teamlime.isEmpty())
+  			{
+  				cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
+  				cyanMsg(pg + "Waiting for another player to join....");
+  			}
+  			if(teamcyan.isEmpty())
+  			{
+  				limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
+  				limeMsg(pg + "Waiting for another player to join....");
+  			}
 		}
 	 }
 	 
