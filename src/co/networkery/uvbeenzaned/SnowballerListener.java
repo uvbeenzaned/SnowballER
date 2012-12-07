@@ -20,7 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -196,27 +196,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 }
 	 }
 	 
-	 @SuppressWarnings("deprecation")
-	@EventHandler
-	 public void playerDropItem(PlayerDropItemEvent event)
+	 @EventHandler
+	 public void playerInvClick(InventoryClickEvent event)
 	 {
 		 if(gameon)
 		 {
-			 for(String pl : teamcyan)
+			 if(teamcyan.contains(event.getWhoClicked().getName()) || teamlime.contains(event.getWhoClicked().getName()))
 			 {
-				 if(pl == event.getPlayer().getName())
-				 {
-					 event.setCancelled(true);
-					 event.getPlayer().updateInventory();
-				 }
-			 }
-			 for(String pl : teamlime)
-			 {
-				 if(pl == event.getPlayer().getName())
-				 {
-					 event.setCancelled(true);
-					 event.getPlayer().updateInventory();
-				 }
+				 event.setCancelled(true);
 			 }
 		 }
 	 }
@@ -226,6 +213,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 	 {
 		 if(gameon)
 		 {
+			 if(event.getEntity() instanceof Player && event.getDamager() instanceof Player)
+			 {
+				 Player plhit = (Player)event.getEntity();
+				 Player plenemy = (Player)event.getDamager();
+				 if(teamcyaninarena.contains(plhit.getName()) || teamlimeinarena.contains(plhit.getName()))
+				 {
+					 if(teamcyaninarena.contains(plenemy.getName()) || teamlimeinarena.contains(plenemy.getName()))
+					 {
+						 if(!teamcyaninarena.contains(plhit.getName()) || !teamcyaninarena.contains(plenemy.getName()))
+						 {
+							 if(!teamlimeinarena.contains(plhit.getName()) || !teamlimeinarena.contains(plenemy.getName()))
+							 {
+								 event.setCancelled(true);
+							 }
+						 }
+					 }
+				 }
+			 }
 			 if ((event.getEntity() instanceof Player && event.getDamager() instanceof Snowball))
 			 {
 				 Player plhit = (Player)event.getEntity();
