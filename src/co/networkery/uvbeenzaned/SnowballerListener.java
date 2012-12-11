@@ -21,6 +21,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,6 +52,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 		 {
 				if(teamcyaninarena.contains(pll))
 				{
+					scores.saveConfig();
 					Bukkit.getServer().getPlayer(pll).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					teamcyaninarena.remove(pll);
 				}
@@ -70,6 +72,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					event.getPlayer().getInventory().clear();
 					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+					terminateAll();
 				}
 				if(teamlime.contains(pll))
 				{
@@ -80,8 +83,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					event.getPlayer().getInventory().clear();
 					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+					terminateAll();
 				}
-				terminateAll();
 		 }
 		 else
 		 {
@@ -106,6 +109,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					event.getPlayer().getInventory().clear();
 					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+					terminateAll();
 				}
 				if(teamlime.contains(pll))
 				{
@@ -116,8 +120,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					event.getPlayer().getInventory().clear();
 					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+					terminateAll();
 				}
-				terminateAll();
 		 }
 	 }
 	 
@@ -149,6 +153,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					event.getDrops().clear();
+					terminateAll();
 				}
 				if(teamlime.contains(pld))
 				{
@@ -157,8 +162,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					event.getDrops().clear();
+					terminateAll();
 				}
-				terminateAll();
 		 }
 		 else
 		 {
@@ -183,6 +188,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					event.getDrops().clear();
+					terminateAll();
 				}
 				if(teamlime.contains(pld))
 				{
@@ -191,19 +197,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					event.getDrops().clear();
+					terminateAll();
 				}
-				terminateAll();
 		 }
 	 }
 	 
 	 @EventHandler
 	 public void playerInvClick(InventoryClickEvent event)
 	 {
-		 if(gameon)
+		 if(teamcyan.contains(event.getWhoClicked().getName()) || teamlime.contains(event.getWhoClicked().getName()))
 		 {
-			 if(teamcyan.contains(event.getWhoClicked().getName()) || teamlime.contains(event.getWhoClicked().getName()))
+			 if(event.getSlotType() == SlotType.ARMOR)
 			 {
-				 event.setCancelled(true);
+				 event.setCancelled(true); 
 			 }
 		 }
 	 }
@@ -500,6 +506,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 				break;
 		}
 	 }
+	 
+//	 @EventHandler
+//	 public void onNameTag(PlayerReceiveNameTagEvent event)
+//	 {
+//		 if(teamcyan.contains(event.getPlayer().getName()))
+//		 {
+//			 if(teamcyan.contains(event.getNamedPlayer().getName()))
+//			 {
+//				 event.setTag(ChatColor.AQUA + event.getNamedPlayer().getName());
+//			 }
+//		 }
+//		 if(teamlime.contains(event.getPlayer().getName()))
+//		 {
+//			 if(teamlime.contains(event.getNamedPlayer().getName()))
+//			 {
+//				 event.setTag(ChatColor.GREEN + event.getNamedPlayer().getName()); 
+//			 }
+//		 }
+//	 }
 	 
 	 public static void sendAllTeamsMsg(String msg)
 	 {

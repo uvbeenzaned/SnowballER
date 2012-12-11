@@ -252,6 +252,7 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			plcmd.getInventory().clear();
 					  			SnowballerListener.giveTeamArmor(plcmd, "cyan");
+//					  			TagAPI.refreshPlayer((Player)plcmd);
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamlime.isEmpty())
@@ -300,6 +301,7 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			plcmd.getInventory().clear();
 					  			SnowballerListener.giveTeamArmor(plcmd, "lime");
+//					  			TagAPI.refreshPlayer((Player)plcmd);
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamcyan.isEmpty())
