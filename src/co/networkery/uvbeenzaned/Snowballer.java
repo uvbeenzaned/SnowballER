@@ -201,7 +201,7 @@ public class Snowballer extends JavaPlugin
 							for(String pl : SnowballerListener.teamcyan)
 							{
 								Bukkit.getServer().getPlayer(pl).getInventory().clear();
-								SnowballerListener.giveTeamArmor(Bukkit.getServer().getPlayer(pl), "cyan");
+//								SnowballerListener.giveTeamArmor(Bukkit.getServer().getPlayer(pl), "cyan");
 							}
 							for (int i = 0; i < SnowballerListener.teamlimeinarena.size(); i++)
 							{
@@ -213,7 +213,7 @@ public class Snowballer extends JavaPlugin
 							for(String pl : SnowballerListener.teamlime)
 							{
 								Bukkit.getServer().getPlayer(pl).getInventory().clear();
-								SnowballerListener.giveTeamArmor(Bukkit.getServer().getPlayer(pl), "lime");
+//								SnowballerListener.giveTeamArmor(Bukkit.getServer().getPlayer(pl), "lime");
 							}
 				  			SnowballerListener.teamcyaninarena.clear();
 				  			SnowballerListener.teamlimeinarena.clear();
@@ -251,8 +251,8 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			plcmd.getInventory().clear();
-					  			SnowballerListener.giveTeamArmor(plcmd, "cyan");
-//					  			TagAPI.refreshPlayer((Player)plcmd);
+//					  			SnowballerListener.giveTeamArmor(plcmd, "cyan");
+					  			SnowballerListener.refreshAllTags();
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamlime.isEmpty())
@@ -300,8 +300,8 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			plcmd.getInventory().clear();
-					  			SnowballerListener.giveTeamArmor(plcmd, "lime");
-//					  			TagAPI.refreshPlayer((Player)plcmd);
+//					  			SnowballerListener.giveTeamArmor(plcmd, "lime");
+					  			SnowballerListener.refreshAllTags();
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamcyan.isEmpty())
@@ -359,6 +359,7 @@ public class Snowballer extends JavaPlugin
 			  			SnowballerListener.terminateAll();
 			  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
+			  			SnowballerListener.refreshAllTags();
 			  			return true;
 			  		}
 			  		if(SnowballerListener.teamlime.contains(plcmd.getName()))
@@ -376,6 +377,7 @@ public class Snowballer extends JavaPlugin
 			  			SnowballerListener.terminateAll();
 			  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
+			  			SnowballerListener.refreshAllTags();
 			  			return true;
 			  		}
 		  			plcmd.sendMessage(pg + "You are not on a team!");

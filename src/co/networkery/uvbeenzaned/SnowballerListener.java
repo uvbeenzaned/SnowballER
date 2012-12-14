@@ -25,6 +25,8 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.kitteh.tag.PlayerReceiveNameTagEvent;
+import org.kitteh.tag.TagAPI;
  
  public class SnowballerListener implements Listener
  {
@@ -199,6 +201,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 					event.getDrops().clear();
 					terminateAll();
 				}
+				refreshAllTags();
 		 }
 	 }
 	 
@@ -262,12 +265,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 									 if(teamcyaninarena.contains(plhit.getName()))
 									 {
 										 teamcyaninarena.remove(plhit.getName());
-										 giveTeamArmor(plhit, "cyan");
+//										 giveTeamArmor(plhit, "cyan");
 									 }
 									 if(teamlimeinarena.contains(plhit.getName()))
 									 {
 										 teamlimeinarena.remove(plhit.getName());
-										 giveTeamArmor(plhit, "lime");
+//										 giveTeamArmor(plhit, "lime");
 									 }
 									 scores.getConfig().set(plhit.getName(), scores.getConfig().getInt(plhit.getName()) - 1);
 									 plhit.sendMessage(pg + "-1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plhit.getName())) + ".");
@@ -287,6 +290,31 @@ import org.bukkit.plugin.java.JavaPlugin;
 			 }
 		 }
 	 }
+	 
+		@EventHandler
+		 public void onNameTag(PlayerReceiveNameTagEvent event)
+		 {
+			 if(teamcyan.contains(event.getNamedPlayer().getName()))
+			 {
+				 event.setTag(ChatColor.AQUA + event.getNamedPlayer().getName());
+			 }
+			 if(teamlime.contains(event.getNamedPlayer().getName()))
+			 {
+				 event.setTag(ChatColor.GREEN + event.getNamedPlayer().getName());
+			 }
+		 }
+		
+		public static void refreshAllTags()
+		{
+			for(String pl : teamcyan)
+			{
+				TagAPI.refreshPlayer(Bukkit.getPlayer(pl));
+			}
+			for(String pl : teamlime)
+			{
+				TagAPI.refreshPlayer(Bukkit.getPlayer(pl));
+			}
+		}
 	 
      public static ActionListener taskPerformer = new ActionListener() {
          public void actionPerformed(ActionEvent evt) {
@@ -506,25 +534,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 				break;
 		}
 	 }
-	 
-//	 @EventHandler
-//	 public void onNameTag(PlayerReceiveNameTagEvent event)
-//	 {
-//		 if(teamcyan.contains(event.getPlayer().getName()))
-//		 {
-//			 if(teamcyan.contains(event.getNamedPlayer().getName()))
-//			 {
-//				 event.setTag(ChatColor.AQUA + event.getNamedPlayer().getName());
-//			 }
-//		 }
-//		 if(teamlime.contains(event.getPlayer().getName()))
-//		 {
-//			 if(teamlime.contains(event.getNamedPlayer().getName()))
-//			 {
-//				 event.setTag(ChatColor.GREEN + event.getNamedPlayer().getName()); 
-//			 }
-//		 }
-//	 }
 	 
 	 public static void sendAllTeamsMsg(String msg)
 	 {
