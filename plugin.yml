@@ -1,6 +1,6 @@
 name: Snowballer
 main: co.networkery.uvbeenzaned.Snowballer
-version: 1.4.7
+version: 1.4.9
 commands:
    snowballer:
        description: Main Snowballer command.

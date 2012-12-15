@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -265,12 +266,12 @@ import org.kitteh.tag.TagAPI;
 									 if(teamcyaninarena.contains(plhit.getName()))
 									 {
 										 teamcyaninarena.remove(plhit.getName());
-//										 giveTeamArmor(plhit, "cyan");
+										 Rank.giveRank(plhit);
 									 }
 									 if(teamlimeinarena.contains(plhit.getName()))
 									 {
 										 teamlimeinarena.remove(plhit.getName());
-//										 giveTeamArmor(plhit, "lime");
+										 Rank.giveRank(plhit);
 									 }
 									 scores.getConfig().set(plhit.getName(), scores.getConfig().getInt(plhit.getName()) - 1);
 									 plhit.sendMessage(pg + "-1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plhit.getName())) + ".");
@@ -298,11 +299,34 @@ import org.kitteh.tag.TagAPI;
 			 {
 				 event.setTag(ChatColor.AQUA + event.getNamedPlayer().getName());
 			 }
-			 if(teamlime.contains(event.getNamedPlayer().getName()))
+			 else
 			 {
-				 event.setTag(ChatColor.GREEN + event.getNamedPlayer().getName());
+				 if(teamlime.contains(event.getNamedPlayer().getName()))
+				 {
+					 event.setTag(ChatColor.GREEN + event.getNamedPlayer().getName());
+				 }
+				 else
+				 {
+					 event.setTag(event.getNamedPlayer().getName());
+				 }
 			 }
 		 }
+		
+		@EventHandler
+		public void onChat(AsyncPlayerChatEvent event)
+		{
+			ChatColor cc = null;
+			if(teamcyan.contains(event.getPlayer().getName()))
+			 {
+				cc = ChatColor.AQUA;
+				event.setFormat(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
+			 }
+			 if(teamlime.contains(event.getPlayer().getName()))
+			 {
+				 cc = ChatColor.GREEN;
+				 event.setFormat(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
+			 }
+		}
 		
 		public static void refreshAllTags()
 		{
@@ -313,6 +337,10 @@ import org.kitteh.tag.TagAPI;
 			for(String pl : teamlime)
 			{
 				TagAPI.refreshPlayer(Bukkit.getPlayer(pl));
+			}
+			for(Player pl : Bukkit.getServer().getOnlinePlayers())
+			{
+				TagAPI.refreshPlayer(pl);
 			}
 		}
 	 
@@ -512,27 +540,6 @@ import org.kitteh.tag.TagAPI;
 		 {
 			 pl.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
 		 }
-	 }
-	 
-	 public static void giveTeamArmor(Player pl, String team)
-	 {
-		switch(team)
-		{
-			case "cyan":
-			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.CYAN));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-				break;
-			case "lime":
-			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.LIME));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-				break;
-		}
 	 }
 	 
 	 public static void sendAllTeamsMsg(String msg)

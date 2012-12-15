@@ -201,7 +201,7 @@ public class Snowballer extends JavaPlugin
 							for(String pl : SnowballerListener.teamcyan)
 							{
 								Bukkit.getServer().getPlayer(pl).getInventory().clear();
-//								SnowballerListener.giveTeamArmor(Bukkit.getServer().getPlayer(pl), "cyan");
+								Rank.giveRank(Bukkit.getServer().getPlayer(pl));
 							}
 							for (int i = 0; i < SnowballerListener.teamlimeinarena.size(); i++)
 							{
@@ -213,7 +213,7 @@ public class Snowballer extends JavaPlugin
 							for(String pl : SnowballerListener.teamlime)
 							{
 								Bukkit.getServer().getPlayer(pl).getInventory().clear();
-//								SnowballerListener.giveTeamArmor(Bukkit.getServer().getPlayer(pl), "lime");
+								Rank.giveRank(Bukkit.getServer().getPlayer(pl));
 							}
 				  			SnowballerListener.teamcyaninarena.clear();
 				  			SnowballerListener.teamlimeinarena.clear();
@@ -251,7 +251,7 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			plcmd.getInventory().clear();
-//					  			SnowballerListener.giveTeamArmor(plcmd, "cyan");
+					  			Rank.giveRank(Bukkit.getServer().getPlayer(plcmd.getName()));
 					  			SnowballerListener.refreshAllTags();
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
@@ -300,7 +300,7 @@ public class Snowballer extends JavaPlugin
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			plcmd.getInventory().clear();
-//					  			SnowballerListener.giveTeamArmor(plcmd, "lime");
+					  			Rank.giveRank(Bukkit.getServer().getPlayer(plcmd.getName()));
 					  			SnowballerListener.refreshAllTags();
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{

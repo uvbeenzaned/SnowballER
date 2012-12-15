@@ -18,7 +18,7 @@ public enum ArmorColor {
     ORANGE(15435844),
     WHITE(15790320);
  
-    private int    color;
+    private int color;
  
     private ArmorColor(int color){
         this.color = color;
