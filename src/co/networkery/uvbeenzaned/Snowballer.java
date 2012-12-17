@@ -112,6 +112,18 @@ public class Snowballer extends JavaPlugin
 			  		}
 			  		plcmd.sendMessage(pg + "You have to be an op to run this command!");
 			  		return true;
+			  	case "arenalist":
+			  		if(plcmd.isOp())
+			  		{
+		  				plcmd.sendMessage(pg + "List of arenas:");
+		  				for(String k1 : SnowballerListener.config.getConfig().getConfigurationSection("teamcyanarenasides").getKeys(false))
+		  				{
+		  					plcmd.sendMessage(k1);
+		  				}
+		  				return true;
+			  		}
+					plcmd.sendMessage(pg + "You have to be an op to run this command!");
+					return true;
 			  	case "start":
 			  		if(plcmd.isOp())
 			  		{
