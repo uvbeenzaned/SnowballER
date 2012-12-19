@@ -3,7 +3,13 @@ package co.networkery.uvbeenzaned;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import javax.swing.Timer;
@@ -40,6 +46,7 @@ import org.kitteh.tag.TagAPI;
 	 public static List<String> teamlime = new ArrayList<String>();
 	 public static List<String> teamcyaninarena = new ArrayList<String>();
 	 public static List<String> teamlimeinarena = new ArrayList<String>();
+	 public static HashMap<String, Integer> roundpoints = new HashMap<String, Integer>();
 	 
 	 public SnowballerListener(JavaPlugin jp)
 	 {
@@ -532,6 +539,29 @@ import org.kitteh.tag.TagAPI;
 				 startIndependentTimerRound();
 			 }
 		 }
+	 }
+	 
+	 public static String checkPlayerLead()
+	 {
+		 String player = null;
+		 int points = 0;
+		 for(Entry<String, Integer> e : roundpoints.entrySet())
+		 {
+			 if(player == null && points == 0)
+			 {
+				 player = e.getKey();
+				 points = e.getValue();
+			 }
+			 else
+			 {
+				 if(e.getValue() > points)
+				 {
+					 player = e.getKey();
+					 points = e.getValue();
+				 }
+			 }
+		 }
+		 return player + "," + String.valueOf(points);
 	 }
 	 
 	 public static void giveSnowballs(Player pl)
