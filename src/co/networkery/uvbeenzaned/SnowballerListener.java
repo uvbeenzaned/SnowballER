@@ -3,12 +3,8 @@ package co.networkery.uvbeenzaned;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -46,7 +42,7 @@ import org.kitteh.tag.TagAPI;
 	 public static List<String> teamlime = new ArrayList<String>();
 	 public static List<String> teamcyaninarena = new ArrayList<String>();
 	 public static List<String> teamlimeinarena = new ArrayList<String>();
-	 public static HashMap<String, Integer> roundpoints = new HashMap<String, Integer>();
+	 public static HashMap<String, Integer> hitcnts = new HashMap<String, Integer>();
 	 
 	 public SnowballerListener(JavaPlugin jp)
 	 {
@@ -282,6 +278,7 @@ import org.kitteh.tag.TagAPI;
 									 }
 									 scores.getConfig().set(plhit.getName(), scores.getConfig().getInt(plhit.getName()) - 1);
 									 plhit.sendMessage(pg + "-1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plhit.getName())) + ".");
+									 hitcnts.put(plenemy.getName(), hitcnts.get(plenemy.getName()) + 1);
 									 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 									 plenemy.sendMessage(pg + "+1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plenemy.getName())) + ".");
 									 scores.saveConfig();
@@ -326,12 +323,12 @@ import org.kitteh.tag.TagAPI;
 			if(teamcyan.contains(event.getPlayer().getName()))
 			 {
 				cc = ChatColor.AQUA;
-				event.setFormat(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
+				event.setFormat(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
 			 }
 			 if(teamlime.contains(event.getPlayer().getName()))
 			 {
 				 cc = ChatColor.GREEN;
-				 event.setFormat(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
+				 event.setFormat(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
 			 }
 		}
 		
@@ -499,10 +496,23 @@ import org.kitteh.tag.TagAPI;
 				 teamlimeinarena.clear();
 				 for(String pl : teamlime)
 				 {
-					 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints"));
+					 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamcyan.size());
 				 }
-				 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
-				 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
+				 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
+				 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
+				 String hskiller = "";
+				 int hskills = 0;
+				 for(Entry<String, Integer> e : hitcnts.entrySet())
+				 {
+					 if(e.getValue() > hskills)
+					 {
+						 hskiller = e.getKey();
+						 hskills = e.getValue();
+					 }
+				 }
+				 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hskills);
+				 sendAllTeamsMsg(pg + hskiller + " was awarded " + hskills + "points for the highest lead!");
+				 hitcnts.clear();
 				 scores.saveConfig();
 				 gameon = false;
 			 }
@@ -526,10 +536,23 @@ import org.kitteh.tag.TagAPI;
 					 teamlimeinarena.clear();
 					 for(String pl : teamcyan)
 					 {
-						 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints"));
+						 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamlime.size());
 					 }
-					 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
-					 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints")) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+					 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+					 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+					 String hskiller = "";
+					 int hskills = 0;
+					 for(Entry<String, Integer> e : hitcnts.entrySet())
+					 {
+						 if(e.getValue() > hskills)
+						 {
+							 hskiller = e.getKey();
+							 hskills = e.getValue();
+						 }
+					 }
+					 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hskills);
+					 sendAllTeamsMsg(pg + hskiller + " was awarded " + hskills + "points for the highest lead!");
+					 hitcnts.clear();
 					 scores.saveConfig();
 					 gameon = false;
 				 } 
@@ -545,7 +568,7 @@ import org.kitteh.tag.TagAPI;
 	 {
 		 String player = null;
 		 int points = 0;
-		 for(Entry<String, Integer> e : roundpoints.entrySet())
+		 for(Entry<String, Integer> e : hitcnts.entrySet())
 		 {
 			 if(player == null && points == 0)
 			 {

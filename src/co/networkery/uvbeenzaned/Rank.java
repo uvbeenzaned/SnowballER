@@ -3,6 +3,8 @@ package co.networkery.uvbeenzaned;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.Color;
 
 public class Rank {
 
@@ -78,112 +80,112 @@ public class Rank {
 		{
 			case "Loser":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.PINK));
+				pl.getInventory().setChestplate(colorArmor(255, 0, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Newbie":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.BROWN));
+				pl.getInventory().setChestplate(colorArmor(255, 74 ,0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Beginner":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.RED));
+				pl.getInventory().setChestplate(colorArmor(255, 119, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Amature":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.MAGENTA));
+				pl.getInventory().setChestplate(colorArmor(255, 195, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Intermediate":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.PURPLE));
+				pl.getInventory().setChestplate(colorArmor(255, 255, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Master":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.BLUE));
+				pl.getInventory().setChestplate(colorArmor(204, 255, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Boss":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.LIGHT_BLUE));
+				pl.getInventory().setChestplate(colorArmor(0, 255, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Butch":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.CYAN));
+				pl.getInventory().setChestplate(colorArmor(0, 255, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Rex":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.GREEN));
+				pl.getInventory().setChestplate(colorArmor(0, 0, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Killer":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.LIME));
+				pl.getInventory().setChestplate(colorArmor(89, 0, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Alpha":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.YELLOW));
+				pl.getInventory().setChestplate(colorArmor(255, 0, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Hunter":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.ORANGE));
+				pl.getInventory().setChestplate(colorArmor(255, 0, 78));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Double":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.BLACK));
+				pl.getInventory().setChestplate(colorArmor(0, 0, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Winner":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.GRAY));
+				pl.getInventory().setChestplate(colorArmor(96, 96, 96));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Ultimate":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.SILVER));
+				pl.getInventory().setChestplate(colorArmor(160, 160, 160));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 				break;
 			case "Chosen":
 			try {
-				pl.getInventory().setChestplate(Armor.setColor(new ItemStack(Material.LEATHER_CHESTPLATE), ArmorColor.WHITE));
+				pl.getInventory().setChestplate(colorArmor(255, 255, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -259,5 +261,14 @@ public class Rank {
 			 rank = "{R15}Chosen";
 		 }
 		return rank;
+	}
+	
+	private static ItemStack colorArmor(int r, int g, int b)
+	{
+		 ItemStack cp = new ItemStack(Material.LEATHER_CHESTPLATE);
+		 LeatherArmorMeta m = (LeatherArmorMeta)cp.getItemMeta();
+		 m.setColor(Color.fromRGB(r, g, b));
+		 cp.setItemMeta(m);
+		return cp;
 	}
 }
