@@ -278,7 +278,14 @@ import org.kitteh.tag.TagAPI;
 									 }
 									 scores.getConfig().set(plhit.getName(), scores.getConfig().getInt(plhit.getName()) - 1);
 									 plhit.sendMessage(pg + "-1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plhit.getName())) + ".");
-									 hitcnts.put(plenemy.getName(), hitcnts.get(plenemy.getName()) + 1);
+									 if(!hitcnts.containsKey(plenemy.getName()))
+									 {
+										 hitcnts.put(plenemy.getName(), 1);
+									 }
+									 else
+									 {
+										 hitcnts.put(plenemy.getName(), hitcnts.get(plenemy.getName()) + 1);
+									 }
 									 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 									 plenemy.sendMessage(pg + "+1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plenemy.getName())) + ".");
 									 scores.saveConfig();
@@ -511,7 +518,7 @@ import org.kitteh.tag.TagAPI;
 					 }
 				 }
 				 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hskills);
-				 sendAllTeamsMsg(pg + hskiller + " was awarded " + hskills + "points for the highest lead!");
+				 sendAllTeamsMsg(pg + hskiller + " was awarded " + hskills + " points for the most player hits!");
 				 hitcnts.clear();
 				 scores.saveConfig();
 				 gameon = false;
@@ -551,7 +558,7 @@ import org.kitteh.tag.TagAPI;
 						 }
 					 }
 					 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hskills);
-					 sendAllTeamsMsg(pg + hskiller + " was awarded " + hskills + "points for the highest lead!");
+					 sendAllTeamsMsg(pg + hskiller + " was awarded " + hskills + " points for the most player hits!");
 					 hitcnts.clear();
 					 scores.saveConfig();
 					 gameon = false;
