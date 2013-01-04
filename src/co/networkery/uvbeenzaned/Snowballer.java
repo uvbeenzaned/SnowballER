@@ -395,21 +395,35 @@ public class Snowballer extends JavaPlugin
 		  			plcmd.sendMessage(pg + "You are not on a team!");
 		  			return true;
 			  	case "score":
-			  		if(SnowballerListener.teamcyan.contains(plcmd.getName()))
+			  		if(args.length == 1)
 			  		{
-			  			plcmd.sendMessage(pg + "Your score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(plcmd.getName())) + ".");
-			  			return true;
-			  		}
-			  		else
-			  		{
-				  		if(SnowballerListener.teamlime.contains(plcmd.getName()))
+				  		if(SnowballerListener.teamcyan.contains(plcmd.getName()))
 				  		{
 				  			plcmd.sendMessage(pg + "Your score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(plcmd.getName())) + ".");
 				  			return true;
 				  		}
+				  		else
+				  		{
+					  		if(SnowballerListener.teamlime.contains(plcmd.getName()))
+					  		{
+					  			plcmd.sendMessage(pg + "Your score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(plcmd.getName())) + ".");
+					  			return true;
+					  		}
+				  		}
+				  		plcmd.sendMessage(pg + "Join a team to lookup your score!");
+				  		return true;
 			  		}
-			  		plcmd.sendMessage(pg + "Join a team to lookup your score!");
-			  		return true;
+			  		else
+			  		{
+			  			if(args.length > 1)
+			  			{
+					  		if(SnowballerListener.teamcyan.contains(plcmd.getName()) || SnowballerListener.teamlime.contains(plcmd.getName()))
+					  		{
+					  			plcmd.sendMessage(pg + args[0] + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[0])) + ".");
+					  			return true;
+					  		}
+			  			}
+			  		}
 			  	case "stats":
 			  		plcmd.sendMessage(pg + "Not implemented yet.");
 			  		return true;
