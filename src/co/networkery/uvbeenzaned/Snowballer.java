@@ -413,17 +413,16 @@ public class Snowballer extends JavaPlugin
 				  		plcmd.sendMessage(pg + "Join a team to lookup your score!");
 				  		return true;
 			  		}
-			  		else
-			  		{
-			  			if(args.length > 1)
-			  			{
-					  		if(SnowballerListener.teamcyan.contains(plcmd.getName()) || SnowballerListener.teamlime.contains(plcmd.getName()))
-					  		{
-					  			plcmd.sendMessage(pg + args[0] + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[0])) + ".");
-					  			return true;
-					  		}
-			  			}
-			  		}
+		  			if(args.length > 1)
+		  			{
+				  		if(SnowballerListener.teamcyan.contains(plcmd.getName()) || SnowballerListener.teamlime.contains(plcmd.getName()))
+				  		{
+				  			plcmd.sendMessage(pg + args[0] + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[0])) + ".");
+				  			return true;
+				  		}
+				  		plcmd.sendMessage(pg + "That player does not exist in the score records!");
+				  		return false;
+		  			}
 			  	case "stats":
 			  		plcmd.sendMessage(pg + "Not implemented yet.");
 			  		return true;

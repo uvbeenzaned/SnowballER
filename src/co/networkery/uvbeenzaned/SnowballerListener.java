@@ -174,10 +174,10 @@ import org.kitteh.tag.TagAPI;
 					event.getDrops().clear();
 					terminateAll();
 				}
-				 if(hitcnts.containsKey(event.getEntity().getName()))
-				 {
-					 hitcnts.remove(event.getEntity().getName());
-				 }
+				if(hitcnts.containsKey(event.getEntity().getName()))
+				{
+					hitcnts.remove(event.getEntity().getName());
+				}
 		 }
 		 else
 		 {
@@ -213,10 +213,10 @@ import org.kitteh.tag.TagAPI;
 					event.getDrops().clear();
 					terminateAll();
 				}
-				 if(hitcnts.containsKey(event.getEntity().getName()))
-				 {
-					 hitcnts.remove(event.getEntity().getName());
-				 }
+				if(hitcnts.containsKey(event.getEntity().getName()))
+				{
+					hitcnts.remove(event.getEntity().getName());
+				}
 				refreshAllTags();
 		 }
 	 }
@@ -521,19 +521,22 @@ import org.kitteh.tag.TagAPI;
 				 }
 				 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
 				 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
-				 String hskiller = "";
-				 int hshits = 0;
-				 for(Entry<String, Integer> e : hitcnts.entrySet())
+				 if(!hitcnts.isEmpty())
 				 {
-					 if(e.getValue() > hshits)
+					 String hskiller = "";
+					 int hshits = 0;
+					 for(Entry<String, Integer> e : hitcnts.entrySet())
 					 {
-						 hskiller = e.getKey();
-						 hshits = e.getValue();
+						 if(e.getValue() > hshits)
+						 {
+							 hskiller = e.getKey();
+							 hshits = e.getValue();
+						 }
 					 }
+					 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
+					 sendAllTeamsMsg(pg + hskiller + " was awarded " + hshits * hshits + " points for the most player hits!");
+					 hitcnts.clear();
 				 }
-				 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
-				 sendAllTeamsMsg(pg + hskiller + " was awarded " + hshits * hshits + " points for the most player hits!");
-				 hitcnts.clear();
 				 scores.saveConfig();
 				 gameon = false;
 			 }
@@ -561,19 +564,22 @@ import org.kitteh.tag.TagAPI;
 					 }
 					 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
 					 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
-					 String hskiller = "";
-					 int hshits = 0;
-					 for(Entry<String, Integer> e : hitcnts.entrySet())
+					 if(!hitcnts.isEmpty())
 					 {
-						 if(e.getValue() > hshits)
+						 String hskiller = "";
+						 int hshits = 0;
+						 for(Entry<String, Integer> e : hitcnts.entrySet())
 						 {
-							 hskiller = e.getKey();
-							 hshits = e.getValue();
+							 if(e.getValue() > hshits)
+							 {
+								 hskiller = e.getKey();
+								 hshits = e.getValue();
+							 }
 						 }
+						 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
+						 sendAllTeamsMsg(pg + hskiller + " was awarded " + hshits * hshits + " points for the most player hits!");
+						 hitcnts.clear();
 					 }
-					 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
-					 sendAllTeamsMsg(pg + hskiller + " was awarded " + hshits * hshits + " points for the most player hits!");
-					 hitcnts.clear();
 					 scores.saveConfig();
 					 gameon = false;
 				 } 
