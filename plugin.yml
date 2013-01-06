@@ -1,13 +1,15 @@
 name: Snowballer
 main: co.networkery.uvbeenzaned.Snowballer
-version: 1.5.6
+version: 1.5.9
 commands:
    snowballer:
        description: Main Snowballer command.
        aliases: [sbr]
        usage: |
          ----Snowballer Help----
-         /<command> join cyan to join the cyan team.
-         /<command> join lime to join the lime team.
-         /<command> leave to leave your current team.
-         /<command> score to check your current score or /<command> score [player] to check another players score.
+         /<command> join cyan - to join the cyan team.
+         /<command> join lime - to join the lime team.
+         /<command> leave - to leave your current team.
+         /<command> score - to check your current score or /<command> score [player] to check another players score.
+         /<command> stats - to view Snowballer's collected statistics.
+         /<command> teamstats - to view the current team count and players.

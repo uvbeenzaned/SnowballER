@@ -1,6 +1,7 @@
 startwithoutop: false
 timerdelay: 30000
 teampoints: 1
+snowballthrowncount: 0
 lobbyspawnlocation: 
 teamcyanarenasides: 
 teamlimearenasides: 

@@ -16,12 +16,14 @@ import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -229,6 +231,24 @@ import org.kitteh.tag.TagAPI;
 			 if(event.getSlotType() == SlotType.ARMOR)
 			 {
 				 event.setCancelled(true); 
+			 }
+		 }
+	 }
+	 
+	 @EventHandler
+	 public void onSnowballThrow(ProjectileLaunchEvent event)
+	 {
+		 if(gameon)
+		 {
+			 if(event.getEntityType() == EntityType.SNOWBALL)
+			 {
+				 if(event.getEntity().getShooter().getType() == EntityType.PLAYER)
+				 {
+					 if(teamcyan.contains(((Player)event.getEntity().getShooter()).getName()) || teamlime.contains(((Player)event.getEntity().getShooter()).getName()))
+					 {
+						 config.getConfig().set("snowballthrowncount", config.getConfig().getInt("snowballthrowncount") + 1);
+					 }
+				 }
 			 }
 		 }
 	 }
@@ -538,6 +558,7 @@ import org.kitteh.tag.TagAPI;
 					 hitcnts.clear();
 				 }
 				 scores.saveConfig();
+				 config.saveConfig();
 				 gameon = false;
 			 }
 			 else
@@ -581,6 +602,7 @@ import org.kitteh.tag.TagAPI;
 						 hitcnts.clear();
 					 }
 					 scores.saveConfig();
+					 config.saveConfig();
 					 gameon = false;
 				 } 
 			 }

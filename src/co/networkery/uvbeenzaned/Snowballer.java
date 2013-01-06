@@ -415,16 +415,42 @@ public class Snowballer extends JavaPlugin
 			  		}
 		  			if(args.length > 1)
 		  			{
-				  		if(SnowballerListener.teamcyan.contains(plcmd.getName()) || SnowballerListener.teamlime.contains(plcmd.getName()))
+				  		if(SnowballerListener.scores.getConfig().contains(args[1]))
 				  		{
-				  			plcmd.sendMessage(pg + args[0] + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[0])) + ".");
+				  			plcmd.sendMessage(pg + args[1] + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[1])) + ".");
 				  			return true;
 				  		}
 				  		plcmd.sendMessage(pg + "That player does not exist in the score records!");
-				  		return false;
+				  		return true;
 		  			}
 			  	case "stats":
-			  		plcmd.sendMessage(pg + "Not implemented yet.");
+			  		plcmd.sendMessage(pg + String.valueOf(SnowballerListener.config.getConfig().getInt("snowballthrowncount")) + " snowballs have been thrown since records began.");
+			  		return true;
+			  	case "teamstats":
+			  		if(SnowballerListener.teamcyan.size() > 0)
+			  		{
+				  		plcmd.sendMessage(pg + "Team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "has " + String.valueOf(SnowballerListener.teamcyan.size()) + " players.");
+				  		for(String p : SnowballerListener.teamcyan)
+				  		{
+				  			plcmd.sendMessage( "    " + ChatColor.AQUA + p);
+				  		}
+			  		}
+			  		else
+			  		{
+			  			plcmd.sendMessage(pg + "Team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "has no players currently.");
+			  		}
+			  		if(SnowballerListener.teamlime.size() > 0)
+			  		{
+				  		plcmd.sendMessage(pg + "Team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "has " + String.valueOf(SnowballerListener.teamcyan.size()) + " players.");
+				  		for(String p : SnowballerListener.teamlime)
+				  		{
+				  			plcmd.sendMessage( "    " + ChatColor.GREEN + p);
+				  		}
+			  		}
+			  		else
+			  		{
+			  			plcmd.sendMessage(pg + "Team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "has no players currently.");
+			  		}
 			  		return true;
 			  }
 		  }
