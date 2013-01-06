@@ -441,7 +441,7 @@ public class Snowballer extends JavaPlugin
 			  		}
 			  		if(SnowballerListener.teamlime.size() > 0)
 			  		{
-				  		plcmd.sendMessage(pg + "Team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "has " + String.valueOf(SnowballerListener.teamcyan.size()) + " players.");
+				  		plcmd.sendMessage(pg + "Team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "has " + String.valueOf(SnowballerListener.teamlime.size()) + " players.");
 				  		for(String p : SnowballerListener.teamlime)
 				  		{
 				  			plcmd.sendMessage( "    " + ChatColor.GREEN + p);
