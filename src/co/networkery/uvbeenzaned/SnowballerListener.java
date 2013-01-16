@@ -17,17 +17,21 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -358,6 +362,43 @@ import org.kitteh.tag.TagAPI;
 				 }
 			 }
 		 }
+		
+		@EventHandler
+		public void onNewSign(SignChangeEvent event)
+		{
+			if(event.getPlayer().isOp())
+			{
+				if(event.getLine(0).equalsIgnoreCase("[sbr]"))
+				{
+					event.setLine(0, ChatColor.AQUA + "[Snowballer]");
+					event.setLine(1, "(click here)");
+					event.setLine(2, ChatColor.BLUE + "([RANK])");
+					event.setLine(3, "(points)");
+				}
+			}
+		}
+		
+		@EventHandler
+		public void onSignClick(PlayerInteractEvent event)
+		{
+			if(teamcyan.contains(event.getPlayer().getName()) || teamlime.contains(event.getPlayer().getName()))
+			{
+				if(event.getAction() == Action.RIGHT_CLICK_BLOCK)
+				{
+					if(event.getClickedBlock().getType() == Material.SIGN || event.getClickedBlock().getType() == Material.SIGN_POST || event.getClickedBlock().getType() == Material.WALL_SIGN)
+					{
+						Sign s = (org.bukkit.block.Sign)event.getClickedBlock().getState();
+						if(s.getLine(0).equalsIgnoreCase(ChatColor.AQUA + "[Snowballer]"))
+						{
+							s.setLine(1, event.getPlayer().getName());
+							s.setLine(2, ChatColor.BLUE + Rank.getRankName(event.getPlayer()));
+							s.setLine(3, String.valueOf(SnowballerListener.scores.getConfig().getInt(event.getPlayer().getName())));
+							s.update();
+						}
+					}
+				}
+			}
+		}
 		
 		@EventHandler
 		public void onChat(AsyncPlayerChatEvent event)
