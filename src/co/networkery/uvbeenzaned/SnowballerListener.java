@@ -329,9 +329,8 @@ import org.kitteh.tag.TagAPI;
 									 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 									 plenemy.sendMessage(pg + "+1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plenemy.getName())) + ".");
 									 scores.saveConfig();
-									 sendAllTeamsMsg(pg + "There are now " + teamcyaninarena.size() + " players on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " left in the arena!");
-									 sendAllTeamsMsg(pg + "There are now " + teamlimeinarena.size() + " players on team " + ChatColor.GREEN + "LIME" + ChatColor.RESET + " left in the arena!");
-									 sendAllTeamsMsg(pg + ChatColor.RED + plenemy.getName() + ChatColor.BLUE + " snowbrawled " + ChatColor.GREEN + plhit.getName() + ".");
+									 sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
+									 sendAllTeamsMsg(pg + getNamewColor(plenemy) + ChatColor.BLUE + " snowbrawled " + getNamewColor(plhit) + ".");
 									 checkTeamsInArena();
 									 event.setCancelled(true);
 								 }
@@ -430,6 +429,19 @@ import org.kitteh.tag.TagAPI;
 			{
 				TagAPI.refreshPlayer(pl);
 			}
+		}
+		
+		public static String getNamewColor(Player p) 
+		{
+			 if(teamcyan.contains(p))
+			 {
+				 return ChatColor.AQUA + p.getName();
+			 }
+			 if(teamlime.contains(p))
+			 {
+				 return ChatColor.GREEN + p.getName();
+			 }
+			return p.getName();
 		}
 	 
      public static ActionListener taskPerformer = new ActionListener() {

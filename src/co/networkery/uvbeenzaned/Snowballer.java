@@ -265,7 +265,7 @@ public class Snowballer extends JavaPlugin
 					  			plcmd.getInventory().clear();
 					  			Rank.giveRank(Bukkit.getServer().getPlayer(plcmd.getName()));
 					  			SnowballerListener.refreshAllTags();
-					  			plcmd.setPlayerListName(ChatColor.AQUA + plcmd.getName());
+					  			plcmd.setPlayerListName(Rank.getRankName(plcmd)+ " " + ChatColor.AQUA + plcmd.getName());
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamlime.isEmpty())
@@ -315,7 +315,7 @@ public class Snowballer extends JavaPlugin
 					  			plcmd.getInventory().clear();
 					  			Rank.giveRank(Bukkit.getServer().getPlayer(plcmd.getName()));
 					  			SnowballerListener.refreshAllTags();
-					  			plcmd.setPlayerListName(ChatColor.GREEN + plcmd.getName());
+					  			plcmd.setPlayerListName(Rank.getRankName(plcmd)+ " " + ChatColor.GREEN + plcmd.getName());
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamcyan.isEmpty())
