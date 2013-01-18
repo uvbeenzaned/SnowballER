@@ -154,6 +154,7 @@ import org.kitteh.tag.TagAPI;
 			    	Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 			    	teamcyaninarena.remove(pld);
 			    	event.getDrops().clear();
+			    	Bukkit.getPlayer(pld).setPlayerListName(Bukkit.getPlayer(pld).getName());
 				}
 				if(teamlimeinarena.contains(pld))
 				{
@@ -161,6 +162,7 @@ import org.kitteh.tag.TagAPI;
 					Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					teamlimeinarena.remove(pld);
 					event.getDrops().clear();
+					Bukkit.getPlayer(pld).setPlayerListName(Bukkit.getPlayer(pld).getName());
 				}
 				checkTeamsInArena();
 			    if(teamcyan.contains(pld))
@@ -170,6 +172,7 @@ import org.kitteh.tag.TagAPI;
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					event.getDrops().clear();
+					Bukkit.getPlayer(pld).setPlayerListName(Bukkit.getPlayer(pld).getName());
 					terminateAll();
 				}
 				if(teamlime.contains(pld))
@@ -179,6 +182,7 @@ import org.kitteh.tag.TagAPI;
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					event.getDrops().clear();
+					Bukkit.getPlayer(pld).setPlayerListName(Bukkit.getPlayer(pld).getName());
 					terminateAll();
 				}
 				if(hitcnts.containsKey(event.getEntity().getName()))
@@ -329,8 +333,8 @@ import org.kitteh.tag.TagAPI;
 									 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 									 plenemy.sendMessage(pg + "+1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plenemy.getName())) + ".");
 									 scores.saveConfig();
-									 sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
-									 sendAllTeamsMsg(pg + getNamewColor(plenemy) + ChatColor.BLUE + " snowbrawled " + getNamewColor(plhit) + ".");
+									 sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
+									 sendAllTeamsMsg(pg + getNamewColor(plenemy) + ChatColor.RED + " snowbrawled " + getNamewColor(plhit) + ".");
 									 checkTeamsInArena();
 									 event.setCancelled(true);
 								 }
@@ -433,15 +437,44 @@ import org.kitteh.tag.TagAPI;
 		
 		public static String getNamewColor(Player p) 
 		{
+			String newname = null;
+			 if(teamcyan.contains(p.getName()))
+			 {
+				 newname = ChatColor.AQUA + p.getName();
+			 }
+			 else
+			 {
+				 if(teamlime.contains(p.getName()))
+				 {
+					 newname = ChatColor.GREEN + p.getName();
+				 }
+				 else
+				 {
+					 newname = p.getName();
+				 } 
+			 }
+			return newname + ChatColor.RESET;
+		}
+		
+		public static String getNamewColor(String p) 
+		{
+			String newname = null;
 			 if(teamcyan.contains(p))
 			 {
-				 return ChatColor.AQUA + p.getName();
+				 newname = ChatColor.AQUA + p;
 			 }
-			 if(teamlime.contains(p))
+			 else
 			 {
-				 return ChatColor.GREEN + p.getName();
+				 if(teamlime.contains(p))
+				 {
+					 newname = ChatColor.GREEN + p;
+				 }
+				 else
+				 {
+					 newname = p;
+				 }
 			 }
-			return p.getName();
+			return newname + ChatColor.RESET;
 		}
 	 
      public static ActionListener taskPerformer = new ActionListener() {
@@ -611,7 +644,7 @@ import org.kitteh.tag.TagAPI;
 						 }
 					 }
 					 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
-					 sendAllTeamsMsg(pg + hskiller + " was awarded " + hshits * hshits + " points for the most player hits!");
+					 sendAllTeamsMsg(pg + getNamewColor(hskiller) + " was awarded " + hshits * hshits + " points for the most player hits!");
 					 hitcnts.clear();
 				 }
 				 scores.saveConfig();
@@ -655,7 +688,7 @@ import org.kitteh.tag.TagAPI;
 							 }
 						 }
 						 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
-						 sendAllTeamsMsg(pg + hskiller + " was awarded " + hshits * hshits + " points for the most player hits!");
+						 sendAllTeamsMsg(pg + getNamewColor(hskiller) + " was awarded " + hshits * hshits + " points for the most player hits!");
 						 hitcnts.clear();
 					 }
 					 scores.saveConfig();

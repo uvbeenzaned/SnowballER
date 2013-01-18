@@ -41,7 +41,7 @@ public class Snowballer extends JavaPlugin
 		  Player plcmd = (Player)sender;
 		  if(args.length > 0)
 		  {
-			  switch(args[0])
+			  switch(args[0].toLowerCase())
 			  {
 			  	case "setspawn":
 			  		if(plcmd.isOp())
@@ -259,13 +259,13 @@ public class Snowballer extends JavaPlugin
 					  		{
 					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 					  			SnowballerListener.teamcyan.add(plcmd.getName());
-					  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+					  			SnowballerListener.sendAllTeamsMsg(pg + SnowballerListener.getNamewColor(plcmd) + " has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			plcmd.getInventory().clear();
 					  			Rank.giveRank(Bukkit.getServer().getPlayer(plcmd.getName()));
 					  			SnowballerListener.refreshAllTags();
-					  			plcmd.setPlayerListName(Rank.getRankName(plcmd)+ " " + ChatColor.AQUA + plcmd.getName());
+					  			plcmd.setPlayerListName(ChatColor.AQUA + plcmd.getName());
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamlime.isEmpty())
@@ -309,13 +309,13 @@ public class Snowballer extends JavaPlugin
 					  		{
 					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 					  			SnowballerListener.teamlime.add(plcmd.getName());
-					  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() +" has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+					  			SnowballerListener.sendAllTeamsMsg(pg + SnowballerListener.getNamewColor(plcmd) + " has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			plcmd.getInventory().clear();
 					  			Rank.giveRank(Bukkit.getServer().getPlayer(plcmd.getName()));
 					  			SnowballerListener.refreshAllTags();
-					  			plcmd.setPlayerListName(Rank.getRankName(plcmd)+ " " + ChatColor.GREEN + plcmd.getName());
+					  			plcmd.setPlayerListName(ChatColor.GREEN + plcmd.getName());
 					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 					  			{
 						  			if(!SnowballerListener.teamcyan.isEmpty())
@@ -421,7 +421,7 @@ public class Snowballer extends JavaPlugin
 		  			{
 				  		if(SnowballerListener.scores.getConfig().contains(args[1]))
 				  		{
-				  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(Bukkit.getPlayer(args[1])) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + args[1] + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[1])) + ".");
+				  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(Bukkit.getPlayer(args[1])) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + SnowballerListener.getNamewColor(args[1]) + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[1])) + ".");
 				  			return true;
 				  		}
 				  		plcmd.sendMessage(pg + "That player does not exist in the score records!");
