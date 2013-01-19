@@ -573,6 +573,15 @@ import org.kitteh.tag.TagAPI;
 					teamlimeinarena.add(pl);
 					Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("teamlimearenasides." + key)));
 				}
+				//attempt at the invis tp glitch
+				for(String pl1 : teamcyan)
+				{
+					for(String pl2 : teamlime)
+					{
+						Bukkit.getServer().getPlayer(pl1).showPlayer(Bukkit.getServer().getPlayer(pl2));
+						Bukkit.getServer().getPlayer(pl2).showPlayer(Bukkit.getServer().getPlayer(pl1));
+					}
+				}
 			}
 			i++;
 		}
