@@ -394,7 +394,7 @@ import org.kitteh.tag.TagAPI;
 						if(s.getLine(0).equalsIgnoreCase(ChatColor.AQUA + "[Snowballer]"))
 						{
 							s.setLine(1, event.getPlayer().getName());
-							s.setLine(2, ChatColor.BLUE + Rank.getRankName(event.getPlayer()));
+							s.setLine(2, ChatColor.BLUE + Rank.getRankName(event.getPlayer().getName()));
 							s.setLine(3, String.valueOf(SnowballerListener.scores.getConfig().getInt(event.getPlayer().getName())));
 							s.update();
 						}
@@ -410,12 +410,12 @@ import org.kitteh.tag.TagAPI;
 			if(teamcyan.contains(event.getPlayer().getName()))
 			 {
 				cc = ChatColor.AQUA;
-				event.setFormat(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
+				event.setFormat(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
 			 }
 			 if(teamlime.contains(event.getPlayer().getName()))
 			 {
 				 cc = ChatColor.GREEN;
-				 event.setFormat(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
+				 event.setFormat(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
 			 }
 		}
 		

@@ -403,14 +403,14 @@ public class Snowballer extends JavaPlugin
 			  		{
 				  		if(SnowballerListener.teamcyan.contains(plcmd.getName()))
 				  		{
-				  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName((Player)plcmd) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + "Your score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(plcmd.getName())) + ".");
+				  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(plcmd.getName()) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + "Your score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(plcmd.getName())) + ".");
 				  			return true;
 				  		}
 				  		else
 				  		{
 					  		if(SnowballerListener.teamlime.contains(plcmd.getName()))
 					  		{
-					  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName((Player)plcmd) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + "Your score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(plcmd.getName())) + ".");
+					  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(plcmd.getName()) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + "Your score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(plcmd.getName())) + ".");
 					  			return true;
 					  		}
 				  		}
@@ -421,7 +421,7 @@ public class Snowballer extends JavaPlugin
 		  			{
 				  		if(SnowballerListener.scores.getConfig().contains(args[1]))
 				  		{
-				  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(Bukkit.getPlayer(args[1])) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + SnowballerListener.getNamewColor(args[1]) + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[1])) + ".");
+				  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(args[1]) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + SnowballerListener.getNamewColor(args[1]) + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[1])) + ".");
 				  			return true;
 				  		}
 				  		plcmd.sendMessage(pg + "That player does not exist in the score records!");
@@ -436,7 +436,7 @@ public class Snowballer extends JavaPlugin
 				  		plcmd.sendMessage(pg + "Team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "has " + String.valueOf(SnowballerListener.teamcyan.size()) + " players.");
 				  		for(String p : SnowballerListener.teamcyan)
 				  		{
-				  			plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(Bukkit.getPlayer(p)) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + p);
+				  			plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + p);
 				  		}
 			  		}
 			  		else
@@ -448,7 +448,7 @@ public class Snowballer extends JavaPlugin
 				  		plcmd.sendMessage(pg + "Team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "has " + String.valueOf(SnowballerListener.teamlime.size()) + " players.");
 				  		for(String p : SnowballerListener.teamlime)
 				  		{
-				  			plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(Bukkit.getPlayer(p)) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + p);
+				  			plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + p);
 				  		}
 			  		}
 			  		else

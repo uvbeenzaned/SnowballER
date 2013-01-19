@@ -192,9 +192,9 @@ public class Rank {
 				break;
 		}
 	}
-	public static String getRankName(Player pl)
+	public static String getRankName(String pl)
 	{
-		int score = SnowballerListener.scores.getConfig().getInt(pl.getName());
+		int score = SnowballerListener.scores.getConfig().getInt(pl);
 		 String rank = "";
 		 if(score <= -1)
 		 {
