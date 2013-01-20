@@ -22,6 +22,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
@@ -31,6 +32,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -55,6 +57,22 @@ import org.kitteh.tag.TagAPI;
 	 {
 		 config = new ConfigAccessor(jp, "config.yml");
 		 scores = new ConfigAccessor(jp, "scores.yml");
+	 }
+	 
+	 @EventHandler(priority = EventPriority.HIGHEST)
+	 public void onPlayerCommand(PlayerCommandPreprocessEvent e)
+	 {
+		 if(!e.getPlayer().isOp())
+		 {
+			 if(teamcyan.contains(e.getPlayer().getName()) | teamlime.contains(e.getPlayer().getName()))
+			 {
+				 if(!e.getMessage().startsWith("/sbr"))
+				 {
+					 sendAllTeamsMsg(pg + "Leave your team to execute other commands!");
+					 e.setCancelled(true);
+				 } 
+			 } 
+		 }
 	 }
 	 
 	 @EventHandler
