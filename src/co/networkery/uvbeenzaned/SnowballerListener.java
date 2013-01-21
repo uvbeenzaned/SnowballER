@@ -64,13 +64,15 @@ import org.kitteh.tag.TagAPI;
 	 {
 		 if(!e.getPlayer().isOp())
 		 {
-			 if(teamcyan.contains(e.getPlayer().getName()) | teamlime.contains(e.getPlayer().getName()))
+			 if(teamcyan.contains(e.getPlayer().getName()) || teamlime.contains(e.getPlayer().getName()))
 			 {
-				 if(!e.getMessage().startsWith("/sbr"))
+				 String cmdname = e.getMessage().split(" ")[0].replace("/", "");
+				 e.getPlayer().sendMessage(cmdname);
+				 if(!cmdname.equalsIgnoreCase("sbr") && !cmdname.equalsIgnoreCase("snowballer"))
 				 {
 					 sendAllTeamsMsg(pg + "Leave your team to execute other commands!");
 					 e.setCancelled(true);
-				 } 
+				 }
 			 } 
 		 }
 	 }
