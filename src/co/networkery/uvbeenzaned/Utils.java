@@ -46,7 +46,6 @@ public class Utils {
         			Bukkit.getPlayer(p).teleport(new Location(w, x, y, z));
         		}
         	}
-        	unstucktimer.stop();
         }
     };
     
@@ -55,6 +54,7 @@ public class Utils {
 	public static void checkPlayerStuck(int delay)
 	{
 		unstucktimer = new Timer(delay, taskPerformer);
+		unstucktimer.setRepeats(false);
 		unstucktimer.start();
 	}
 	
