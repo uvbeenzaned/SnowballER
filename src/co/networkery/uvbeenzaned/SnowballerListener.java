@@ -70,7 +70,7 @@ import org.kitteh.tag.TagAPI;
 				 e.getPlayer().sendMessage(cmdname);
 				 if(!cmdname.equalsIgnoreCase("sbr") && !cmdname.equalsIgnoreCase("snowballer"))
 				 {
-					 sendAllTeamsMsg(pg + "Leave your team to execute other commands!");
+					 e.getPlayer().sendMessage((pg + "Leave your team to execute other commands!"));
 					 e.setCancelled(true);
 				 }
 			 } 
@@ -352,8 +352,6 @@ import org.kitteh.tag.TagAPI;
 									 }
 									 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 									 plenemy.sendMessage(pg + "+1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plenemy.getName())) + ".");
-									 plenemy.setPlayerListName(Utils.getNamewColor(plenemy) + ChatColor.RED + "(" + hitcnts.get(plenemy).toString() + ")");
-									 plhit.setPlayerListName(Utils.getNamewColor(plenemy));
 									 scores.saveConfig();
 									 sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
 									 sendAllTeamsMsg(pg + Utils.getNamewColor(plenemy) + ChatColor.RED + " snowbrawled " + Utils.getNamewColor(plhit) + ".");
