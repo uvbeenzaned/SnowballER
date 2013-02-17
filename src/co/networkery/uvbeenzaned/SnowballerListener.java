@@ -100,6 +100,7 @@ import org.kitteh.tag.TagAPI;
 				{
 					scores.saveConfig();
 					teamcyan.remove(pll);
+					Bukkit.getServer().getPlayer(pll).setRemoveWhenFarAway(true);
 					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
@@ -111,6 +112,7 @@ import org.kitteh.tag.TagAPI;
 				{
 					scores.saveConfig();
 					teamlime.remove(pll);
+					Bukkit.getServer().getPlayer(pll).setRemoveWhenFarAway(true);
 					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
@@ -137,6 +139,7 @@ import org.kitteh.tag.TagAPI;
 				{
 					scores.saveConfig();
 					teamcyan.remove(pll);
+					Bukkit.getServer().getPlayer(pll).setRemoveWhenFarAway(true);
 					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
@@ -148,6 +151,7 @@ import org.kitteh.tag.TagAPI;
 				{
 					scores.saveConfig();
 					teamlime.remove(pll);
+					Bukkit.getServer().getPlayer(pll).setRemoveWhenFarAway(true);
 					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
@@ -189,6 +193,7 @@ import org.kitteh.tag.TagAPI;
 			    {
 			    	scores.saveConfig();
 			    	teamcyan.remove(pld);
+			    	Bukkit.getServer().getPlayer(pld).setRemoveWhenFarAway(true);
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					event.getDrops().clear();
@@ -199,6 +204,7 @@ import org.kitteh.tag.TagAPI;
 				{
 					scores.saveConfig();
 					teamlime.remove(pld);
+					Bukkit.getServer().getPlayer(pld).setRemoveWhenFarAway(true);
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					event.getDrops().clear();
@@ -230,6 +236,7 @@ import org.kitteh.tag.TagAPI;
 			    {
 			    	scores.saveConfig();
 			    	teamcyan.remove(pld);
+			    	Bukkit.getServer().getPlayer(pld).setRemoveWhenFarAway(true);
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					event.getDrops().clear();
@@ -239,6 +246,7 @@ import org.kitteh.tag.TagAPI;
 				{
 					scores.saveConfig();
 					teamlime.remove(pld);
+					Bukkit.getServer().getPlayer(pld).setRemoveWhenFarAway(true);
 					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					event.getDrops().clear();
@@ -328,6 +336,7 @@ import org.kitteh.tag.TagAPI;
 									 locyplus1.setY(locyplus1.getY() + 1);
 									 plhit.getWorld().playEffect(locyplus1, Effect.ENDER_SIGNAL, 0);
 									 plhit.getWorld().playEffect(plhit.getLocation(), Effect.ENDER_SIGNAL, 0);
+									 plhit.setRemoveWhenFarAway(true);
 									 plhit.teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 									 plhit.getInventory().clear();
 									 if(teamcyaninarena.contains(plhit.getName()))
@@ -529,6 +538,15 @@ import org.kitteh.tag.TagAPI;
 		{
 			if(mapnum == i)
 			{
+				//attempt at the invis tp glitch
+				for(String pl : teamcyan)
+				{
+					Bukkit.getPlayer(pl).setRemoveWhenFarAway(false);
+				}
+				for(String pl : teamlime)
+				{
+					Bukkit.getPlayer(pl).setRemoveWhenFarAway(false);
+				}
 				for(String pl : teamcyan)
 				{
 					if(Bukkit.getServer().getPlayer(pl).getGameMode() == GameMode.CREATIVE)
@@ -552,15 +570,6 @@ import org.kitteh.tag.TagAPI;
 					Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("teamlimearenasides." + key)));
 				}
 				Utils.checkPlayerStuck(500);
-				//attempt at the invis tp glitch
-				for(String pl1 : teamcyan)
-				{
-					for(String pl2 : teamlime)
-					{
-						Bukkit.getServer().getPlayer(pl1).showPlayer(Bukkit.getServer().getPlayer(pl2));
-						Bukkit.getServer().getPlayer(pl2).showPlayer(Bukkit.getServer().getPlayer(pl1));
-					}
-				}
 			}
 			i++;
 		}
@@ -616,6 +625,7 @@ import org.kitteh.tag.TagAPI;
 				 for(String pl : teamlime)
 				 {
 					 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamcyan.size());
+					 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 				 }
 				 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
 				 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
@@ -660,6 +670,7 @@ import org.kitteh.tag.TagAPI;
 					 for(String pl : teamcyan)
 					 {
 						 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamlime.size());
+						 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 					 }
 					 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
 					 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");

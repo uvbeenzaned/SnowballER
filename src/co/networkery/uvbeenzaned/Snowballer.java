@@ -257,6 +257,7 @@ public class Snowballer extends JavaPlugin
 					  		{
 					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 					  			SnowballerListener.teamcyan.add(plcmd.getName());
+					  			plcmd.setRemoveWhenFarAway(false);
 					  			SnowballerListener.sendAllTeamsMsg(pg + Utils.getNamewColor(plcmd) + " has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " players: " + SnowballerListener.teamcyan.size());
 					  			plcmd.getInventory().clear();
@@ -306,6 +307,7 @@ public class Snowballer extends JavaPlugin
 					  		{
 					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 					  			SnowballerListener.teamlime.add(plcmd.getName());
+					  			plcmd.setRemoveWhenFarAway(false);
 					  			SnowballerListener.sendAllTeamsMsg(pg + Utils.getNamewColor(plcmd) + " has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
 					  			plcmd.getInventory().clear();
@@ -362,6 +364,7 @@ public class Snowballer extends JavaPlugin
 			  				plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 			  			}
 			  			SnowballerListener.teamcyan.remove(plcmd.getName());
+			  			plcmd.setRemoveWhenFarAway(true);
 			  			plcmd.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 			  			plcmd.getInventory().clear();
 			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
