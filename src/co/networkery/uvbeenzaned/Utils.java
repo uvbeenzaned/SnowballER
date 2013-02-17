@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 public class Utils {
 
@@ -56,6 +58,48 @@ public class Utils {
 		unstucktimer = new Timer(delay, taskPerformer);
 		unstucktimer.setRepeats(false);
 		unstucktimer.start();
+	}
+	
+	public static String getNamewColor(Player p) 
+	{
+		String newname = null;
+		 if(SnowballerListener.teamcyan.contains(p.getName()))
+		 {
+			 newname = ChatColor.AQUA + p.getName();
+		 }
+		 else
+		 {
+			 if(SnowballerListener.teamlime.contains(p.getName()))
+			 {
+				 newname = ChatColor.GREEN + p.getName();
+			 }
+			 else
+			 {
+				 newname = p.getName();
+			 } 
+		 }
+		return newname + ChatColor.RESET;
+	}
+	
+	public static String getNamewColor(String p) 
+	{
+		String newname = null;
+		 if(SnowballerListener.teamcyan.contains(p))
+		 {
+			 newname = ChatColor.AQUA + p;
+		 }
+		 else
+		 {
+			 if(SnowballerListener.teamlime.contains(p))
+			 {
+				 newname = ChatColor.GREEN + p;
+			 }
+			 else
+			 {
+				 newname = p;
+			 }
+		 }
+		return newname + ChatColor.RESET;
 	}
 	
 }

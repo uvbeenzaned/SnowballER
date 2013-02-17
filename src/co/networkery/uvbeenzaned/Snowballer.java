@@ -259,7 +259,7 @@ public class Snowballer extends JavaPlugin
 					  		{
 					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 					  			SnowballerListener.teamcyan.add(plcmd.getName());
-					  			SnowballerListener.sendAllTeamsMsg(pg + SnowballerListener.getNamewColor(plcmd) + " has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+					  			SnowballerListener.sendAllTeamsMsg(pg + Utils.getNamewColor(plcmd) + " has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			plcmd.getInventory().clear();
@@ -309,7 +309,7 @@ public class Snowballer extends JavaPlugin
 					  		{
 					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 					  			SnowballerListener.teamlime.add(plcmd.getName());
-					  			SnowballerListener.sendAllTeamsMsg(pg + SnowballerListener.getNamewColor(plcmd) + " has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+					  			SnowballerListener.sendAllTeamsMsg(pg + Utils.getNamewColor(plcmd) + " has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
 					  			SnowballerListener.sendAllTeamsMsg(pg + "There are now " + SnowballerListener.teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
 					  			plcmd.getInventory().clear();
@@ -421,7 +421,7 @@ public class Snowballer extends JavaPlugin
 		  			{
 				  		if(SnowballerListener.scores.getConfig().contains(args[1]))
 				  		{
-				  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(args[1]) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + SnowballerListener.getNamewColor(args[1]) + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[1])) + ".");
+				  			plcmd.sendMessage(pg + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(args[1]) + ChatColor.RESET + ChatColor.GOLD + "] " + ChatColor.RESET + Utils.getNamewColor(args[1]) + "'s score is " + String.valueOf(SnowballerListener.scores.getConfig().getInt(args[1])) + ".");
 				  			return true;
 				  		}
 				  		plcmd.sendMessage(pg + "That player does not exist in the score records!");
@@ -442,7 +442,7 @@ public class Snowballer extends JavaPlugin
 				  		{
 				  			if(SnowballerListener.hitcnts.containsKey(p))
 				  			{
-				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + p + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(p).toString() + "hits)");
+				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + p + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(p).toString() + " hits)");
 				  			}
 				  			else
 				  			{
@@ -465,7 +465,7 @@ public class Snowballer extends JavaPlugin
 				  		{
 				  			if(SnowballerListener.hitcnts.containsKey(p))
 				  			{
-				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + p + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(p).toString() + "hits)");
+				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + p + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(p).toString() + " hits)");
 				  			}
 				  			else
 				  			{
