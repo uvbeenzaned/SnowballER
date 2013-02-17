@@ -433,27 +433,49 @@ public class Snowballer extends JavaPlugin
 			  	case "teamstats":
 			  		if(SnowballerListener.teamcyan.size() > 0)
 			  		{
-				  		plcmd.sendMessage(pg + "Team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "has " + String.valueOf(SnowballerListener.teamcyan.size()) + " players.");
+				  		plcmd.sendMessage(pg + ChatColor.AQUA + "CYAN " + ChatColor.RESET + ": " + String.valueOf(SnowballerListener.teamcyan.size()) + " players");
+				  		if(SnowballerListener.gameon == true)
+				  		{
+				  			plcmd.sendMessage(pg + ChatColor.AQUA + "CYAN " + ChatColor.RESET + " left in arena: " + String.valueOf(SnowballerListener.teamcyaninarena.size()) + " players");
+				  		}
 				  		for(String p : SnowballerListener.teamcyan)
 				  		{
-				  			plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + p);
+				  			if(SnowballerListener.hitcnts.containsKey(p))
+				  			{
+				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + p + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(p).toString() + "hits)");
+				  			}
+				  			else
+				  			{
+				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + p);
+				  			}
 				  		}
 			  		}
 			  		else
 			  		{
-			  			plcmd.sendMessage(pg + "Team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "has no players currently.");
+			  			plcmd.sendMessage(pg + ChatColor.AQUA + "CYAN " + ChatColor.RESET + ": 0 players");
 			  		}
 			  		if(SnowballerListener.teamlime.size() > 0)
 			  		{
-				  		plcmd.sendMessage(pg + "Team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "has " + String.valueOf(SnowballerListener.teamlime.size()) + " players.");
+				  		plcmd.sendMessage(pg + ChatColor.GREEN + "LIME " + ChatColor.RESET + ": " + String.valueOf(SnowballerListener.teamlime.size()) + " players");
+				  		if(SnowballerListener.gameon == true)
+				  		{
+				  			plcmd.sendMessage(pg + ChatColor.GREEN + "LIME " + ChatColor.RESET + "left in arena: " + String.valueOf(SnowballerListener.teamlimeinarena.size()) + " players");
+				  		}
 				  		for(String p : SnowballerListener.teamlime)
 				  		{
-				  			plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + p);
+				  			if(SnowballerListener.hitcnts.containsKey(p))
+				  			{
+				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + p + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(p).toString() + "hits)");
+				  			}
+				  			else
+				  			{
+				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + p);
+				  			}
 				  		}
 			  		}
 			  		else
 			  		{
-			  			plcmd.sendMessage(pg + "Team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "has no players currently.");
+			  			plcmd.sendMessage(pg + ChatColor.GREEN + "LIME " + ChatColor.RESET + ": 0 players");
 			  		}
 			  		return true;
 			  }
