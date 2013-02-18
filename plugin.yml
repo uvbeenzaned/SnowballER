@@ -1,6 +1,6 @@
 name: Snowballer
 main: co.networkery.uvbeenzaned.Snowballer
-version: 1.7.3
+version: 1.7.4
 commands:
    snowballer:
        description: Main Snowballer command.
@@ -10,6 +10,9 @@ commands:
          /<command> join cyan - to join the cyan team.
          /<command> join lime - to join the lime team.
          /<command> leave - to leave your current team.
-         /<command> score - to check your current score or /<command> score [player] to check another players score.
+         /<command> score - to check your current score.
+         /<command> score [player] - to check another players score.
          /<command> stats - to view Snowballer's collected statistics.
          /<command> teamstats - to view the current team count and players.
+         /<command> arenalist - to show a list of all arenas.
+         /<command> warparena [arena name] - to warp to the specified arena. (requires permissions)

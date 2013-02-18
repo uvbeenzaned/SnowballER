@@ -122,6 +122,32 @@ public class Snowballer extends JavaPlugin
 	  				arenalist = arenalist + ChatColor.AQUA + " (" + SnowballerListener.config.getConfig().getConfigurationSection("teamcyanarenasides").getKeys(false).size() + ")";
 	  				plcmd.sendMessage(arenalist);
 	  				return true;
+			  	case "warparena":
+			  		if(plcmd.isOp() || plcmd.hasPermission("snowballer.warparena"))
+			  		{
+			  			if(args.length > 1)
+			  			{
+				  			if(SnowballerListener.config.getConfig().get("teamcyanarenasides." + args[1]) != null)
+				  			{
+				  				plcmd.sendMessage(pg + "Teleporting to: " + ChatColor.GOLD + args[1]);
+				  				plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamcyanarenasides." + args[1])));
+				  				Utils.checkPlayerStuck(500);
+				  				return true;
+				  			}
+				  			else
+				  			{
+				  				plcmd.sendMessage(pg + "That arena does not exist!  Type /sbr arenalist to get a list of arenas.");
+				  				return true;
+				  			}
+			  			}
+			  			else
+			  			{
+			  				plcmd.sendMessage(pg + "You need to supply an arena name!  Type /sbr arenalist to get a list of arenas.");
+			  				return true;
+			  			}
+			  		}
+			  		plcmd.sendMessage(pg + "You do not have permission to warp to arenas!");
+			  		return true;
 			  	case "start":
 			  		if(plcmd.isOp())
 			  		{
