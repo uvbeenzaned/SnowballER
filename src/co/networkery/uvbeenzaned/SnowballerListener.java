@@ -422,9 +422,9 @@ import org.kitteh.tag.TagAPI;
 						Sign s = (org.bukkit.block.Sign)event.getClickedBlock().getState();
 						if(s.getLine(0).equalsIgnoreCase(ChatColor.AQUA + "[Snowballer]"))
 						{
-							s.setLine(1, event.getPlayer().getName());
+							s.setLine(1, Utils.getNamewColor(event.getPlayer()));
 							s.setLine(2, ChatColor.BLUE + Rank.getRankName(event.getPlayer().getName()));
-							s.setLine(3, String.valueOf(SnowballerListener.scores.getConfig().getInt(event.getPlayer().getName())));
+							s.setLine(3, ChatColor.GOLD + String.valueOf(SnowballerListener.scores.getConfig().getInt(event.getPlayer().getName())));
 							s.update();
 						}
 					}
@@ -627,8 +627,8 @@ import org.kitteh.tag.TagAPI;
 					 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamcyan.size());
 					 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 				 }
-				 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
-				 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + ".");
+				 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
+				 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
 				 if(!hitcnts.isEmpty())
 				 {
 					 String hskiller = "";
@@ -672,8 +672,8 @@ import org.kitteh.tag.TagAPI;
 						 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamlime.size());
 						 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 					 }
-					 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
-					 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + ".");
+					 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
+					 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
 					 if(!hitcnts.isEmpty())
 					 {
 						 String hskiller = "";
