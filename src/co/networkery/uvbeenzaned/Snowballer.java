@@ -4,18 +4,16 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Snowballer extends JavaPlugin
 {
 	
-	public String pg = ChatColor.AQUA + "[Snowballer] " +  ChatColor.RESET;
+	public String pg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Snowballer" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	public SnowballerListener sbr;
 	public Logger log;
 	
@@ -158,7 +156,7 @@ public class Snowballer extends JavaPlugin
 				  				if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
 				  				{
 					  				SnowballerListener.gameon = true;
-						  			SnowballerListener.randomMap();
+						  			Round.randomMap();
 						  			plcmd.sendMessage(pg + "You've started a Snowballer game.");
 						  			return true;
 				  				}
@@ -192,7 +190,7 @@ public class Snowballer extends JavaPlugin
 				  				if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
 				  				{
 					  				SnowballerListener.timergame = true;
-					  				SnowballerListener.startIndependentTimerRound();
+					  				Round.startIndependentTimerRound();
 						  			plcmd.sendMessage(pg + "You've scheduled a Snowballer game for " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
 						  			return true;
 				  				}
@@ -267,162 +265,12 @@ public class Snowballer extends JavaPlugin
 			  	case "join":
 			  		if(args.length > 1)
 			  		{
-			  			if(SnowballerListener.teamcyan.contains(plcmd.getName()))
-			  			{
-			  				plcmd.sendMessage(pg + "You are already on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-			  				return true;
-			  			}
-			  			if(SnowballerListener.teamlime.contains(plcmd.getName()))
-			  			{
-			  				plcmd.sendMessage(pg + "You are already on team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-			  				return true;
-			  			}
-			  			if(args[1].equalsIgnoreCase("cyan"))
-			  			{
-					  		if(!SnowballerListener.teamcyan.contains(plcmd.getName()) && !SnowballerListener.teamlime.contains(plcmd.getName()))
-					  		{
-					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
-					  			SnowballerListener.teamcyan.add(plcmd.getName());
-					  			plcmd.setRemoveWhenFarAway(false);
-					  			SnowballerListener.sendAllTeamsMsg(pg + Utils.getNamewColor(plcmd) + " has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-					  			SnowballerListener.sendAllTeamsMsg(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " players: " + SnowballerListener.teamcyan.size());
-					  			plcmd.getInventory().clear();
-					  			Rank.giveRank(Bukkit.getServer().getPlayer(plcmd.getName()));
-					  			SnowballerListener.refreshAllTags();
-					  			plcmd.setPlayerListName(ChatColor.AQUA + plcmd.getName());
-					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
-					  			{
-						  			if(!SnowballerListener.teamlime.isEmpty())
-						  			{
-						  				if(SnowballerListener.gameon == false)
-							  			{
-							  				if(SnowballerListener.timergame == false)
-							  				{
-								  				if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
-								  				{
-									  				SnowballerListener.timergame = true;
-									  				SnowballerListener.startIndependentTimerRound();
-										  			plcmd.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
-										  			return true;
-								  				}
-								  				else
-								  				{
-								  					plcmd.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
-								  					return true;
-								  				}
-							  				}
-								  		}
-							  			else
-							  			{
-							  				plcmd.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
-							  				return true;
-							  			}
-						  			}
-						  			else
-						  			{
-						  				plcmd.sendMessage(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
-						  				plcmd.sendMessage(pg + "Waiting for another player to join....");
-						  			}
-					  			}
-					  			return true;
-					  		}
-			  			}
-			  			if(args[1].equalsIgnoreCase("lime"))
-			  			{
-					  		if(!SnowballerListener.teamlime.contains(plcmd.getName()) && !SnowballerListener.teamcyan.contains(plcmd.getName()))
-					  		{
-					  			plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
-					  			SnowballerListener.teamlime.add(plcmd.getName());
-					  			plcmd.setRemoveWhenFarAway(false);
-					  			SnowballerListener.sendAllTeamsMsg(pg + Utils.getNamewColor(plcmd) + " has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-					  			SnowballerListener.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
-					  			plcmd.getInventory().clear();
-					  			Rank.giveRank(Bukkit.getServer().getPlayer(plcmd.getName()));
-					  			SnowballerListener.refreshAllTags();
-					  			plcmd.setPlayerListName(ChatColor.GREEN + plcmd.getName());
-					  			if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
-					  			{
-						  			if(!SnowballerListener.teamcyan.isEmpty())
-						  			{
-						  				if(SnowballerListener.gameon == false)
-							  			{
-							  				if(SnowballerListener.timergame == false)
-							  				{
-								  				if(!SnowballerListener.teamlime.isEmpty() && !SnowballerListener.teamcyan.isEmpty())
-								  				{
-									  				SnowballerListener.timergame = true;
-									  				SnowballerListener.startIndependentTimerRound();
-										  			plcmd.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
-										  			return true;
-								  				}
-								  				else
-								  				{
-								  					plcmd.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
-								  					return true;
-								  				}
-							  				}
-								  		}
-							  			else
-							  			{
-							  				plcmd.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
-							  				return true;
-							  			}
-						  			}
-						  			else
-						  			{
-						  				plcmd.sendMessage(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
-						  				plcmd.sendMessage(pg + "Waiting for another player to join....");
-						  			}
-					  			}
-					  			return true;
-					  		}
-			  			}
-			  			return true;
+			  			 return Team.Join(plcmd.getName(), args[1]);
 			  		}
 			  		return false;
 			  	case "leave":
 			  		SnowballerListener.scores.saveConfig();
-			  		if(SnowballerListener.teamcyan.contains(plcmd.getName()))
-			  		{
-			  			if(SnowballerListener.teamcyaninarena.contains(plcmd.getName()))
-			  			{
-			  				SnowballerListener.teamcyaninarena.remove(plcmd.getName());
-			  				plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
-			  			}
-			  			SnowballerListener.teamcyan.remove(plcmd.getName());
-			  			plcmd.setRemoveWhenFarAway(true);
-			  			plcmd.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
-			  			plcmd.getInventory().clear();
-			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-			  			SnowballerListener.checkTeamsInArena();
-			  			SnowballerListener.terminateAll();
-			  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-			  			SnowballerListener.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
-			  			SnowballerListener.refreshAllTags();
-			  			plcmd.setPlayerListName(plcmd.getName());
-			  			return true;
-			  		}
-			  		if(SnowballerListener.teamlime.contains(plcmd.getName()))
-			  		{
-			  			if(SnowballerListener.teamlimeinarena.contains(plcmd.getName()))
-			  			{
-			  				SnowballerListener.teamlimeinarena.remove(plcmd.getName());
-			  				plcmd.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
-			  			}
-			  			SnowballerListener.teamlime.remove(plcmd.getName());
-			  			plcmd.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
-			  			plcmd.getInventory().clear();
-			  			plcmd.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-			  			SnowballerListener.checkTeamsInArena();
-			  			SnowballerListener.terminateAll();
-			  			SnowballerListener.sendAllTeamsMsg(pg + plcmd.getName() + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-			  			SnowballerListener.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
-			  			SnowballerListener.refreshAllTags();
-			  			plcmd.setPlayerListName(plcmd.getName());
-			  			return true;
-			  		}
-		  			plcmd.sendMessage(pg + "You are not on a team!");
-		  			return true;
+			  		return Team.Leave(plcmd.getName(), false);
 			  	case "score":
 			  		if(args.length == 1)
 			  		{
@@ -500,7 +348,7 @@ public class Snowballer extends JavaPlugin
 			  		}
 			  		else
 			  		{
-			  			plcmd.sendMessage(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players" + ": 0 players");
+			  			plcmd.sendMessage(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players" + ": 0");
 			  		}
 			  		return true;
 			  }

@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.kitteh.tag.TagAPI;
 
 public class Utils {
 
@@ -58,6 +59,22 @@ public class Utils {
 		unstucktimer = new Timer(delay, taskPerformer);
 		unstucktimer.setRepeats(false);
 		unstucktimer.start();
+	}
+	
+	public static void refreshAllTags()
+	{
+		for(String pl : SnowballerListener.teamcyan)
+		{
+			TagAPI.refreshPlayer(Bukkit.getPlayer(pl));
+		}
+		for(String pl : SnowballerListener.teamlime)
+		{
+			TagAPI.refreshPlayer(Bukkit.getPlayer(pl));
+		}
+		for(Player pl : Bukkit.getServer().getOnlinePlayers())
+		{
+			TagAPI.refreshPlayer(pl);
+		}
 	}
 	
 	public static String getNamewColor(Player p) 

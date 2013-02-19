@@ -1,19 +1,13 @@
 package co.networkery.uvbeenzaned;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Random;
-
-import javax.swing.Timer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -35,14 +29,14 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.kitteh.tag.PlayerReceiveNameTagEvent;
-import org.kitteh.tag.TagAPI;
  
  public class SnowballerListener implements Listener
  {
-	 public static String pg = ChatColor.AQUA + "[Snowballer] " +  ChatColor.RESET;
+	 public static String pg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Snowballer" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	 public static ConfigAccessor config;
 	 public static ConfigAccessor scores;
 	 public static boolean gameon = false;
@@ -81,183 +75,21 @@ import org.kitteh.tag.TagAPI;
 	 public void playerLeave(PlayerQuitEvent event)
 	 {
 		 String pll = event.getPlayer().getName();
-		 if(gameon)
-		 {
-				if(teamcyaninarena.contains(pll))
-				{
-					scores.saveConfig();
-					Bukkit.getServer().getPlayer(pll).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					teamcyaninarena.remove(pll);
-				}
-				if(teamlimeinarena.contains(pll))
-				{
-					scores.saveConfig();
-					Bukkit.getServer().getPlayer(pll).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					teamlimeinarena.remove(pll);
-				}
-				checkTeamsInArena();
-				if(teamcyan.contains(pll))
-				{
-					scores.saveConfig();
-					teamcyan.remove(pll);
-					Bukkit.getServer().getPlayer(pll).setRemoveWhenFarAway(true);
-					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
-					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					event.getPlayer().getInventory().clear();
-					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
-					terminateAll();
-				}
-				if(teamlime.contains(pll))
-				{
-					scores.saveConfig();
-					teamlime.remove(pll);
-					Bukkit.getServer().getPlayer(pll).setRemoveWhenFarAway(true);
-					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
-					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					event.getPlayer().getInventory().clear();
-					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
-					terminateAll();
-				}
-		 }
-		 else
-		 {
-				if(teamcyaninarena.contains(pll))
-				{
-					scores.saveConfig();
-					Bukkit.getServer().getPlayer(pll).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					teamcyaninarena.remove(pll);
-				}
-				if(teamlimeinarena.contains(pll))
-				{
-					scores.saveConfig();
-					Bukkit.getServer().getPlayer(pll).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					teamlimeinarena.remove(pll);
-				}
-				if(teamcyan.contains(pll))
-				{
-					scores.saveConfig();
-					teamcyan.remove(pll);
-					Bukkit.getServer().getPlayer(pll).setRemoveWhenFarAway(true);
-					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
-					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					event.getPlayer().getInventory().clear();
-					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
-					terminateAll();
-				}
-				if(teamlime.contains(pll))
-				{
-					scores.saveConfig();
-					teamlime.remove(pll);
-					Bukkit.getServer().getPlayer(pll).setRemoveWhenFarAway(true);
-					sendAllTeamsMsg(pg + pll + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
-					event.getPlayer().teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					event.getPlayer().getInventory().clear();
-					event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR, 1));
-					terminateAll();
-				}
-		 }
-		 if(hitcnts.containsKey(event.getPlayer().getName()))
-		 {
-			 hitcnts.remove(event.getPlayer().getName());
-		 }
+		 Team.Leave(pll, true);
 	 }
 	 
 	 @EventHandler
 	 public void playerDeath(PlayerDeathEvent event)
 	 {
 		 String pld = event.getEntity().getName();
-		 if(gameon)
-		 {
-			    if(teamcyaninarena.contains(pld))
-			    {
-			    	scores.saveConfig();
-			    	Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-			    	teamcyaninarena.remove(pld);
-			    	event.getDrops().clear();
-			    	Bukkit.getPlayer(pld).setPlayerListName(Bukkit.getPlayer(pld).getName());
-				}
-				if(teamlimeinarena.contains(pld))
-				{
-					scores.saveConfig();
-					Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					teamlimeinarena.remove(pld);
-					event.getDrops().clear();
-					Bukkit.getPlayer(pld).setPlayerListName(Bukkit.getPlayer(pld).getName());
-				}
-				checkTeamsInArena();
-			    if(teamcyan.contains(pld))
-			    {
-			    	scores.saveConfig();
-			    	teamcyan.remove(pld);
-			    	Bukkit.getServer().getPlayer(pld).setRemoveWhenFarAway(true);
-					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.AQUA + "CYAN.");
-					event.getDrops().clear();
-					Bukkit.getPlayer(pld).setPlayerListName(Bukkit.getPlayer(pld).getName());
-					terminateAll();
-				}
-				if(teamlime.contains(pld))
-				{
-					scores.saveConfig();
-					teamlime.remove(pld);
-					Bukkit.getServer().getPlayer(pld).setRemoveWhenFarAway(true);
-					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
-					event.getDrops().clear();
-					Bukkit.getPlayer(pld).setPlayerListName(Bukkit.getPlayer(pld).getName());
-					terminateAll();
-				}
-				if(hitcnts.containsKey(event.getEntity().getName()))
-				{
-					hitcnts.remove(event.getEntity().getName());
-				}
-		 }
-		 else
-		 {
-			    if(teamcyaninarena.contains(pld))
-			    {
-			    	scores.saveConfig();
-			    	Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-			    	teamcyaninarena.remove(pld);
-			    	event.getDrops().clear();
-				}
-				if(teamlimeinarena.contains(pld))
-				{
-					scores.saveConfig();
-					Bukkit.getServer().getPlayer(pld).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					teamlimeinarena.remove(pld);
-					event.getDrops().clear();
-				}
-			    if(teamcyan.contains(pld))
-			    {
-			    	scores.saveConfig();
-			    	teamcyan.remove(pld);
-			    	Bukkit.getServer().getPlayer(pld).setRemoveWhenFarAway(true);
-					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-					sendAllTeamsMsg(pg + "There are now " + teamcyan.size() + " players on team " + ChatColor.AQUA + "CYAN.");
-					event.getDrops().clear();
-					terminateAll();
-				}
-				if(teamlime.contains(pld))
-				{
-					scores.saveConfig();
-					teamlime.remove(pld);
-					Bukkit.getServer().getPlayer(pld).setRemoveWhenFarAway(true);
-					sendAllTeamsMsg(pg + pld + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-					sendAllTeamsMsg(pg + "There are now " + teamlime.size() + " players on team " + ChatColor.GREEN + "LIME.");
-					event.getDrops().clear();
-					terminateAll();
-				}
-				if(hitcnts.containsKey(event.getEntity().getName()))
-				{
-					hitcnts.remove(event.getEntity().getName());
-				}
-				refreshAllTags();
-		 }
+		 Team.Leave(pld, true);
+		 event.getDrops().clear();
+	 }
+	 
+	 @EventHandler(priority = EventPriority.HIGHEST)
+	 public void playerRespawn(PlayerRespawnEvent event)
+	 {
+		 event.setRespawnLocation(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 	 }
 	 
 	 @EventHandler
@@ -362,8 +194,8 @@ import org.kitteh.tag.TagAPI;
 									 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 									 plenemy.sendMessage(pg + "+1 point!  Your score is now " + String.valueOf(scores.getConfig().getInt(plenemy.getName())) + ".");
 									 scores.saveConfig();
-									 sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
-									 sendAllTeamsMsg(pg + Utils.getNamewColor(plenemy) + ChatColor.RED + " snowbrawled " + Utils.getNamewColor(plhit) + ".");
+									 Chat.sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
+									 Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(plenemy) + ChatColor.RED + " snowbrawled " + Utils.getNamewColor(plhit) + ".");
 									 checkTeamsInArena();
 									 event.setCancelled(true);
 								 }
@@ -402,7 +234,7 @@ import org.kitteh.tag.TagAPI;
 			{
 				if(event.getLine(0).equalsIgnoreCase("[sbr]"))
 				{
-					event.setLine(0, ChatColor.AQUA + "[Snowballer]");
+					event.setLine(0, ChatColor.GOLD + "[" + ChatColor.AQUA + "SBR" + ChatColor.GOLD + "]");
 					event.setLine(1, "(click here)");
 					event.setLine(2, ChatColor.BLUE + "([RANK])");
 					event.setLine(3, "(points)");
@@ -420,9 +252,9 @@ import org.kitteh.tag.TagAPI;
 					if(event.getClickedBlock().getType() == Material.SIGN || event.getClickedBlock().getType() == Material.SIGN_POST || event.getClickedBlock().getType() == Material.WALL_SIGN)
 					{
 						Sign s = (org.bukkit.block.Sign)event.getClickedBlock().getState();
-						if(s.getLine(0).equalsIgnoreCase(ChatColor.AQUA + "[Snowballer]"))
+						if(s.getLine(0).equalsIgnoreCase(ChatColor.GOLD + "[" + ChatColor.AQUA + "SBR" + ChatColor.GOLD + "]"))
 						{
-							s.setLine(1, Utils.getNamewColor(event.getPlayer()));
+							s.setLine(1, ChatColor.RED + event.getPlayer().getName());
 							s.setLine(2, ChatColor.BLUE + Rank.getRankName(event.getPlayer().getName()));
 							s.setLine(3, ChatColor.GOLD + String.valueOf(SnowballerListener.scores.getConfig().getInt(event.getPlayer().getName())));
 							s.update();
@@ -447,133 +279,8 @@ import org.kitteh.tag.TagAPI;
 				 event.setFormat(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(event.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + event.getPlayer().getName() + ChatColor.RESET + "> " + event.getMessage());
 			 }
 		}
-		
-		public static void refreshAllTags()
-		{
-			for(String pl : teamcyan)
-			{
-				TagAPI.refreshPlayer(Bukkit.getPlayer(pl));
-			}
-			for(String pl : teamlime)
-			{
-				TagAPI.refreshPlayer(Bukkit.getPlayer(pl));
-			}
-			for(Player pl : Bukkit.getServer().getOnlinePlayers())
-			{
-				TagAPI.refreshPlayer(pl);
-			}
-		}
 	 
-     public static ActionListener taskPerformer = new ActionListener() {
-         public void actionPerformed(ActionEvent evt) {
-         	if(timergame == true && gameon == false)
-         	{
-         		if(!teamcyan.isEmpty() && !teamlime.isEmpty())
-         		{
-	            		sendAllTeamsMsg(pg + "Starting next round....");
-		            	randomMap();
-		            	gameon = true;
-         		}
-         		else
-         		{
-         			if(teamlime.isEmpty())
-         			{
-         				cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
-         				cyanMsg(pg + "Stopping game and waiting for another player to join....");
-         				timer.stop();
-         				gameon = false;
-         				timergame = false;
-         			}
-         			if(teamcyan.isEmpty())
-         			{
-         				limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
-         				limeMsg(pg + "Stopping game and waiting for another player to join....");
-         				timer.stop();
-         				gameon = false;
-         				timergame = false;
-         			}
-         		}
-         	}
-         }
-         };
-         
-         public static Timer timer;
-	 
-	 public static void startIndependentTimerRound()
-	 {
-		 if(timergame == true && gameon == false)
-		 {
-			 if(!teamcyan.isEmpty() && !teamlime.isEmpty())
-			 {
-				 timer = new Timer(config.getConfig().getInt("timerdelay"), taskPerformer);
-				 timer.setRepeats(false);
-			     timer.start();
-			     sendAllTeamsMsg(pg + "Next round starts in " + Integer.toString(config.getConfig().getInt("timerdelay") / 1000) + " seconds!");
-			 }
-			 else
-			 {
-      			if(teamlime.isEmpty())
-      			{
-      				cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
-      				cyanMsg(pg + "Waiting for another player to join....");
-      			}
-      			if(teamcyan.isEmpty())
-      			{
-      				limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
-      				limeMsg(pg + "Waiting for another player to join....");
-      			}
-			 }
-		 }
-	 }
-	 
-	 public static Random r = new Random();
-	 
-	 public static void randomMap()
-	 {
-		hitcnts.clear();
-		r.setSeed(System.currentTimeMillis());
-		int mapnum = r.nextInt(config.getConfig().getConfigurationSection("teamcyanarenasides").getKeys(false).size());
-		int i = 0;
-		for(String key : config.getConfig().getConfigurationSection("teamcyanarenasides").getKeys(false))
-		{
-			if(mapnum == i)
-			{
-				//attempt at the invis tp glitch
-				for(String pl : teamcyan)
-				{
-					Bukkit.getPlayer(pl).setRemoveWhenFarAway(false);
-				}
-				for(String pl : teamlime)
-				{
-					Bukkit.getPlayer(pl).setRemoveWhenFarAway(false);
-				}
-				for(String pl : teamcyan)
-				{
-					if(Bukkit.getServer().getPlayer(pl).getGameMode() == GameMode.CREATIVE)
-					{
-						Bukkit.getServer().getPlayer(pl).setGameMode(GameMode.SURVIVAL);
-					}
-					Bukkit.getServer().getPlayer(pl).getInventory().clear();
-					giveSnowballs(Bukkit.getServer().getPlayer(pl));
-					teamcyaninarena.add(pl);
-					Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("teamcyanarenasides." + key)));
-				}
-				for(String pl : teamlime)
-				{
-					if(Bukkit.getServer().getPlayer(pl).getGameMode() == GameMode.CREATIVE)
-					{
-						Bukkit.getServer().getPlayer(pl).setGameMode(GameMode.SURVIVAL);
-					}
-					Bukkit.getServer().getPlayer(pl).getInventory().clear();
-					giveSnowballs(Bukkit.getServer().getPlayer(pl));
-					teamlimeinarena.add(pl);
-					Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("teamlimearenasides." + key)));
-				}
-				Utils.checkPlayerStuck(500);
-			}
-			i++;
-		}
-	 }
+
 	 
 	 public static void terminateAll()
 	 {
@@ -583,21 +290,21 @@ import org.kitteh.tag.TagAPI;
 		{
 			gameon = false;
 			timergame = false;
-			if(timer != null && timer.isRunning())
+			if(Round.timer != null && Round.timer.isRunning())
 			{
-				timer.stop();
+				Round.timer.stop();
 			}
 			teamcyaninarena.clear();
 			teamlimeinarena.clear();
   			if(teamlime.isEmpty())
   			{
-  				cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
-  				cyanMsg(pg + "Waiting for another player to join....");
+  				Chat.cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
+  				Chat.cyanMsg(pg + "Waiting for another player to join....");
   			}
   			if(teamcyan.isEmpty())
   			{
-  				limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
-  				limeMsg(pg + "Waiting for another player to join....");
+  				Chat.limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
+  				Chat.limeMsg(pg + "Waiting for another player to join....");
   			}
 		}
 	 }
@@ -610,16 +317,16 @@ import org.kitteh.tag.TagAPI;
 			 {
 				 for(String pl : teamlimeinarena)
 				 {
-					 Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					 Bukkit.getServer().getPlayer(pl).getInventory().clear();
+					 Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+					 Bukkit.getPlayer(pl).getInventory().clear();
 				 }
 				 for(String pl : teamcyaninarena)
 				 {
-					 Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-					 Bukkit.getServer().getPlayer(pl).getInventory().clear();
+					 Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+					 Bukkit.getPlayer(pl).getInventory().clear();
 				 }
-				 limeMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
-				 cyanMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
+				 Chat.limeMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
+				 Chat.cyanMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
 				 teamcyaninarena.clear();
 				 teamlimeinarena.clear();
 				 for(String pl : teamlime)
@@ -627,8 +334,8 @@ import org.kitteh.tag.TagAPI;
 					 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamcyan.size());
 					 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 				 }
-				 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
-				 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
+				 Chat.limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
+				 Chat.cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
 				 if(!hitcnts.isEmpty())
 				 {
 					 String hskiller = "";
@@ -642,7 +349,7 @@ import org.kitteh.tag.TagAPI;
 						 }
 					 }
 					 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
-					 sendAllTeamsMsg(pg + Utils.getNamewColor(hskiller) + " was awarded " + hshits * hshits + " points for the most player hits!");
+					 Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(hskiller) + " was awarded " + hshits * hshits + " points for the most player hits!");
 					 hitcnts.clear();
 				 }
 				 scores.saveConfig();
@@ -655,16 +362,16 @@ import org.kitteh.tag.TagAPI;
 				 {
 					 for(String pl : teamcyaninarena)
 					 {
-						 Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-						 Bukkit.getServer().getPlayer(pl).getInventory().clear();
+						 Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+						 Bukkit.getPlayer(pl).getInventory().clear();
 					 }
 					 for(String pl : teamlimeinarena)
 					 {
-						 Bukkit.getServer().getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
-						 Bukkit.getServer().getPlayer(pl).getInventory().clear();
+						 Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+						 Bukkit.getPlayer(pl).getInventory().clear();
 					 }
-					 cyanMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
-					 limeMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
+					 Chat.cyanMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
+					 Chat.limeMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
 					 teamcyaninarena.clear();
 					 teamlimeinarena.clear();
 					 for(String pl : teamcyan)
@@ -672,8 +379,8 @@ import org.kitteh.tag.TagAPI;
 						 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamlime.size());
 						 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 					 }
-					 limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
-					 cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
+					 Chat.limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
+					 Chat.cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
 					 if(!hitcnts.isEmpty())
 					 {
 						 String hskiller = "";
@@ -687,7 +394,7 @@ import org.kitteh.tag.TagAPI;
 							 }
 						 }
 						 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
-						 sendAllTeamsMsg(pg + Utils.getNamewColor(hskiller) + " was awarded " + hshits * hshits + " points for the most player hits!");
+						 Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(hskiller) + " was awarded " + hshits * hshits + " points for the most player hits!");
 						 hitcnts.clear();
 					 }
 					 scores.saveConfig();
@@ -697,7 +404,7 @@ import org.kitteh.tag.TagAPI;
 			 }
 			 if(timergame == true && gameon == false)
 			 {
-				 startIndependentTimerRound();
+				 Round.startIndependentTimerRound();
 			 }
 		 }
 	 }
@@ -730,34 +437,6 @@ import org.kitteh.tag.TagAPI;
 		 for(int x = 0; x < 9; x++)
 		 {
 			 pl.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
-		 }
-	 }
-	 
-	 public static void sendAllTeamsMsg(String msg)
-	 {
-		 for(String pl : teamlime)
-		 {
-			 Bukkit.getServer().getPlayer(pl).sendMessage(msg);
-		 }
-		 for(String pl : teamcyan)
-		 {
-			 Bukkit.getServer().getPlayer(pl).sendMessage(msg);
-		 } 
-	 }
-	 
-	 public static void cyanMsg(String msg)
-	 {
-		 for(String pl : teamcyan)
-		 {
-			 Bukkit.getServer().getPlayer(pl).sendMessage(msg);
-		 }
-	 }
-	 
-	 public static void limeMsg(String msg)
-	 {
-		 for(String pl : teamlime)
-		 {
-			 Bukkit.getServer().getPlayer(pl).sendMessage(msg);
 		 }
 	 }
  }
