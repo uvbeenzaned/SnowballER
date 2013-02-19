@@ -76,6 +76,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 	 {
 		 String pll = event.getPlayer().getName();
 		 Team.Leave(pll, true);
+		 event.getPlayer().setPlayerListName(null);
 	 }
 	 
 	 @EventHandler
@@ -235,9 +236,9 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 				if(event.getLine(0).equalsIgnoreCase("[sbr]"))
 				{
 					event.setLine(0, ChatColor.GOLD + "[" + ChatColor.AQUA + "SBR" + ChatColor.GOLD + "]");
-					event.setLine(1, "(click here)");
+					event.setLine(1, ChatColor.DARK_RED + "(click here)");
 					event.setLine(2, ChatColor.BLUE + "([RANK])");
-					event.setLine(3, "(points)");
+					event.setLine(3, ChatColor.GOLD + "(points)");
 				}
 			}
 		}
@@ -254,7 +255,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 						Sign s = (org.bukkit.block.Sign)event.getClickedBlock().getState();
 						if(s.getLine(0).equalsIgnoreCase(ChatColor.GOLD + "[" + ChatColor.AQUA + "SBR" + ChatColor.GOLD + "]"))
 						{
-							s.setLine(1, ChatColor.RED + event.getPlayer().getName());
+							s.setLine(1, ChatColor.DARK_RED + event.getPlayer().getName());
 							s.setLine(2, ChatColor.BLUE + Rank.getRankName(event.getPlayer().getName()));
 							s.setLine(3, ChatColor.GOLD + String.valueOf(SnowballerListener.scores.getConfig().getInt(event.getPlayer().getName())));
 							s.update();
@@ -325,8 +326,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 					 Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 					 Bukkit.getPlayer(pl).getInventory().clear();
 				 }
-				 Chat.limeMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
-				 Chat.cyanMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
+				 Chat.sendAllTeamsMsg(pg + "Team" + ChatColor.GREEN + " LIME " + ChatColor.RESET + "wins!");
 				 teamcyaninarena.clear();
 				 teamlimeinarena.clear();
 				 for(String pl : teamlime)
@@ -334,8 +334,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 					 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamcyan.size());
 					 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 				 }
-				 Chat.limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
-				 Chat.cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
+				 Chat.sendAllTeamsMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
 				 if(!hitcnts.isEmpty())
 				 {
 					 String hskiller = "";
@@ -370,8 +369,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 						 Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 						 Bukkit.getPlayer(pl).getInventory().clear();
 					 }
-					 Chat.cyanMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
-					 Chat.limeMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
+					 Chat.sendAllTeamsMsg(pg + "Team" + ChatColor.AQUA + " CYAN " + ChatColor.RESET + "wins!");
 					 teamcyaninarena.clear();
 					 teamlimeinarena.clear();
 					 for(String pl : teamcyan)
@@ -379,8 +377,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 						 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamlime.size());
 						 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 					 }
-					 Chat.limeMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
-					 Chat.cyanMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
+					 Chat.sendAllTeamsMsg(pg + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
 					 if(!hitcnts.isEmpty())
 					 {
 						 String hskiller = "";

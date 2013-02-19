@@ -175,7 +175,7 @@ public class Team {
 			Chat.sendAllTeamsMsg(pg + p.getName() + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
 			Utils.refreshAllTags();
-			p.setPlayerListName(p.getName());
+  			p.setPlayerListName(p.getName());
 			return true;
 		}
 		if(!quiet)
