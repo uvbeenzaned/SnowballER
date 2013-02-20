@@ -243,6 +243,8 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 			}
 		}
 		
+		public static ArrayList<String> punchcounts = new ArrayList<String>();
+		
 		@EventHandler
 		public void onSignClick(PlayerInteractEvent event)
 		{
@@ -259,6 +261,21 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 							s.setLine(2, ChatColor.BLUE + Rank.getRankName(event.getPlayer().getName()));
 							s.setLine(3, ChatColor.GOLD + String.valueOf(SnowballerListener.scores.getConfig().getInt(event.getPlayer().getName())));
 							s.update();
+						}
+					}
+				}
+				if(event.getAction() == Action.LEFT_CLICK_BLOCK)
+				{
+					if(event.getPlayer().isSneaking())
+					{
+						if(!punchcounts.contains(event.getPlayer().getName()))
+						{
+							punchcounts.add(event.getPlayer().getName());
+						}
+						else
+						{
+							punchcounts.remove(event.getPlayer().getName());
+							Chat.getTeamStats(event.getPlayer().getName());
 						}
 					}
 				}

@@ -304,56 +304,11 @@ public class Snowballer extends JavaPlugin
 			  		plcmd.sendMessage(pg + String.valueOf(SnowballerListener.config.getConfig().getInt("snowballthrowncount")) + " snowballs have been thrown since records began.");
 			  		return true;
 			  	case "teamstats":
-			  		if(SnowballerListener.teamcyan.size() > 0)
-			  		{
-				  		plcmd.sendMessage(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " players" + ": " + String.valueOf(SnowballerListener.teamcyan.size()));
-				  		if(SnowballerListener.gameon == true)
-				  		{
-				  			plcmd.sendMessage(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " left in arena: " + String.valueOf(SnowballerListener.teamcyaninarena.size()));
-				  		}
-				  		for(String p : SnowballerListener.teamcyan)
-				  		{
-				  			if(SnowballerListener.hitcnts.containsKey(p))
-				  			{
-				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + p + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(p).toString() + " hits)");
-				  			}
-				  			else
-				  			{
-				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + p);
-				  			}
-				  		}
-			  		}
-			  		else
-			  		{
-			  			plcmd.sendMessage(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " players" + ": 0");
-			  		}
-			  		if(SnowballerListener.teamlime.size() > 0)
-			  		{
-				  		plcmd.sendMessage(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players" + ": " + String.valueOf(SnowballerListener.teamlime.size()));
-				  		if(SnowballerListener.gameon == true)
-				  		{
-				  			plcmd.sendMessage(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " left in arena: " + String.valueOf(SnowballerListener.teamlimeinarena.size()));
-				  		}
-				  		for(String p : SnowballerListener.teamlime)
-				  		{
-				  			if(SnowballerListener.hitcnts.containsKey(p))
-				  			{
-				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + p + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(p).toString() + " hits)");
-				  			}
-				  			else
-				  			{
-				  				plcmd.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(p) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + p);
-				  			}
-				  		}
-			  		}
-			  		else
-			  		{
-			  			plcmd.sendMessage(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players" + ": 0");
-			  		}
+			  		Chat.getTeamStats(plcmd.getName());
 			  		return true;
 			  }
 		  }
 	  }
-	  return false;
+	return false;
   }
 }
