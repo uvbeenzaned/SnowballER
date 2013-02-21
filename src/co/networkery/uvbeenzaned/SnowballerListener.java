@@ -84,7 +84,10 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 	 {
 		 String pld = event.getEntity().getName();
 		 Team.Leave(pld, true);
-		 event.getDrops().clear();
+		 if(!teamcyan.contains(pld) && !teamlime.contains(pld))
+		 {
+			 event.getDrops().clear(); 
+		 }
 		 deadplayers.add(pld);
 	 }
 	 
@@ -95,6 +98,10 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 		 {
 			 event.setRespawnLocation(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 			 deadplayers.remove(event.getPlayer().getName());
+		 }
+		 else
+		 {
+			 event.setRespawnLocation(Bukkit.getWorld("world").getSpawnLocation());
 		 }
 	 }
 	 
