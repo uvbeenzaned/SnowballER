@@ -145,13 +145,14 @@ public class Team {
   			p.setRemoveWhenFarAway(true);
   			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
   			p.getInventory().clear();
+  			p.setPlayerListName(p.getName());
+  			SnowballerListener.deadplayers.remove(player);
   			p.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
   			SnowballerListener.checkTeamsInArena();
   			SnowballerListener.terminateAll();
   			Chat.sendAllTeamsMsg(pg + p.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
   			Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
   			Utils.refreshAllTags();
-  			p.setPlayerListName(p.getName());
   			return true;
   		}
 		if(SnowballerListener.teamlime.contains(p.getName()))
@@ -169,13 +170,14 @@ public class Team {
 			}
 			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 			p.getInventory().clear();
+			p.setPlayerListName(p.getName());
+			SnowballerListener.deadplayers.remove(player);
 			p.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			SnowballerListener.checkTeamsInArena();
 			SnowballerListener.terminateAll();
 			Chat.sendAllTeamsMsg(pg + p.getName() + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
 			Utils.refreshAllTags();
-  			p.setPlayerListName(p.getName());
 			return true;
 		}
 		if(!quiet)

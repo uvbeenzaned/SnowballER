@@ -46,6 +46,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 	 public static List<String> teamcyaninarena = new ArrayList<String>();
 	 public static List<String> teamlimeinarena = new ArrayList<String>();
 	 public static HashMap<String, Integer> hitcnts = new HashMap<String, Integer>();
+	 public static List<String> deadplayers = new ArrayList<String>();
 	 
 	 public SnowballerListener(JavaPlugin jp)
 	 {
@@ -84,12 +85,17 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 		 String pld = event.getEntity().getName();
 		 Team.Leave(pld, true);
 		 event.getDrops().clear();
+		 deadplayers.add(pld);
 	 }
 	 
 	 @EventHandler(priority = EventPriority.HIGHEST)
 	 public void playerRespawn(PlayerRespawnEvent event)
 	 {
-		 event.setRespawnLocation(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+		 if(deadplayers.contains(event.getPlayer().getName()))
+		 {
+			 event.setRespawnLocation(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+			 deadplayers.remove(event.getPlayer().getName());
+		 }
 	 }
 	 
 	 @EventHandler
