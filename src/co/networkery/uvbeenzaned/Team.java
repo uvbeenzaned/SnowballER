@@ -146,7 +146,6 @@ public class Team {
   			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
   			p.getInventory().clear();
   			p.setPlayerListName(p.getName());
-  			SnowballerListener.deadplayers.remove(player);
   			p.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
   			SnowballerListener.checkTeamsInArena();
   			SnowballerListener.terminateAll();
@@ -171,7 +170,6 @@ public class Team {
 			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 			p.getInventory().clear();
 			p.setPlayerListName(p.getName());
-			SnowballerListener.deadplayers.remove(player);
 			p.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			SnowballerListener.checkTeamsInArena();
 			SnowballerListener.terminateAll();

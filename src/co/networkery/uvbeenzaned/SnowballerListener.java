@@ -83,12 +83,12 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 	 public void playerDeath(PlayerDeathEvent event)
 	 {
 		 String pld = event.getEntity().getName();
-		 Team.Leave(pld, true);
-		 if(!teamcyan.contains(pld) && !teamlime.contains(pld))
+		 if(teamcyan.contains(pld) || teamlime.contains(pld))
 		 {
-			 event.getDrops().clear(); 
+			 event.getDrops().clear();
+			 deadplayers.add(pld); 
 		 }
-		 deadplayers.add(pld);
+		 Team.Leave(pld, true);
 	 }
 	 
 	 @EventHandler(priority = EventPriority.HIGHEST)
@@ -101,7 +101,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 		 }
 		 else
 		 {
-			 event.setRespawnLocation(Bukkit.getWorld("world").getSpawnLocation());
+			 event.setRespawnLocation(Bukkit.getWorlds().get(0).getSpawnLocation());
 		 }
 	 }
 	 
