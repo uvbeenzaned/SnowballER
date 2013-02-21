@@ -51,11 +51,11 @@ public class Chat {
 			{
 				if(SnowballerListener.hitcnts.containsKey(pl))
 				{
-					p.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(pl) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + pl + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(pl).toString() + " hits)");
+					p.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(pl) + ChatColor.GOLD + "(" + String.valueOf(SnowballerListener.scores.getConfig().get(pl)) + ")]" + ChatColor.AQUA + pl + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(pl).toString() + " hits)");
 				}
 				else
 				{
-					p.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(pl) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.AQUA + pl);
+					p.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(pl) + ChatColor.RESET + ChatColor.GOLD + "(" + String.valueOf(SnowballerListener.scores.getConfig().get(pl)) + ")]" + ChatColor.AQUA + pl);
 				}
 			}
 		}
@@ -74,11 +74,11 @@ public class Chat {
 			{
 				if(SnowballerListener.hitcnts.containsKey(pl))
 				{
-					p.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(pl) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + pl + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(pl).toString() + " hits)");
+					p.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(pl) + ChatColor.GOLD + "(" + String.valueOf(SnowballerListener.scores.getConfig().get(pl)) + ")]" + ChatColor.GREEN + pl + ChatColor.RED + " (" + SnowballerListener.hitcnts.get(pl).toString() + " hits)");
 				}
 				else
 				{
-					p.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(pl) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + ChatColor.GREEN + pl);
+					p.sendMessage( "    " + ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(pl) + ChatColor.GOLD + "(" + String.valueOf(SnowballerListener.scores.getConfig().get(pl)) + ")]" + ChatColor.GREEN + pl);
 				}
 			}
 		}
