@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -155,6 +156,22 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 								 event.setCancelled(true);
 							 }
 						 }
+					 }
+				 }
+			 }
+			 if(event.getEntity() instanceof Entity && event.getDamager() instanceof Snowball && !(event.getEntity() instanceof Player))
+			 {
+				 Entity mob = event.getEntity();
+				 Snowball sb = (Snowball)event.getDamager();
+				 Player plenemy = (Player)sb.getShooter();
+				 if(gameon == true)
+				 {
+					 if(teamcyaninarena.contains(plenemy.getName()) || teamlimeinarena.contains(plenemy.getName()))
+					 {
+						 mob.remove();
+						 plenemy.getWorld().createExplosion(mob.getLocation(), 0F);
+						 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
+						 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + "bonus point for mob hit!");
 					 }
 				 }
 			 }
