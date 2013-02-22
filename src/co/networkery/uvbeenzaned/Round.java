@@ -98,25 +98,25 @@ public class Round {
 				}
 				for(String pl : SnowballerListener.teamcyan)
 				{
-					if(Bukkit.getPlayer(pl).getGameMode() == GameMode.CREATIVE)
-					{
-						Bukkit.getPlayer(pl).setGameMode(GameMode.SURVIVAL);
-					}
 					Bukkit.getPlayer(pl).getInventory().clear();
 					SnowballerListener.giveSnowballs(Bukkit.getPlayer(pl));
 					SnowballerListener.teamcyaninarena.add(pl);
 					Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamcyanarenasides." + key)));
-				}
-				for(String pl : SnowballerListener.teamlime)
-				{
 					if(Bukkit.getPlayer(pl).getGameMode() == GameMode.CREATIVE)
 					{
 						Bukkit.getPlayer(pl).setGameMode(GameMode.SURVIVAL);
 					}
+				}
+				for(String pl : SnowballerListener.teamlime)
+				{
 					Bukkit.getPlayer(pl).getInventory().clear();
 					SnowballerListener.giveSnowballs(Bukkit.getPlayer(pl));
 					SnowballerListener.teamlimeinarena.add(pl);
 					Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamlimearenasides." + key)));
+					if(Bukkit.getPlayer(pl).getGameMode() == GameMode.CREATIVE)
+					{
+						Bukkit.getPlayer(pl).setGameMode(GameMode.SURVIVAL);
+					}
 				}
 				Utils.checkPlayerStuck(500);
 			}
