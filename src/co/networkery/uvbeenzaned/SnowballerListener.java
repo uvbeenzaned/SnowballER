@@ -171,7 +171,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 						 mob.remove();
 						 plenemy.getWorld().createExplosion(mob.getLocation(), 0F);
 						 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
-						 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + "bonus point for mob hit!");
+						 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " bonus point for mob hit!");
 					 }
 				 }
 			 }
