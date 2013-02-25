@@ -143,6 +143,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 	 @EventHandler
 	 public void entityDamage(EntityDamageByEntityEvent event)
 	 {
+		 gameon = true;
 		 if(gameon)
 		 {
 			 if(event.getEntity() instanceof Player && event.getDamager() instanceof Player)
@@ -168,28 +169,25 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 				 Entity mob = event.getEntity();
 				 Snowball sb = (Snowball)event.getDamager();
 				 Player plenemy = (Player)sb.getShooter();
-				 if(gameon == true)
+				 if(teamcyaninarena.contains(plenemy.getName()) || teamlimeinarena.contains(plenemy.getName()))
 				 {
-					 if(teamcyaninarena.contains(plenemy.getName()) || teamlimeinarena.contains(plenemy.getName()))
+					 mob.remove();
+					 Firework fw = mob.getWorld().spawn(mob.getLocation(), Firework.class);
+					 FireworkMeta fwm = fw.getFireworkMeta();
+					 FireworkEffect effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL_LARGE).build();
+					 if(teamcyaninarena.contains(plenemy.getName()))
 					 {
-						 mob.remove();
-						 Firework fw = mob.getWorld().spawn(mob.getLocation(), Firework.class);
-						 FireworkMeta fwm = fw.getFireworkMeta();
-						 FireworkEffect effect = null;
-						 if(teamcyaninarena.contains(plenemy))
-						 {
-							 effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL).build();
-						 }
-						 if(teamcyaninarena.contains(plenemy))
-						 {
-							 effect = FireworkEffect.builder().withColor(Color.GREEN).with(Type.BALL).build();
-						 }
-						 fwm.addEffects(effect);
-						 fwm.setPower(0);       
-						 fw.setFireworkMeta(fwm);
-						 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
-						 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " bonus point for mob hit!");
+						 effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL_LARGE).build();
 					 }
+					 if(teamlimeinarena.contains(plenemy.getName()))
+					 {
+						 effect = FireworkEffect.builder().withColor(Color.GREEN).with(Type.BALL_LARGE).build();
+					 }
+					 fwm.addEffects(effect);
+					 fwm.setPower(0);
+					 fw.setFireworkMeta(fwm);
+					 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
+					 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " bonus point for mob hit!");
 				 }
 			 }
 			 if ((event.getEntity() instanceof Player && event.getDamager() instanceof Snowball))
