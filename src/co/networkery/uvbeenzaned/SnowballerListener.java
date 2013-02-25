@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Effect;
+import org.bukkit.FireworkEffect;
+import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -32,6 +35,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.kitteh.tag.PlayerReceiveNameTagEvent;
  
@@ -169,7 +173,20 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 					 if(teamcyaninarena.contains(plenemy.getName()) || teamlimeinarena.contains(plenemy.getName()))
 					 {
 						 mob.remove();
-						 plenemy.getWorld().createExplosion(mob.getLocation(), 0F);
+						 Firework fw = mob.getWorld().spawn(mob.getLocation(), Firework.class);
+						 FireworkMeta fwm = fw.getFireworkMeta();
+						 FireworkEffect effect = null;
+						 if(teamcyaninarena.contains(plenemy))
+						 {
+							 effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL).build();
+						 }
+						 if(teamcyaninarena.contains(plenemy))
+						 {
+							 effect = FireworkEffect.builder().withColor(Color.GREEN).with(Type.BALL).build();
+						 }
+						 fwm.addEffects(effect);
+						 fwm.setPower(0);       
+						 fw.setFireworkMeta(fwm);
 						 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 						 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " bonus point for mob hit!");
 					 }
