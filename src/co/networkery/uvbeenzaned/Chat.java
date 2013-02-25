@@ -47,7 +47,7 @@ public class Chat {
 			{
 				p.sendMessage(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " left in arena: " + String.valueOf(SnowballerListener.teamcyaninarena.size()));
 			}
-			for(String pl : SnowballerListener.teamcyan)
+			for(String pl : SnowballerListener.teamcyaninarena)
 			{
 				if(SnowballerListener.hitcnts.containsKey(pl))
 				{
@@ -70,7 +70,7 @@ public class Chat {
 			{
 				p.sendMessage(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " left in arena: " + String.valueOf(SnowballerListener.teamlimeinarena.size()));
 			}
-			for(String pl : SnowballerListener.teamlime)
+			for(String pl : SnowballerListener.teamlimeinarena)
 			{
 				if(SnowballerListener.hitcnts.containsKey(pl))
 				{
