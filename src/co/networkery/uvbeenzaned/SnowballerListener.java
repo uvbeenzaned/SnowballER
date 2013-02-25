@@ -143,7 +143,6 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 	 @EventHandler
 	 public void entityDamage(EntityDamageByEntityEvent event)
 	 {
-		 gameon = true;
 		 if(gameon)
 		 {
 			 if(event.getEntity() instanceof Player && event.getDamager() instanceof Player)
