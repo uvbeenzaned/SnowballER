@@ -270,7 +270,7 @@ public class Snowballer extends JavaPlugin
 			  		return false;
 			  	case "leave":
 			  		SnowballerListener.scores.saveConfig();
-			  		return Team.Leave(plcmd.getName(), false);
+			  		return Team.Leave(plcmd.getName(), false, false);
 			  	case "score":
 			  		if(args.length == 1)
 			  		{

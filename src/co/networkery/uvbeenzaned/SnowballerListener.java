@@ -80,8 +80,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 	 public void playerLeave(PlayerQuitEvent event)
 	 {
 		 String pll = event.getPlayer().getName();
-		 Team.Leave(pll, true);
-		 event.getPlayer().setPlayerListName(null);
+		 Team.Leave(pll, true, true);
 	 }
 	 
 	 @EventHandler
@@ -93,7 +92,7 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 			 event.getDrops().clear();
 			 deadplayers.add(pld); 
 		 }
-		 Team.Leave(pld, true);
+		 Team.Leave(pld, true, false);
 	 }
 	 
 	 @EventHandler(priority = EventPriority.HIGHEST)

@@ -126,7 +126,7 @@ public class Team {
 		return true;
 	}
 	
-	public static boolean Leave(String player, boolean quiet)
+	public static boolean Leave(String player, boolean quiet, boolean disconnectmode)
 	{
 		Player p = Bukkit.getPlayer(player);
   		if(SnowballerListener.teamcyan.contains(p.getName()))
@@ -145,7 +145,10 @@ public class Team {
   			p.setRemoveWhenFarAway(true);
   			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
   			p.getInventory().clear();
-  			p.setPlayerListName(p.getName());
+			if(!disconnectmode)
+			{
+				p.setPlayerListName(p.getName());
+			}
   			p.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
   			SnowballerListener.checkTeamsInArena();
   			SnowballerListener.terminateAll();
@@ -169,7 +172,10 @@ public class Team {
 			}
 			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 			p.getInventory().clear();
-			p.setPlayerListName(p.getName());
+			if(!disconnectmode)
+			{
+				p.setPlayerListName(p.getName());
+			}
 			p.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			SnowballerListener.checkTeamsInArena();
 			SnowballerListener.terminateAll();
