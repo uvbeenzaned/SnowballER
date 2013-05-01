@@ -265,7 +265,7 @@ public class Snowballer extends JavaPlugin
 			  	case "join":
 			  		if(args.length > 1)
 			  		{
-			  			 return Team.Join(plcmd.getName(), args[1]);
+			  			 return Team.Join(plcmd.getName(), args[1], false);
 			  		}
 			  		return false;
 			  	case "leave":

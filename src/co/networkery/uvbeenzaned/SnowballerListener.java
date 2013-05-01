@@ -37,7 +37,12 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.kitteh.tag.PlayerReceiveNameTagEvent;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
+//import org.kitteh.tag.PlayerReceiveNameTagEvent;
  
  public class SnowballerListener implements Listener
  {
@@ -51,12 +56,22 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 	 public static List<String> teamcyaninarena = new ArrayList<String>();
 	 public static List<String> teamlimeinarena = new ArrayList<String>();
 	 public static HashMap<String, Integer> hitcnts = new HashMap<String, Integer>();
-	 public static List<String> deadplayers = new ArrayList<String>();
+	 public static HashMap<String, String> deadplayers = new HashMap<String, String>();
+	 public static ScoreboardManager manager = Bukkit.getScoreboardManager();
+	 public static Scoreboard board = manager.getNewScoreboard();
+	 public static org.bukkit.scoreboard.Team teamcyanboard = board.registerNewTeam("CYAN");
+	 public static org.bukkit.scoreboard.Team teamlimeboard = board.registerNewTeam("LIME");
+	 public static Objective objective = board.registerNewObjective("Score", "dummy");
 	 
 	 public SnowballerListener(JavaPlugin jp)
 	 {
 		 config = new ConfigAccessor(jp, "config.yml");
 		 scores = new ConfigAccessor(jp, "scores.yml");
+		 teamcyanboard.setDisplayName("CYAN");
+		 teamcyanboard.setPrefix(ChatColor.AQUA + "(C)" + ChatColor.RESET);
+		 teamlimeboard.setDisplayName("LIME");
+		 teamlimeboard.setPrefix(ChatColor.GREEN + "(L)" + ChatColor.RESET);
+		 objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 	 }
 	 
 	 @EventHandler(priority = EventPriority.HIGHEST)
@@ -87,18 +102,26 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 	 public void playerDeath(PlayerDeathEvent event)
 	 {
 		 String pld = event.getEntity().getName();
-		 if(teamcyan.contains(pld) || teamlime.contains(pld))
+		 if(teamcyan.contains(pld))
 		 {
 			 event.getDrops().clear();
-			 deadplayers.add(pld); 
+			 deadplayers.put(pld, "cyan");
 		 }
-		 Team.Leave(pld, true, false);
+		 else
+		 {
+			 if(teamlime.contains(pld))
+			 {
+				 event.getDrops().clear();
+				 deadplayers.put(pld, "lime");
+			 }
+		 }
+		 Team.Leave(pld, true, true);
 	 }
 	 
 	 @EventHandler(priority = EventPriority.HIGHEST)
 	 public void playerRespawn(PlayerRespawnEvent event)
 	 {
-		 if(deadplayers.contains(event.getPlayer().getName()))
+		 if(deadplayers.containsKey(event.getPlayer().getName()))
 		 {
 			 event.setRespawnLocation(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
 			 deadplayers.remove(event.getPlayer().getName());
@@ -185,6 +208,8 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 					 fwm.setPower(0);
 					 fw.setFireworkMeta(fwm);
 					 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
+					 Score hscore = objective.getScore(plenemy);
+					 hscore.setScore(scores.getConfig().getInt(plenemy.getName()));
 					 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " bonus point for mob hit!");
 				 }
 			 }
@@ -225,6 +250,8 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 										 Rank.giveRank(plhit);
 									 }
 									 scores.getConfig().set(plhit.getName(), scores.getConfig().getInt(plhit.getName()) - 1);
+									 Score hscore = objective.getScore(plhit);
+									 hscore.setScore(scores.getConfig().getInt(plhit.getName()));
 									 plhit.sendMessage(pg + ChatColor.GOLD + "-1" + ChatColor.RESET + " point!  Your score is now " + ChatColor.GOLD + String.valueOf(scores.getConfig().getInt(plhit.getName())) + ChatColor.RESET + ".");
 									 if(!hitcnts.containsKey(plenemy.getName()))
 									 {
@@ -235,6 +262,8 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 										 hitcnts.put(plenemy.getName(), hitcnts.get(plenemy.getName()) + 1);
 									 }
 									 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
+									 Score escore = objective.getScore(plenemy);
+									 escore.setScore(scores.getConfig().getInt(plenemy.getName()));
 									 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " point!  Your score is now " + ChatColor.GOLD + String.valueOf(scores.getConfig().getInt(plenemy.getName())) + ChatColor.RESET + ".");
 									 scores.saveConfig();
 									 Chat.sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
@@ -250,25 +279,25 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 		 }
 	 }
 	 
-		@EventHandler
-		 public void onNameTag(PlayerReceiveNameTagEvent event)
-		 {
-			 if(teamcyan.contains(event.getNamedPlayer().getName()))
-			 {
-				 event.setTag(ChatColor.AQUA + event.getNamedPlayer().getName());
-			 }
-			 else
-			 {
-				 if(teamlime.contains(event.getNamedPlayer().getName()))
-				 {
-					 event.setTag(ChatColor.GREEN + event.getNamedPlayer().getName());
-				 }
-				 else
-				 {
-					 event.setTag(event.getNamedPlayer().getName());
-				 }
-			 }
-		 }
+//		@EventHandler
+//		 public void onNameTag(PlayerReceiveNameTagEvent event)
+//		 {
+//			 if(teamcyan.contains(event.getNamedPlayer().getName()))
+//			 {
+//				 event.setTag(ChatColor.AQUA + event.getNamedPlayer().getName());
+//			 }
+//			 else
+//			 {
+//				 if(teamlime.contains(event.getNamedPlayer().getName()))
+//				 {
+//					 event.setTag(ChatColor.GREEN + event.getNamedPlayer().getName());
+//				 }
+//				 else
+//				 {
+//					 event.setTag(event.getNamedPlayer().getName());
+//				 }
+//			 }
+//		 }
 		
 		@EventHandler
 		public void onNewSign(SignChangeEvent event)
@@ -391,6 +420,8 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 				 for(String pl : teamlime)
 				 {
 					 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamcyan.size());
+					 Score score = objective.getScore(Bukkit.getPlayer(pl));
+					 score.setScore(scores.getConfig().getInt(Bukkit.getPlayer(pl).getName()));
 					 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 				 }
 				 Chat.sendAllTeamsMsg(pg + ChatColor.GOLD + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + ChatColor.RESET + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
@@ -407,6 +438,8 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 						 }
 					 }
 					 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
+					 Score score = objective.getScore(Bukkit.getPlayer(hskiller));
+					 score.setScore(scores.getConfig().getInt(Bukkit.getPlayer(hskiller).getName()));
 					 Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(hskiller) + " was awarded " + ChatColor.GOLD + hshits * hshits + ChatColor.RESET + " points for the most player hits!");
 					 hitcnts.clear();
 				 }
@@ -434,6 +467,8 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 					 for(String pl : teamcyan)
 					 {
 						 scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamlime.size());
+						 Score score = objective.getScore(Bukkit.getPlayer(pl));
+						 score.setScore(scores.getConfig().getInt(Bukkit.getPlayer(pl).getName()));
 						 Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 					 }
 					 Chat.sendAllTeamsMsg(pg + ChatColor.GOLD + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamlime.size()) + ChatColor.RESET + " points for all of team" + ChatColor.AQUA + " CYAN" + ChatColor.RESET + ".");
@@ -450,6 +485,8 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 							 }
 						 }
 						 scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
+						 Score score = objective.getScore(Bukkit.getPlayer(hskiller));
+						 score.setScore(scores.getConfig().getInt(Bukkit.getPlayer(hskiller).getName()));
 						 Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(hskiller) + " was awarded " + ChatColor.GOLD + hshits * hshits + ChatColor.RESET + " points for the most player hits!");
 						 hitcnts.clear();
 					 }

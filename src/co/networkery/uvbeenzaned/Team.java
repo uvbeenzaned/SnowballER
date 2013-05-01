@@ -5,12 +5,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.Score;
 
 public class Team {
 	
 	public static String pg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Snowballer" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	
-	public static boolean Join(String player, String team)
+	public static boolean Join(String player, String team, boolean quietmode)
 	{
 		Player p = Bukkit.getPlayer(player);
 		if(SnowballerListener.teamcyan.contains(p.getName()))
@@ -30,12 +31,19 @@ public class Team {
 				p.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 				SnowballerListener.teamcyan.add(p.getName());
 				p.setRemoveWhenFarAway(false);
-				Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(p) + " has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-				Chat.sendAllTeamsMsg(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " players: " + SnowballerListener.teamcyan.size());
+				if(!quietmode)
+				{
+					Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(p) + " has joined team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+					Chat.sendAllTeamsMsg(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " players: " + SnowballerListener.teamcyan.size());
+				}
 				p.getInventory().clear();
 				Rank.giveRank(Bukkit.getPlayer(p.getName()));
 				Utils.refreshAllTags();
-				p.setPlayerListName(ChatColor.AQUA + p.getName());
+				//p.setPlayerListName(ChatColor.AQUA + p.getName());
+				SnowballerListener.teamcyanboard.addPlayer(p);
+				p.setScoreboard(SnowballerListener.board);
+				Score score = SnowballerListener.objective.getScore(p);
+				score.setScore(SnowballerListener.scores.getConfig().getInt(p.getName()));
 				if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 				{
 		  			if(!SnowballerListener.teamlime.isEmpty())
@@ -80,12 +88,19 @@ public class Team {
 				p.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
 				SnowballerListener.teamlime.add(p.getName());
 				p.setRemoveWhenFarAway(false);
-				Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(p) + " has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
-				Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
+				if(!quietmode)
+				{
+					Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(p) + " has joined team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
+					Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
+				}
 				p.getInventory().clear();
 				Rank.giveRank(Bukkit.getPlayer(p.getName()));
 				Utils.refreshAllTags();
-				p.setPlayerListName(ChatColor.GREEN + p.getName());
+				//p.setPlayerListName(ChatColor.GREEN + p.getName());
+				SnowballerListener.teamlimeboard.addPlayer(p);
+				p.setScoreboard(SnowballerListener.board);
+				Score score = SnowballerListener.objective.getScore(p);
+				score.setScore(SnowballerListener.scores.getConfig().getInt(p.getName()));
 				if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 				{
 		  			if(!SnowballerListener.teamcyan.isEmpty())
@@ -145,10 +160,11 @@ public class Team {
   			p.setRemoveWhenFarAway(true);
   			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
   			p.getInventory().clear();
-			if(!disconnectmode)
-			{
-				p.setPlayerListName(p.getName());
-			}
+  			SnowballerListener.teamcyanboard.removePlayer(p);
+//			if(!disconnectmode)
+//			{
+//				p.setPlayerListName(p.getName());
+//			}
   			p.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
   			SnowballerListener.checkTeamsInArena();
   			SnowballerListener.terminateAll();
@@ -172,10 +188,11 @@ public class Team {
 			}
 			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 			p.getInventory().clear();
-			if(!disconnectmode)
-			{
-				p.setPlayerListName(p.getName());
-			}
+			SnowballerListener.teamlimeboard.removePlayer(p);
+//			if(!disconnectmode)
+//			{
+//				p.setPlayerListName(p.getName());
+//			}
 			p.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			SnowballerListener.checkTeamsInArena();
 			SnowballerListener.terminateAll();
