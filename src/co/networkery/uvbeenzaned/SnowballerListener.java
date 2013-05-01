@@ -252,7 +252,7 @@ import org.bukkit.scoreboard.ScoreboardManager;
 									 scores.getConfig().set(plhit.getName(), scores.getConfig().getInt(plhit.getName()) - 1);
 									 Score hscore = objective.getScore(plhit);
 									 hscore.setScore(scores.getConfig().getInt(plhit.getName()));
-									 plhit.sendMessage(pg + ChatColor.GOLD + "-1" + ChatColor.RESET + " point!  Your score is now " + ChatColor.GOLD + String.valueOf(scores.getConfig().getInt(plhit.getName())) + ChatColor.RESET + ".");
+									 plhit.sendMessage(pg + ChatColor.GOLD + "-1" + ChatColor.RESET + " point!");
 									 if(!hitcnts.containsKey(plenemy.getName()))
 									 {
 										 hitcnts.put(plenemy.getName(), 1);
@@ -264,7 +264,7 @@ import org.bukkit.scoreboard.ScoreboardManager;
 									 scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 									 Score escore = objective.getScore(plenemy);
 									 escore.setScore(scores.getConfig().getInt(plenemy.getName()));
-									 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " point!  Your score is now " + ChatColor.GOLD + String.valueOf(scores.getConfig().getInt(plenemy.getName())) + ChatColor.RESET + ".");
+									 plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " point!");
 									 scores.saveConfig();
 									 Chat.sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
 									 Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(plenemy) + ChatColor.RED + " snowbrawled " + Utils.getNamewColor(plhit) + ".");
