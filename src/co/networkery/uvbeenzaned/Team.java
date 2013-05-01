@@ -38,8 +38,6 @@ public class Team {
 				}
 				p.getInventory().clear();
 				Rank.giveRank(Bukkit.getPlayer(p.getName()));
-				Utils.refreshAllTags();
-				//p.setPlayerListName(ChatColor.AQUA + p.getName());
 				SnowballerListener.teamcyanboard.addPlayer(p);
 				p.setScoreboard(SnowballerListener.board);
 				Score score = SnowballerListener.objective.getScore(p);
@@ -95,8 +93,6 @@ public class Team {
 				}
 				p.getInventory().clear();
 				Rank.giveRank(Bukkit.getPlayer(p.getName()));
-				Utils.refreshAllTags();
-				//p.setPlayerListName(ChatColor.GREEN + p.getName());
 				SnowballerListener.teamlimeboard.addPlayer(p);
 				p.setScoreboard(SnowballerListener.board);
 				Score score = SnowballerListener.objective.getScore(p);
@@ -161,16 +157,13 @@ public class Team {
   			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
   			p.getInventory().clear();
   			SnowballerListener.teamcyanboard.removePlayer(p);
-//			if(!disconnectmode)
-//			{
-//				p.setPlayerListName(p.getName());
-//			}
+  			SnowballerListener.board.resetScores(p);
+  			p.setScoreboard(SnowballerListener.manager.getNewScoreboard());
   			p.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
   			SnowballerListener.checkTeamsInArena();
   			SnowballerListener.terminateAll();
   			Chat.sendAllTeamsMsg(pg + p.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
   			Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
-  			Utils.refreshAllTags();
   			return true;
   		}
 		if(SnowballerListener.teamlime.contains(p.getName()))
@@ -189,16 +182,13 @@ public class Team {
 			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
 			p.getInventory().clear();
 			SnowballerListener.teamlimeboard.removePlayer(p);
-//			if(!disconnectmode)
-//			{
-//				p.setPlayerListName(p.getName());
-//			}
+			SnowballerListener.board.resetScores(p);
+			p.setScoreboard(SnowballerListener.manager.getNewScoreboard());
 			p.sendMessage(pg + "You've left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			SnowballerListener.checkTeamsInArena();
 			SnowballerListener.terminateAll();
 			Chat.sendAllTeamsMsg(pg + p.getName() + " has left team " + ChatColor.GREEN + "LIME" + ChatColor.RESET +"!");
 			Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
-			Utils.refreshAllTags();
 			return true;
 		}
 		if(!quiet)

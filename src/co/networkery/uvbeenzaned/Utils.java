@@ -60,22 +60,6 @@ public class Utils {
 		unstucktimer.start();
 	}
 	
-	public static void refreshAllTags()
-	{
-//		for(String pl : SnowballerListener.teamcyan)
-//		{
-//			TagAPI.refreshPlayer(Bukkit.getPlayer(pl));
-//		}
-//		for(String pl : SnowballerListener.teamlime)
-//		{
-//			TagAPI.refreshPlayer(Bukkit.getPlayer(pl));
-//		}
-//		for(Player pl : Bukkit.getServer().getOnlinePlayers())
-//		{
-//			TagAPI.refreshPlayer(pl);
-//		}
-	}
-	
 	public static String getNamewColor(Player p) 
 	{
 		String newname = null;

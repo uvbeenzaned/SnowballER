@@ -42,7 +42,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
-//import org.kitteh.tag.PlayerReceiveNameTagEvent;
+
  
  public class SnowballerListener implements Listener
  {
@@ -61,7 +61,7 @@ import org.bukkit.scoreboard.ScoreboardManager;
 	 public static Scoreboard board = manager.getNewScoreboard();
 	 public static org.bukkit.scoreboard.Team teamcyanboard = board.registerNewTeam("CYAN");
 	 public static org.bukkit.scoreboard.Team teamlimeboard = board.registerNewTeam("LIME");
-	 public static Objective objective = board.registerNewObjective("Score", "dummy");
+	 public static Objective objective = board.registerNewObjective(ChatColor.GOLD + "Score" + ChatColor.RESET, "dummy");
 	 
 	 public SnowballerListener(JavaPlugin jp)
 	 {
@@ -278,26 +278,6 @@ import org.bukkit.scoreboard.ScoreboardManager;
 			 }
 		 }
 	 }
-	 
-//		@EventHandler
-//		 public void onNameTag(PlayerReceiveNameTagEvent event)
-//		 {
-//			 if(teamcyan.contains(event.getNamedPlayer().getName()))
-//			 {
-//				 event.setTag(ChatColor.AQUA + event.getNamedPlayer().getName());
-//			 }
-//			 else
-//			 {
-//				 if(teamlime.contains(event.getNamedPlayer().getName()))
-//				 {
-//					 event.setTag(ChatColor.GREEN + event.getNamedPlayer().getName());
-//				 }
-//				 else
-//				 {
-//					 event.setTag(event.getNamedPlayer().getName());
-//				 }
-//			 }
-//		 }
 		
 		@EventHandler
 		public void onNewSign(SignChangeEvent event)
@@ -332,21 +312,6 @@ import org.bukkit.scoreboard.ScoreboardManager;
 							s.setLine(2, ChatColor.BLUE + Rank.getRankName(event.getPlayer().getName()));
 							s.setLine(3, ChatColor.GOLD + String.valueOf(SnowballerListener.scores.getConfig().getInt(event.getPlayer().getName())));
 							s.update();
-						}
-					}
-				}
-				if(event.getAction() == Action.LEFT_CLICK_BLOCK)
-				{
-					if(event.getPlayer().isSneaking())
-					{
-						if(!punchcounts.contains(event.getPlayer().getName()))
-						{
-							punchcounts.add(event.getPlayer().getName());
-						}
-						else
-						{
-							punchcounts.remove(event.getPlayer().getName());
-							Chat.getTeamStats(event.getPlayer().getName());
 						}
 					}
 				}
