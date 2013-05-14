@@ -11,9 +11,8 @@ public class Team {
 	
 	public static String pg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Snowballer" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	
-	public static boolean Join(String player, String team, boolean quietmode)
+	public static boolean Join(Player p, String team, boolean quietmode)
 	{
-		Player p = Bukkit.getPlayer(player);
 		if(SnowballerListener.teamcyan.contains(p.getName()))
 		{
 			p.sendMessage(pg + "You are already on team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
@@ -37,7 +36,7 @@ public class Team {
 					Chat.sendAllTeamsMsg(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " players: " + SnowballerListener.teamcyan.size());
 				}
 				p.getInventory().clear();
-				Rank.giveRank(Bukkit.getPlayer(p.getName()));
+				Rank.giveRank(p);
 				SnowballerListener.teamcyanboard.addPlayer(p);
 				p.setScoreboard(SnowballerListener.board);
 				Score score = SnowballerListener.objective.getScore(p);
@@ -92,7 +91,7 @@ public class Team {
 					Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
 				}
 				p.getInventory().clear();
-				Rank.giveRank(Bukkit.getPlayer(p.getName()));
+				Rank.giveRank(p);
 				SnowballerListener.teamlimeboard.addPlayer(p);
 				p.setScoreboard(SnowballerListener.board);
 				Score score = SnowballerListener.objective.getScore(p);
