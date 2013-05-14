@@ -118,7 +118,7 @@ import org.bukkit.scoreboard.ScoreboardManager;
 		 Team.Leave(pld, true, true);
 	 }
 	 
-	 @EventHandler(priority = EventPriority.HIGHEST)
+	 @EventHandler(priority = EventPriority.NORMAL)
 	 public void playerRespawn(PlayerRespawnEvent event)
 	 {
 		 if(deadplayers.containsKey(event.getPlayer().getName()))
