@@ -263,9 +263,26 @@ public class Snowballer extends JavaPlugin
 			  		plcmd.sendMessage(pg + "You have to be an op to run this command!");
 			  		return true;
 			  	case "join":
-			  		if(args.length > 1)
+			  		if(args.length == 1)
 			  		{
-			  			 return Team.Join(plcmd, args[1], false);
+			  			if(SnowballerListener.teamlime.size() > SnowballerListener.teamcyan.size() || SnowballerListener.teamcyan.size() == 0 || SnowballerListener.teamlime.size() == 0)
+			  			{
+			  				return Team.Join(plcmd, "cyan", false);
+			  			}
+			  			if(SnowballerListener.teamcyan.size() > SnowballerListener.teamlime.size() || SnowballerListener.teamlime.size() == 0 || SnowballerListener.teamcyan.size() == 0)
+			  			{
+			  				return Team.Join(plcmd, "lime", false);
+			  			}
+			  		}
+			  		else
+			  		{
+			  			if(args.length > 1)
+				  		{
+			  				if(plcmd.hasPermission("snowballer.join.pick"))
+			  				{
+			  					return Team.Join(plcmd, args[1], false);
+			  				}
+				  		}
 			  		}
 			  		return false;
 			  	case "leave":
