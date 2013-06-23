@@ -19,23 +19,23 @@ public class Team {
 		if(SnowballerListener.teamcyan.size() == SnowballerListener.teamlime.size())
 		{
 			r.setSeed(System.currentTimeMillis());
-			int n = r.nextInt(1);
-			if(n == 0)
+			int n = r.nextInt(10);
+			if(n <= 5)
 			{
-				return Team.Join(p, "cyan", false);
+				return Team.Join(p, "cyan", quietmode);
 			}
-			if(n == 1)
+			if(n >= 5)
 			{
-				return Team.Join(p, "lime", false);
+				return Team.Join(p, "lime", quietmode);
 			}
 		}
 		if(SnowballerListener.teamlime.size() > SnowballerListener.teamcyan.size())
 		{
-			return Team.Join(p, "cyan", false);
+			return Team.Join(p, "cyan", quietmode);
 		}
 		if(SnowballerListener.teamcyan.size() > SnowballerListener.teamlime.size())
 		{
-			return Team.Join(p, "lime", false);
+			return Team.Join(p, "lime", quietmode);
 		}
 		return true;
 	}
