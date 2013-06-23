@@ -1,5 +1,7 @@
 package co.networkery.uvbeenzaned;
 
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,6 +12,33 @@ import org.bukkit.scoreboard.Score;
 public class Team {
 	
 	public static String pg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Snowballer" + ChatColor.GOLD + "] " + ChatColor.RESET;
+	private static Random r = new Random();
+	
+	public static boolean JoinRandom(Player p, boolean quietmode)
+	{
+		if(SnowballerListener.teamcyan.size() == SnowballerListener.teamlime.size())
+		{
+			r.setSeed(System.currentTimeMillis());
+			int n = r.nextInt(1);
+			if(n == 0)
+			{
+				return Team.Join(p, "cyan", false);
+			}
+			if(n == 1)
+			{
+				return Team.Join(p, "lime", false);
+			}
+		}
+		if(SnowballerListener.teamlime.size() > SnowballerListener.teamcyan.size())
+		{
+			return Team.Join(p, "cyan", false);
+		}
+		if(SnowballerListener.teamcyan.size() > SnowballerListener.teamlime.size())
+		{
+			return Team.Join(p, "lime", false);
+		}
+		return true;
+	}
 	
 	public static boolean Join(Player p, String team, boolean quietmode)
 	{

@@ -265,20 +265,13 @@ public class Snowballer extends JavaPlugin
 			  	case "join":
 			  		if(args.length == 1)
 			  		{
-			  			if(SnowballerListener.teamlime.size() > SnowballerListener.teamcyan.size() || SnowballerListener.teamcyan.size() == 0 || SnowballerListener.teamlime.size() == 0)
-			  			{
-			  				return Team.Join(plcmd, "cyan", false);
-			  			}
-			  			if(SnowballerListener.teamcyan.size() > SnowballerListener.teamlime.size() || SnowballerListener.teamlime.size() == 0 || SnowballerListener.teamcyan.size() == 0)
-			  			{
-			  				return Team.Join(plcmd, "lime", false);
-			  			}
+			  			return Team.JoinRandom(plcmd, false);
 			  		}
 			  		else
 			  		{
 			  			if(args.length > 1)
 				  		{
-			  				if(plcmd.hasPermission("snowballer.join.pick"))
+			  				if(plcmd.hasPermission("snowballer.join.pick") || plcmd.isOp())
 			  				{
 			  					return Team.Join(plcmd, args[1], false);
 			  				}
