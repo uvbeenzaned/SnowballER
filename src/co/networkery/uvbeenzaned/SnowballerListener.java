@@ -294,8 +294,6 @@ import org.bukkit.scoreboard.ScoreboardManager;
 			}
 		}
 		
-		public static ArrayList<String> punchcounts = new ArrayList<String>();
-		
 		@EventHandler
 		public void onSignClick(PlayerInteractEvent event)
 		{
@@ -465,29 +463,6 @@ import org.bukkit.scoreboard.ScoreboardManager;
 				 Round.startIndependentTimerRound();
 			 }
 		 }
-	 }
-	 
-	 public static String checkPlayerLead()
-	 {
-		 String player = null;
-		 int points = 0;
-		 for(Entry<String, Integer> e : hitcnts.entrySet())
-		 {
-			 if(player == null && points == 0)
-			 {
-				 player = e.getKey();
-				 points = e.getValue();
-			 }
-			 else
-			 {
-				 if(e.getValue() > points)
-				 {
-					 player = e.getKey();
-					 points = e.getValue();
-				 }
-			 }
-		 }
-		 return player + "," + String.valueOf(points);
 	 }
 	 
 	 public static void giveSnowballs(Player pl)
