@@ -10,10 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Score;
 
 public class Team {
-	
+
 	public static String pg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Snowballer" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	private static Random r = new Random();
-	
+
 	public static boolean JoinRandom(Player p, boolean quietmode)
 	{
 		if(SnowballerListener.teamcyan.size() == SnowballerListener.teamlime.size())
@@ -39,7 +39,7 @@ public class Team {
 		}
 		return true;
 	}
-	
+
 	public static boolean Join(Player p, String team, boolean quietmode)
 	{
 		if(SnowballerListener.teamcyan.contains(p.getName()))
@@ -72,37 +72,37 @@ public class Team {
 				score.setScore(SnowballerListener.scores.getConfig().getInt(p.getName()));
 				if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 				{
-		  			if(!SnowballerListener.teamlime.isEmpty())
-		  			{
-		  				if(SnowballerListener.gameon == false)
-			  			{
-			  				if(SnowballerListener.timergame == false)
-			  				{
-				  				if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
-				  				{
-					  				SnowballerListener.timergame = true;
-					  				Round.startIndependentTimerRound();
-						  			p.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
-						  			return true;
-				  				}
-				  				else
-				  				{
-				  					p.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
-				  					return true;
-				  				}
-			  				}
-				  		}
-			  			else
-			  			{
-			  				p.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
-			  				return true;
-			  			}
-		  			}
-		  			else
-		  			{
-		  				p.sendMessage(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
-		  				p.sendMessage(pg + "Waiting for another player to join....");
-		  			}
+					if(!SnowballerListener.teamlime.isEmpty())
+					{
+						if(SnowballerListener.gameon == false)
+						{
+							if(SnowballerListener.timergame == false)
+							{
+								if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
+								{
+									SnowballerListener.timergame = true;
+									Round.startIndependentTimerRound();
+									p.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
+									return true;
+								}
+								else
+								{
+									p.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
+									return true;
+								}
+							}
+						}
+						else
+						{
+							p.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
+							return true;
+						}
+					}
+					else
+					{
+						p.sendMessage(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
+						p.sendMessage(pg + "Waiting for another player to join....");
+					}
 				}
 				return true;
 			}
@@ -127,73 +127,73 @@ public class Team {
 				score.setScore(SnowballerListener.scores.getConfig().getInt(p.getName()));
 				if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 				{
-		  			if(!SnowballerListener.teamcyan.isEmpty())
-		  			{
-		  				if(SnowballerListener.gameon == false)
-			  			{
-			  				if(SnowballerListener.timergame == false)
-			  				{
-				  				if(!SnowballerListener.teamlime.isEmpty() && !SnowballerListener.teamcyan.isEmpty())
-				  				{
-					  				SnowballerListener.timergame = true;
-					  				Round.startIndependentTimerRound();
-						  			p.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
-						  			return true;
-				  				}
-				  				else
-				  				{
-				  					p.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
-				  					return true;
-				  				}
-			  				}
-				  		}
-			  			else
-			  			{
-			  				p.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
-			  				return true;
-			  			}
-		  			}
-		  			else
-		  			{
-		  				p.sendMessage(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
-		  				p.sendMessage(pg + "Waiting for another player to join....");
-		  			}
+					if(!SnowballerListener.teamcyan.isEmpty())
+					{
+						if(SnowballerListener.gameon == false)
+						{
+							if(SnowballerListener.timergame == false)
+							{
+								if(!SnowballerListener.teamlime.isEmpty() && !SnowballerListener.teamcyan.isEmpty())
+								{
+									SnowballerListener.timergame = true;
+									Round.startIndependentTimerRound();
+									p.sendMessage(pg + "A new Snowballer game will start in " + Integer.toString(SnowballerListener.config.getConfig().getInt("timerdelay") / 1000) + " seconds from now.");
+									return true;
+								}
+								else
+								{
+									p.sendMessage(pg + "Cannot start game!  One or both of the teams have no players on them at the moment.");
+									return true;
+								}
+							}
+						}
+						else
+						{
+							p.sendMessage(pg + "There is a game currently in progress right now.  Please wait for the round to end!");
+							return true;
+						}
+					}
+					else
+					{
+						p.sendMessage(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
+						p.sendMessage(pg + "Waiting for another player to join....");
+					}
 				}
 				return true;
 			}
 		}
 		return true;
 	}
-	
+
 	public static boolean Leave(String player, boolean quiet, boolean disconnectmode)
 	{
 		Player p = Bukkit.getPlayer(player);
-  		if(SnowballerListener.teamcyan.contains(p.getName()))
-  		{
-  			SnowballerListener.scores.saveConfig();
-  			if(SnowballerListener.teamcyaninarena.contains(p.getName()))
-  			{
-  				SnowballerListener.teamcyaninarena.remove(p.getName());
-  				p.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
-  			}
-  			SnowballerListener.teamcyan.remove(p.getName());
-  			if(SnowballerListener.hitcnts.containsKey(p.getPlayer().getName()))
-  			{
-  				SnowballerListener.hitcnts.remove(p.getPlayer().getName());
-  			}
-  			p.setRemoveWhenFarAway(true);
-  			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
-  			p.getInventory().clear();
-  			SnowballerListener.teamcyanboard.removePlayer(p);
-  			SnowballerListener.board.resetScores(p);
-  			p.setScoreboard(SnowballerListener.manager.getNewScoreboard());
-  			p.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-  			SnowballerListener.checkTeamsInArena();
-  			SnowballerListener.terminateAll();
-  			Chat.sendAllTeamsMsg(pg + p.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
-  			Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
-  			return true;
-  		}
+		if(SnowballerListener.teamcyan.contains(p.getName()))
+		{
+			SnowballerListener.scores.saveConfig();
+			if(SnowballerListener.teamcyaninarena.contains(p.getName()))
+			{
+				SnowballerListener.teamcyaninarena.remove(p.getName());
+				p.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
+			}
+			SnowballerListener.teamcyan.remove(p.getName());
+			if(SnowballerListener.hitcnts.containsKey(p.getPlayer().getName()))
+			{
+				SnowballerListener.hitcnts.remove(p.getPlayer().getName());
+			}
+			p.setRemoveWhenFarAway(true);
+			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+			p.getInventory().clear();
+			SnowballerListener.teamcyanboard.removePlayer(p);
+			SnowballerListener.board.resetScores(p);
+			p.setScoreboard(SnowballerListener.manager.getNewScoreboard());
+			p.sendMessage(pg + "You've left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+			SnowballerListener.checkTeamsInArena();
+			SnowballerListener.terminateAll();
+			Chat.sendAllTeamsMsg(pg + p.getName() + " has left team " + ChatColor.AQUA + "CYAN" + ChatColor.RESET +"!");
+			Chat.sendAllTeamsMsg(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players: " + SnowballerListener.teamlime.size());
+			return true;
+		}
 		if(SnowballerListener.teamlime.contains(p.getName()))
 		{
 			SnowballerListener.scores.saveConfig();

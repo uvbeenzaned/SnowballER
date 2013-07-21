@@ -5,41 +5,41 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class Chat {
-	
+
 	public static String pg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Snowballer" + ChatColor.GOLD + "] " + ChatColor.RESET;
-	
-	 public static void sendAllTeamsMsg(String msg)
-	 {
-		 for(String pl : SnowballerListener.teamlime)
-		 {
-			 Bukkit.getPlayer(pl).sendMessage(msg);
-		 }
-		 for(String pl : SnowballerListener.teamcyan)
-		 {
-			 Bukkit.getPlayer(pl).sendMessage(msg);
-		 } 
-	 }
-	 
-	 public static void cyanMsg(String msg)
-	 {
-		 for(String pl : SnowballerListener.teamcyan)
-		 {
-			 Bukkit.getPlayer(pl).sendMessage(msg);
-		 }
-	 }
-	 
-	 public static void limeMsg(String msg)
-	 {
-		 for(String pl : SnowballerListener.teamlime)
-		 {
-			 Bukkit.getPlayer(pl).sendMessage(msg);
-		 }
-	 }
-	 
-	 public static boolean getTeamStats(String player)
-	 {
-		 Player p = Bukkit.getPlayer(player);
-		 
+
+	public static void sendAllTeamsMsg(String msg)
+	{
+		for(String pl : SnowballerListener.teamlime)
+		{
+			Bukkit.getPlayer(pl).sendMessage(msg);
+		}
+		for(String pl : SnowballerListener.teamcyan)
+		{
+			Bukkit.getPlayer(pl).sendMessage(msg);
+		} 
+	}
+
+	public static void cyanMsg(String msg)
+	{
+		for(String pl : SnowballerListener.teamcyan)
+		{
+			Bukkit.getPlayer(pl).sendMessage(msg);
+		}
+	}
+
+	public static void limeMsg(String msg)
+	{
+		for(String pl : SnowballerListener.teamlime)
+		{
+			Bukkit.getPlayer(pl).sendMessage(msg);
+		}
+	}
+
+	public static boolean getTeamStats(String player)
+	{
+		Player p = Bukkit.getPlayer(player);
+
 		if(SnowballerListener.teamcyan.size() > 0)
 		{
 			p.sendMessage(pg + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " players" + ": " + String.valueOf(SnowballerListener.teamcyan.size()));
@@ -87,5 +87,5 @@ public class Chat {
 			p.sendMessage(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players" + ": 0");
 		}
 		return true;
-	 }
+	}
 }
