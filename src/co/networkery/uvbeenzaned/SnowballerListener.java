@@ -57,21 +57,17 @@ public class SnowballerListener implements Listener
 	public static List<String> teamlimeinarena = new ArrayList<String>();
 	public static HashMap<String, Integer> hitcnts = new HashMap<String, Integer>();
 	public static HashMap<String, String> deadplayers = new HashMap<String, String>();
-	public static ScoreboardManager manager;
-	public static Scoreboard board;
-	public static org.bukkit.scoreboard.Team teamcyanboard;
-	public static org.bukkit.scoreboard.Team teamlimeboard;
+	public static ScoreboardManager manager = Bukkit.getScoreboardManager();
+	public static Scoreboard board = manager.getNewScoreboard();;
+	public static org.bukkit.scoreboard.Team teamcyanboard = board.registerNewTeam("CYAN");;
+	public static org.bukkit.scoreboard.Team teamlimeboard = board.registerNewTeam("LIME");;
 	public static Objective objective;
 
 	public SnowballerListener(JavaPlugin jp)
 	{
 		config = new ConfigAccessor(jp, "config.yml");
 		scores = new ConfigAccessor(jp, "scores.yml");
-		manager = Bukkit.getScoreboardManager();
-		board = manager.getNewScoreboard();
 		objective = board.registerNewObjective("score", "dummy");
-		teamcyanboard = board.registerNewTeam("CYAN");
-		teamlimeboard = board.registerNewTeam("LIME");
 		teamcyanboard.setDisplayName("CYAN");
 		teamcyanboard.setPrefix(ChatColor.AQUA + "(C)" + ChatColor.RESET);
 		teamlimeboard.setDisplayName("LIME");
@@ -216,6 +212,7 @@ public class SnowballerListener implements Listener
 					scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 					Score hscore = objective.getScore(plenemy);
 					hscore.setScore(scores.getConfig().getInt(plenemy.getName()));
+					plenemy.setScoreboard(board);
 					plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " bonus point for mob hit!");
 				}
 			}
@@ -259,6 +256,7 @@ public class SnowballerListener implements Listener
 									Score hscore = objective.getScore(plhit);
 									hscore.setScore(scores.getConfig().getInt(plhit.getName()));
 									plhit.sendMessage(pg + ChatColor.GOLD + "-1" + ChatColor.RESET + " point!");
+									plhit.setScoreboard(board);
 									if(!hitcnts.containsKey(plenemy.getName()))
 									{
 										hitcnts.put(plenemy.getName(), 1);
@@ -271,6 +269,7 @@ public class SnowballerListener implements Listener
 									Score escore = objective.getScore(plenemy);
 									escore.setScore(scores.getConfig().getInt(plenemy.getName()));
 									plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " point!");
+									plenemy.setScoreboard(board);
 									scores.saveConfig();
 									Chat.sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
 									Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(plenemy) + ChatColor.RED + " snowbrawled " + Utils.getNamewColor(plhit) + ".");
@@ -390,7 +389,7 @@ public class SnowballerListener implements Listener
 				{
 					scores.getConfig().set(pl, scores.getConfig().getInt(pl) + config.getConfig().getInt("teampoints") * teamcyan.size());
 					Score score = objective.getScore(Bukkit.getPlayer(pl));
-					score.setScore(scores.getConfig().getInt(Bukkit.getPlayer(pl).getName()));
+					score.setScore(scores.getConfig().getInt(pl));
 					Bukkit.getPlayer(pl).setRemoveWhenFarAway(true);
 				}
 				Chat.sendAllTeamsMsg(pg + ChatColor.GOLD + "+" + String.valueOf(config.getConfig().getInt("teampoints") * teamcyan.size()) + ChatColor.RESET + " points for all of team" + ChatColor.GREEN + " LIME" + ChatColor.RESET + ".");
@@ -408,7 +407,7 @@ public class SnowballerListener implements Listener
 					}
 					scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
 					Score score = objective.getScore(Bukkit.getPlayer(hskiller));
-					score.setScore(scores.getConfig().getInt(Bukkit.getPlayer(hskiller).getName()));
+					score.setScore(scores.getConfig().getInt(hskiller));
 					Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(hskiller) + " was awarded " + ChatColor.GOLD + hshits * hshits + ChatColor.RESET + " points for the most player hits!");
 					hitcnts.clear();
 				}
@@ -455,7 +454,7 @@ public class SnowballerListener implements Listener
 						}
 						scores.getConfig().set(hskiller, scores.getConfig().getInt(hskiller) + hshits * hshits);
 						Score score = objective.getScore(Bukkit.getPlayer(hskiller));
-						score.setScore(scores.getConfig().getInt(Bukkit.getPlayer(hskiller).getName()));
+						score.setScore(scores.getConfig().getInt(hskiller));
 						Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(hskiller) + " was awarded " + ChatColor.GOLD + hshits * hshits + ChatColor.RESET + " points for the most player hits!");
 						hitcnts.clear();
 					}

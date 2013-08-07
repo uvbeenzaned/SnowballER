@@ -103,6 +103,7 @@ public class Round {
 					SnowballerListener.teamcyaninarena.add(pl);
 					Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamcyanarenasides." + key)));
 					Bukkit.getPlayer(pl).setGameMode(GameMode.SURVIVAL);
+					Bukkit.getPlayer(pl).setScoreboard(SnowballerListener.board);
 				}
 				for(String pl : SnowballerListener.teamlime)
 				{
@@ -111,6 +112,7 @@ public class Round {
 					SnowballerListener.teamlimeinarena.add(pl);
 					Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamlimearenasides." + key)));
 					Bukkit.getPlayer(pl).setGameMode(GameMode.SURVIVAL);
+					Bukkit.getPlayer(pl).setScoreboard(SnowballerListener.board);
 				}
 				Utils.checkPlayerStuck(300);
 			}

@@ -14,7 +14,7 @@ public class Team {
 	public static String pg = ChatColor.GOLD + "[" + ChatColor.AQUA + "Snowballer" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	private static Random r = new Random();
 
-	public static boolean JoinRandom(Player p, boolean quietmode)
+	public static boolean JoinRandom(Player p, boolean q)
 	{
 		if(SnowballerListener.teamcyan.size() == SnowballerListener.teamlime.size())
 		{
@@ -22,20 +22,20 @@ public class Team {
 			int n = r.nextInt(10);
 			if(n <= 5)
 			{
-				return Team.Join(p, "cyan", quietmode);
+				return Team.Join(p, "cyan", q);
 			}
 			if(n >= 5)
 			{
-				return Team.Join(p, "lime", quietmode);
+				return Team.Join(p, "lime", q);
 			}
 		}
 		if(SnowballerListener.teamlime.size() > SnowballerListener.teamcyan.size())
 		{
-			return Team.Join(p, "cyan", quietmode);
+			return Team.Join(p, "cyan", q);
 		}
 		if(SnowballerListener.teamcyan.size() > SnowballerListener.teamlime.size())
 		{
-			return Team.Join(p, "lime", quietmode);
+			return Team.Join(p, "lime", q);
 		}
 		return true;
 	}
