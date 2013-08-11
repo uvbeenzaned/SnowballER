@@ -34,6 +34,8 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,9 +60,9 @@ public class SnowballerListener implements Listener
 	public static HashMap<String, Integer> hitcnts = new HashMap<String, Integer>();
 	public static HashMap<String, String> deadplayers = new HashMap<String, String>();
 	public static ScoreboardManager manager = Bukkit.getScoreboardManager();
-	public static Scoreboard board = manager.getNewScoreboard();;
-	public static org.bukkit.scoreboard.Team teamcyanboard = board.registerNewTeam("CYAN");;
-	public static org.bukkit.scoreboard.Team teamlimeboard = board.registerNewTeam("LIME");;
+	public static Scoreboard board = manager.getNewScoreboard();
+	public static org.bukkit.scoreboard.Team teamcyanboard = board.registerNewTeam("CYAN");
+	public static org.bukkit.scoreboard.Team teamlimeboard = board.registerNewTeam("LIME");
 	public static Objective objective;
 
 	public SnowballerListener(JavaPlugin jp)
@@ -97,7 +99,7 @@ public class SnowballerListener implements Listener
 	public void playerLeave(PlayerQuitEvent event)
 	{
 		String pll = event.getPlayer().getName();
-		Team.Leave(pll, true, true);
+		Team.Leave(pll, true);
 	}
 
 	@EventHandler
@@ -117,7 +119,7 @@ public class SnowballerListener implements Listener
 				deadplayers.put(pld, "lime");
 			}
 		}
-		Team.Leave(pld, true, true);
+		Team.Leave(pld, true);
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -126,11 +128,22 @@ public class SnowballerListener implements Listener
 		if(deadplayers.containsKey(event.getPlayer().getName()))
 		{
 			event.setRespawnLocation(LTSTL.str2loc(config.getConfig().getString("lobbyspawnlocation")));
+			Team.Join(event.getPlayer(), deadplayers.get(event.getPlayer().getName()).toString(), true);
 			deadplayers.remove(event.getPlayer().getName());
 		}
 		else
 		{
 			event.setRespawnLocation(Bukkit.getWorlds().get(0).getSpawnLocation());
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerTeleport(PlayerTeleportEvent event)
+	{
+		Player p = event.getPlayer();
+		if((event.getCause() != TeleportCause.PLUGIN) && (teamcyan.contains(p.getName()) || teamlime.contains(p.getName())) && (p.getWorld().getName() != LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")).getWorld().getName()))
+		{
+			Team.Leave(p.getName(), true);
 		}
 	}
 
@@ -212,7 +225,6 @@ public class SnowballerListener implements Listener
 					scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 					Score hscore = objective.getScore(plenemy);
 					hscore.setScore(scores.getConfig().getInt(plenemy.getName()));
-					plenemy.setScoreboard(board);
 					plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " bonus point for mob hit!");
 				}
 			}
@@ -269,7 +281,6 @@ public class SnowballerListener implements Listener
 									Score escore = objective.getScore(plenemy);
 									escore.setScore(scores.getConfig().getInt(plenemy.getName()));
 									plenemy.sendMessage(pg + ChatColor.GOLD + "+1" + ChatColor.RESET + " point!");
-									plenemy.setScoreboard(board);
 									scores.saveConfig();
 									Chat.sendAllTeamsMsg(pg + teamcyaninarena.size() + " " + ChatColor.AQUA + "CYAN" + ChatColor.RESET + " vs " + teamlimeinarena.size() + " " + ChatColor.GREEN + "LIME");
 									Chat.sendAllTeamsMsg(pg + Utils.getNamewColor(plenemy) + ChatColor.RED + " snowbrawled " + Utils.getNamewColor(plhit) + ".");
@@ -342,9 +353,9 @@ public class SnowballerListener implements Listener
 	public static void terminateAll()
 	{
 		checkTeamsInArena();
-		hitcnts.clear();
 		if(teamcyan.isEmpty() || teamlime.isEmpty())
 		{
+			hitcnts.clear();
 			gameon = false;
 			timergame = false;
 			if(Round.timer != null && Round.timer.isRunning())

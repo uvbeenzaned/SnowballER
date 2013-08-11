@@ -17,6 +17,20 @@ public class Round {
 		public void actionPerformed(ActionEvent evt) {
 			if(SnowballerListener.timergame == true && SnowballerListener.gameon == false)
 			{
+				for(int p = 0; p < SnowballerListener.teamcyan.size(); p++)
+				{
+					if(Bukkit.getPlayer(SnowballerListener.teamcyan.toArray()[p].toString()).getWorld().getName() != LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")).getWorld().getName())	
+					{
+						Team.Leave(SnowballerListener.teamcyan.toArray()[p].toString(), true);
+					}
+				}
+				for(int p = 0; p < SnowballerListener.teamlime.size(); p++)
+				{
+					if(Bukkit.getPlayer(SnowballerListener.teamlime.toArray()[p].toString()).getWorld().getName() != LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")).getWorld().getName())	
+					{
+						Team.Leave(SnowballerListener.teamlime.toArray()[p].toString(), true);
+					}
+				}
 				if(!SnowballerListener.teamcyan.isEmpty() && !SnowballerListener.teamlime.isEmpty())
 				{
 					Chat.sendAllTeamsMsg(pg + "Starting next round....");
@@ -76,6 +90,7 @@ public class Round {
 	}
 
 	public static Random r = new Random();
+	public static String lastmap = "";
 
 	public static void randomMap()
 	{
@@ -87,34 +102,40 @@ public class Round {
 		{
 			if(mapnum == i)
 			{
-				//attempt at the invis tp glitch
-				for(String pl : SnowballerListener.teamcyan)
+				if(lastmap != key)
 				{
-					Bukkit.getPlayer(pl).setRemoveWhenFarAway(false);
+					for(String pl : SnowballerListener.teamcyan)
+					{
+						Bukkit.getPlayer(pl).setRemoveWhenFarAway(false);
+					}
+					for(String pl : SnowballerListener.teamlime)
+					{
+						Bukkit.getPlayer(pl).setRemoveWhenFarAway(false);
+					}
+					for(String pl : SnowballerListener.teamcyan)
+					{
+						Bukkit.getPlayer(pl).getInventory().clear();
+						SnowballerListener.giveSnowballs(Bukkit.getPlayer(pl));
+						SnowballerListener.teamcyaninarena.add(pl);
+						Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamcyanarenasides." + key)));
+						Bukkit.getPlayer(pl).setGameMode(GameMode.SURVIVAL);
+					}
+					for(String pl : SnowballerListener.teamlime)
+					{
+						Bukkit.getPlayer(pl).getInventory().clear();
+						SnowballerListener.giveSnowballs(Bukkit.getPlayer(pl));
+						SnowballerListener.teamlimeinarena.add(pl);
+						Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamlimearenasides." + key)));
+						Bukkit.getPlayer(pl).setGameMode(GameMode.SURVIVAL);
+					}
+					Utils.checkPlayerStuck(300);
+					Chat.sendAllTeamsMsg(pg + "Arena: " + ChatColor.GOLD + key);
+					lastmap = key;
 				}
-				for(String pl : SnowballerListener.teamlime)
+				else
 				{
-					Bukkit.getPlayer(pl).setRemoveWhenFarAway(false);
+					randomMap();
 				}
-				for(String pl : SnowballerListener.teamcyan)
-				{
-					Bukkit.getPlayer(pl).getInventory().clear();
-					SnowballerListener.giveSnowballs(Bukkit.getPlayer(pl));
-					SnowballerListener.teamcyaninarena.add(pl);
-					Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamcyanarenasides." + key)));
-					Bukkit.getPlayer(pl).setGameMode(GameMode.SURVIVAL);
-					Bukkit.getPlayer(pl).setScoreboard(SnowballerListener.board);
-				}
-				for(String pl : SnowballerListener.teamlime)
-				{
-					Bukkit.getPlayer(pl).getInventory().clear();
-					SnowballerListener.giveSnowballs(Bukkit.getPlayer(pl));
-					SnowballerListener.teamlimeinarena.add(pl);
-					Bukkit.getPlayer(pl).teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("teamlimearenasides." + key)));
-					Bukkit.getPlayer(pl).setGameMode(GameMode.SURVIVAL);
-					Bukkit.getPlayer(pl).setScoreboard(SnowballerListener.board);
-				}
-				Utils.checkPlayerStuck(300);
 			}
 			i++;
 		}

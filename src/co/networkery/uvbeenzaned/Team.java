@@ -67,9 +67,9 @@ public class Team {
 				p.getInventory().clear();
 				Rank.giveRank(p);
 				SnowballerListener.teamcyanboard.addPlayer(p);
-				p.setScoreboard(SnowballerListener.board);
 				Score score = SnowballerListener.objective.getScore(p);
 				score.setScore(SnowballerListener.scores.getConfig().getInt(p.getName()));
+				p.setScoreboard(SnowballerListener.board);
 				if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 				{
 					if(!SnowballerListener.teamlime.isEmpty())
@@ -122,9 +122,9 @@ public class Team {
 				p.getInventory().clear();
 				Rank.giveRank(p);
 				SnowballerListener.teamlimeboard.addPlayer(p);
-				p.setScoreboard(SnowballerListener.board);
 				Score score = SnowballerListener.objective.getScore(p);
 				score.setScore(SnowballerListener.scores.getConfig().getInt(p.getName()));
+				p.setScoreboard(SnowballerListener.board);
 				if(SnowballerListener.config.getConfig().getBoolean("startwithoutop"))
 				{
 					if(!SnowballerListener.teamcyan.isEmpty())
@@ -165,16 +165,24 @@ public class Team {
 		return true;
 	}
 
-	public static boolean Leave(String player, boolean quiet, boolean disconnectmode)
+	public static boolean Leave(String player, boolean quiet)
 	{
 		Player p = Bukkit.getPlayer(player);
+		boolean diffworld = false;
+		if(p.getWorld().getName() != LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")).getWorld().getName())	
+		{
+			diffworld = true;
+		}
 		if(SnowballerListener.teamcyan.contains(p.getName()))
 		{
 			SnowballerListener.scores.saveConfig();
 			if(SnowballerListener.teamcyaninarena.contains(p.getName()))
 			{
 				SnowballerListener.teamcyaninarena.remove(p.getName());
-				p.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
+				if(!diffworld)
+				{
+					p.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
+				}				
 			}
 			SnowballerListener.teamcyan.remove(p.getName());
 			if(SnowballerListener.hitcnts.containsKey(p.getPlayer().getName()))
@@ -182,8 +190,11 @@ public class Team {
 				SnowballerListener.hitcnts.remove(p.getPlayer().getName());
 			}
 			p.setRemoveWhenFarAway(true);
-			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
-			p.getInventory().clear();
+			if(!diffworld)
+			{
+				p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+				p.getInventory().clear();
+			}
 			SnowballerListener.teamcyanboard.removePlayer(p);
 			SnowballerListener.board.resetScores(p);
 			p.setScoreboard(SnowballerListener.manager.getNewScoreboard());
@@ -200,15 +211,21 @@ public class Team {
 			if(SnowballerListener.teamlimeinarena.contains(p.getName()))
 			{
 				SnowballerListener.teamlimeinarena.remove(p.getName());
-				p.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
+				if(!diffworld)
+				{
+					p.teleport(LTSTL.str2loc(SnowballerListener.config.getConfig().getString("lobbyspawnlocation")));
+				}
 			}
 			SnowballerListener.teamlime.remove(p.getName());
 			if(SnowballerListener.hitcnts.containsKey(p.getPlayer().getName()))
 			{
 				SnowballerListener.hitcnts.remove(p.getPlayer().getName());
 			}
-			p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
-			p.getInventory().clear();
+			if(!diffworld)
+			{
+				p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+				p.getInventory().clear();
+			}
 			SnowballerListener.teamlimeboard.removePlayer(p);
 			SnowballerListener.board.resetScores(p);
 			p.setScoreboard(SnowballerListener.manager.getNewScoreboard());
