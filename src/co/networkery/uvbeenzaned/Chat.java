@@ -10,29 +10,53 @@ public class Chat {
 
 	public static void sendAllTeamsMsg(String msg)
 	{
-		for(String pl : SnowballerListener.teamlime)
+		if(SnowballerListener.teamlime != null)
 		{
-			Bukkit.getPlayer(pl).sendMessage(msg);
+			for(String pl : SnowballerListener.teamlime)
+			{
+				if(pl != null)
+				{
+					Bukkit.getPlayer(pl).sendMessage(msg);
+				}
+			}
 		}
-		for(String pl : SnowballerListener.teamcyan)
+		if(SnowballerListener.teamcyan != null)
 		{
-			Bukkit.getPlayer(pl).sendMessage(msg);
-		} 
+			for(String pl : SnowballerListener.teamcyan)
+			{
+				if(pl != null)
+				{
+					Bukkit.getPlayer(pl).sendMessage(msg);
+				}
+			} 
+		}
 	}
 
 	public static void cyanMsg(String msg)
 	{
-		for(String pl : SnowballerListener.teamcyan)
+		if(SnowballerListener.teamcyan != null)
 		{
-			Bukkit.getPlayer(pl).sendMessage(msg);
+			for(String pl : SnowballerListener.teamcyan)
+			{
+				if(pl != null)
+				{
+					Bukkit.getPlayer(pl).sendMessage(msg);
+				}
+			} 
 		}
 	}
 
 	public static void limeMsg(String msg)
 	{
-		for(String pl : SnowballerListener.teamlime)
+		if(SnowballerListener.teamlime != null)
 		{
-			Bukkit.getPlayer(pl).sendMessage(msg);
+			for(String pl : SnowballerListener.teamlime)
+			{
+				if(pl != null)
+				{
+					Bukkit.getPlayer(pl).sendMessage(msg);
+				}
+			}
 		}
 	}
 
