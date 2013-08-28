@@ -316,6 +316,18 @@ public class Snowballer extends JavaPlugin
 				case "teamstats":
 					Chat.getTeamStats(plcmd.getName());
 					return true;
+				case "top":
+					if(args.length < 2)
+					{
+						plcmd.sendMessage(pg + "Best Snowballers:");
+						for(String s : Chat.getTopScores())
+						{
+							plcmd.sendMessage("    " + s);
+						}
+						return true;
+					}
+					//dont forget to add only printing arg supplied amount of players
+					return true;
 				}
 			}
 		}

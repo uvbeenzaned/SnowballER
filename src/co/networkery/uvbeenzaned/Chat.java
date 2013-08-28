@@ -1,5 +1,12 @@
 package co.networkery.uvbeenzaned;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -111,5 +118,25 @@ public class Chat {
 			p.sendMessage(pg + ChatColor.GREEN + "LIME" + ChatColor.RESET + " players" + ": 0");
 		}
 		return true;
+	}
+	
+	public static List<String> getTopScores()
+	{
+		Map<String, Integer> l = new HashMap<String, Integer>();
+		MapValueSorter mvs = new MapValueSorter(l);
+		TreeMap<String, Integer> sortedl = new TreeMap<String, Integer>(mvs);
+		List<String> formatedl = new ArrayList<String>();
+		for(String p : SnowballerListener.scores.getConfig().getKeys(false))
+		{
+			l.put(p, SnowballerListener.scores.getConfig().getInt(p));
+		}
+		sortedl.putAll(l);
+		for(Entry<String, Integer> e : sortedl.entrySet())
+		{
+			formatedl.add(ChatColor.GOLD + "[" + ChatColor.BLUE + Rank.getRankName(e.getKey().toString()) + ChatColor.GOLD + "] " + ChatColor.RESET + Utils.getNamewColor(e.getKey().toString()) + 
+					ChatColor.DARK_PURPLE + " <" + ChatColor.GOLD + "-" + ChatColor.DARK_PURPLE + "> " + 
+					ChatColor.GOLD + e.getValue().toString());
+		}
+		return formatedl;
 	}
 }

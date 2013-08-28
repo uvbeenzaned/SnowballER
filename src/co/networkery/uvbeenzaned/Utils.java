@@ -101,5 +101,4 @@ public class Utils {
 		}
 		return newname + ChatColor.RESET;
 	}
-
 }

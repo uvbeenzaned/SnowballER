@@ -70,12 +70,13 @@ public class SnowballerListener implements Listener
 		config = new ConfigAccessor(jp, "config.yml");
 		scores = new ConfigAccessor(jp, "scores.yml");
 		objective = board.registerNewObjective("score", "dummy");
+		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+		objective.setDisplayName(ChatColor.AQUA + "==== " + ChatColor.GOLD + "Score" + ChatColor.AQUA + " ====");
 		teamcyanboard.setDisplayName("CYAN");
 		teamcyanboard.setPrefix(ChatColor.GOLD + "[" + ChatColor.AQUA + "C" + ChatColor.GOLD + "]" + ChatColor.RESET);
 		teamlimeboard.setDisplayName("LIME");
 		teamlimeboard.setPrefix(ChatColor.GOLD + "[" + ChatColor.GREEN + "L" + ChatColor.GOLD + "]" + ChatColor.RESET);
-		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		objective.setDisplayName(ChatColor.AQUA + "==== " + ChatColor.GOLD + "Score" + ChatColor.AQUA + " ====");
+		
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
