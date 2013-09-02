@@ -214,14 +214,14 @@ public class SnowballerListener implements Listener
 					FireworkEffect effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL_LARGE).build();
 					if(teamcyaninarena.contains(plenemy.getName()))
 					{
-						effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL_LARGE).build();
+						effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL_LARGE).withFlicker().withTrail().build();
 					}
 					if(teamlimeinarena.contains(plenemy.getName()))
 					{
-						effect = FireworkEffect.builder().withColor(Color.GREEN).with(Type.BALL_LARGE).build();
+						effect = FireworkEffect.builder().withColor(Color.GREEN).with(Type.BALL_LARGE).withFlicker().withTrail().build();
 					}
 					fwm.addEffects(effect);
-					fwm.setPower(0);
+					fwm.setPower(10);
 					fw.setFireworkMeta(fwm);
 					scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 					Score hscore = objective.getScore(plenemy);
