@@ -221,7 +221,7 @@ public class SnowballerListener implements Listener
 						effect = FireworkEffect.builder().withColor(Color.GREEN).with(Type.BALL_LARGE).withFlicker().withTrail().build();
 					}
 					fwm.addEffects(effect);
-					fwm.setPower(10);
+					fwm.setPower(1);
 					fw.setFireworkMeta(fwm);
 					scores.getConfig().set(plenemy.getName(), scores.getConfig().getInt(plenemy.getName()) + 1);
 					Score hscore = objective.getScore(plenemy);
@@ -365,16 +365,16 @@ public class SnowballerListener implements Listener
 			}
 			teamcyaninarena.clear();
 			teamlimeinarena.clear();
-			if(teamlime.isEmpty())
-			{
-				Chat.cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
-				Chat.cyanMsg(pg + "Waiting for another player to join....");
-			}
-			if(teamcyan.isEmpty())
-			{
-				Chat.limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
-				Chat.limeMsg(pg + "Waiting for another player to join....");
-			}
+//			if(teamlime.isEmpty())
+//			{
+//				Chat.cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
+//				Chat.cyanMsg(pg + "Waiting for another player to join....");
+//			}
+//			if(teamcyan.isEmpty())
+//			{
+//				Chat.limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
+//				Chat.limeMsg(pg + "Waiting for another player to join....");
+//			}
 		}
 	}
 
