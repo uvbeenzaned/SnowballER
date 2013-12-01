@@ -122,6 +122,18 @@ public class SnowballerListener implements Listener
 		}
 		Team.Leave(pld, true);
 	}
+	
+	@EventHandler
+	public void playerInteractBlock(PlayerInteractEvent event)
+	{
+		if(teamcyaninarena.contains(event.getPlayer().getName()) || teamlimeinarena.contains(event.getPlayer().getName()))
+		{
+			if(event.getAction() == Action.LEFT_CLICK_BLOCK)
+			{
+				event.setCancelled(true);
+			}
+		}
+	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void playerRespawn(PlayerRespawnEvent event)
@@ -365,16 +377,6 @@ public class SnowballerListener implements Listener
 			}
 			teamcyaninarena.clear();
 			teamlimeinarena.clear();
-//			if(teamlime.isEmpty())
-//			{
-//				Chat.cyanMsg(pg + "There are no players on team " + ChatColor.GREEN + "LIME " + ChatColor.RESET + "to play with.");
-//				Chat.cyanMsg(pg + "Waiting for another player to join....");
-//			}
-//			if(teamcyan.isEmpty())
-//			{
-//				Chat.limeMsg(pg + "There are no players on team " + ChatColor.AQUA + "CYAN " + ChatColor.RESET + "to play with.");
-//				Chat.limeMsg(pg + "Waiting for another player to join....");
-//			}
 		}
 	}
 
